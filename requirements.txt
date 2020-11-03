@@ -1,0 +1,12 @@
+requests
+apscheduler
+bs4
+Flask
+aiml
+lxml
+pymysql
+Pillow
+redis
+flask-cors
+wordcloud
+xlwt

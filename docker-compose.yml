@@ -1,0 +1,28 @@
+#docker build -t darkbuddy .
+#docker rm -f darkbuddy
+#docker run -ti -d --name darkbuddy -p 9000:9000 darkbuddy
+#docker image rm -f darkbuddy
+
+version: "3"
+services:
+  darkbuddy:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 9000:9000
+    container_name: darkbuddy
+#    command: docker image rm -f dark_buddy_darkbuddy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
