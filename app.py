@@ -225,23 +225,6 @@ def sign_in():
         response = jsonify(response_lib.ERROR_CODE)
         return response
 
-@app.route('/dark_buddy/sign_in/get_signature_by_url', methods=['POST', 'OPTIONS'])
-@control_allow
-def get_signature_by_url():
-    try:
-        if request.method == 'OPTIONS':
-            response = jsonify(response_lib.SUCCESS_CODE)
-            return response
-        if request.method == 'POST':
-            json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
-            url = json_object['url']
-            return get_url_signature(url)
-    except:
-        log.error(traceback.format_exc())
-        response = jsonify(response_lib.ERROR_CODE)
-        return response
-
 @app.route('/dark_buddy/darkSpy/getWord', methods=['POST', 'OPTIONS'])
 @control_allow
 def darkSpyGetWord():
