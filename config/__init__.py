@@ -1,0 +1,29 @@
+# coding=utf-8
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timezone, timedelta
+from random import Random
+
+from pony.orm import Database
+from redis import Redis
+
+from config.DataSoure import host, port_mysql, user_mysql, password_mysql, db_mysql, password_redis, port_redis
+
+# 机器人部署时的ip地址，或者域名
+public_ip = 'www.darkbuddy.cn'
+
+# 统一使用一个random实例
+random = Random()
+
+# 统一使用一个线程池，核数根据实际情况调节
+dark_show_hand_thread_pool = ThreadPoolExecutor(max_workers=8)
+
+# mysql实例
+db = Database()
+db.bind('mysql', host=host, port=port_mysql, user=user_mysql, passwd=password_mysql, db=db_mysql)
+
+# redis实例
+redis = Redis(host, port_redis, password=password_redis)
+
+# 当前时间实例
+tzutc_8 = timezone(timedelta(hours=8))
+now_date = datetime.utcnow().astimezone(tzutc_8)
