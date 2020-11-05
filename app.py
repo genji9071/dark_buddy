@@ -11,11 +11,11 @@ from flask import Flask, request, make_response, send_from_directory
 from flask.json import jsonify, _json
 from flask_cors import CORS
 
-import mapper
 from config.ChatbotsConfig import chatbots
 from dark_chat.DarkChat import dark_chat
 from dark_chat.dark_jikipedia.DarkJiWordCloud import dark_ji_word_cloud
 from dark_listener.DarkListener import dark_listeners
+from dark_live_chat.DarkLiveChat import get_live_chat_response
 from dark_maze.DarkMaze import dark_maze
 from dark_menu.DarkMenu import dark_menu
 from dark_spy.DarkSpy import dark_spy
@@ -23,7 +23,7 @@ from dark_word_cloud.DarkWordCloud import dark_word_cloud
 from lib.ImageFactory import image_factory
 from lib.Logger import log
 from lib.ResponseLib import response_lib
-from lib.chatbot import ActionCard, CardItem
+from mapper.DarkBuddyUser import select_by_name
 from user.login.User_login import user_login
 
 app = Flask(__name__, static_url_path="")
@@ -76,10 +76,20 @@ def do_request(request_json):
             user_login.record_words(request_json['text']['content'], founded_user.get('id'))
             dark_chat.do_dark_chat(request_json)
 
+
+def do_live_chat_request(request_json):
+    bibi = False
+    bibi = do_dark_debug(request_json) or bibi
+    if not bibi and not capture_by_listener(request_json):
+        # 进入自动逼逼环节
+        dark_chat.do_dark_chat(request_json)
+    return get_live_chat_response(request_json)
+
+
 def do_listener(json_object):
     name = json_object['name']
     message = json_object['message']
-    founded_user = mapper.mapper_user.select_by_name(name.strip())
+    founded_user = select_by_name(name.strip())
     if founded_user is None:
         pass
     user_login.record_words(message, founded_user.id)
@@ -119,6 +129,27 @@ def dark_buddy():
         chatbots.get(request.json['chatbotUserId']
                      ).send_text(traceback.format_exc())
         return response
+
+
+@app.route('/dark_buddy/chat', methods=['POST', 'OPTIONS', 'GET'])
+@control_allow
+def dark_buddy():
+    try:
+        if request.method == 'OPTIONS':
+            response = jsonify(response_lib.SUCCESS_CODE)
+            return response
+        if request.method == 'POST':
+            json_object = request.json
+            log.info(_json.dumps(json_object, indent=4))
+            return do_live_chat_request(json_object)
+        if request.method == 'GET':
+            log.error('Why you got GET method?')
+            log.info(request)
+            response = jsonify(response_lib.SUCCESS_CODE)
+            return response
+    except:
+        log.error(traceback.format_exc())
+        return None
 
 
 @app.route('/dark_buddy/listener', methods=['POST', 'OPTIONS'])
@@ -225,6 +256,7 @@ def sign_in():
         response = jsonify(response_lib.ERROR_CODE)
         return response
 
+
 @app.route('/dark_buddy/darkSpy/getWord', methods=['POST', 'OPTIONS'])
 @control_allow
 def darkSpyGetWord():
@@ -265,6 +297,7 @@ def web_get(path):
 
 def do_dark_debug(json):
     return dark_menu.call_api(json)
+
 
 if __name__ == '__main__':
     p = Process(target=run_schedule_task)
