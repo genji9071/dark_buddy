@@ -23,7 +23,8 @@
     "store": "^2.0.12",
     "typescript": "3.7.2",
     "vconsole": "^3.3.4",
-    "react-chat-widget": "^3.0.5"
+    "react-chat-widget": "^3.0.5",
+    "uuid": "8.3.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -44,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/uuid": "^8.3.0"
   }
 }

@@ -5,17 +5,19 @@ import 'react-chat-widget/lib/styles.css';
 import messageHandler from 'utils/messageHandler';
 
 function ChatApp() {
-  useEffect(() => {
-    addResponseMessage('Welcome to this awesome chat!');
-  }, []);
 
-  return (
-    <div className="App">
-      <Widget
-        handleNewUserMessage={messageHandler}
-      />
-    </div>
-  );
+    useEffect(() => {
+        const session_id = "session_id"
+        addResponseMessage(session_id);
+    }, []);
+
+    return (
+        <div className="ChatApp">
+        <Widget
+            handleNewUserMessage={messageHandler}
+        />
+        </div>
+    );
 }
 
 export default ChatApp;
