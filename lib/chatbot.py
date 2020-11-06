@@ -45,7 +45,7 @@ class DingtalkChatbot(object):
     钉钉群自定义机器人（每个机器人每分钟最多发送20条），支持文本（text）、连接（link）、markdown三种消息类型！
     """
 
-    def __init__(self, webhook):
+    def __init__(self, webhook, is_live_chat=False):
         """
         机器人初始化
         :param webhook: 钉钉群自定义机器人webhook地址
@@ -55,6 +55,7 @@ class DingtalkChatbot(object):
         self.webhook = webhook
         self.times = 0
         self.start_time = time.time()
+        self.is_live_chat = is_live_chat
 
     def send_text(self, msg, is_at_all=False, at_mobiles=[], at_dingtalk_ids=[]):
         """
@@ -199,27 +200,28 @@ class DingtalkChatbot(object):
         logging.debug("FeedCard类型：%s" % data)
         return self.post(data)
 
-    def post(self, data, is_live_chat=False):
+    def post(self, data):
         """
         发送消息（内容UTF-8编码）
         :param data: 消息数据（字典）
         :return: 返回发送结果
         """
-        lock.acquire()
-        self.times += 1
-        if self.times % 20 == 0:
-            if time.time() - self.start_time < 60:
-                logging.info('钉钉官方限制每个机器人每分钟最多发送20条，当前消息发送频率已达到限制条件，休眠一分钟')
-                time.sleep(61 - time.time() + self.start_time)
-            self.start_time = time.time()
-        lock.release()
+        if not self.is_live_chat:
+            lock.acquire()
+            self.times += 1
+            if self.times % 20 == 0:
+                if time.time() - self.start_time < 60:
+                    logging.info('钉钉官方限制每个机器人每分钟最多发送20条，当前消息发送频率已达到限制条件，休眠一分钟')
+                    time.sleep(61 - time.time() + self.start_time)
+                self.start_time = time.time()
+            lock.release()
         post_data = json.dumps(data)
         try:
+            if self.is_live_chat:
+                put_live_chat_response(post_data)
+                return
             if env_config.get("DEBUG_MODE") == '0':
                 logging.info(post_data.encode('utf-8').decode('unicode_escape'))
-                return
-            if is_live_chat:
-                put_live_chat_response(post_data, self.webhook)
                 return
             response = requests.post(self.webhook, headers=self.headers, data=post_data)
         except requests.exceptions.HTTPError as exc:

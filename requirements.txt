@@ -1,6 +1,7 @@
 requests
 apscheduler
 bs4
+lxml
 
 Flask
 flask-cors

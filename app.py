@@ -7,7 +7,7 @@ from multiprocessing import Process
 
 import pytz
 from apscheduler.schedulers.blocking import BlockingScheduler
-from flask import Flask, request, make_response, send_from_directory
+from flask import Flask, request, make_response, send_from_directory, g
 from flask.json import jsonify, _json
 from flask_cors import CORS
 
@@ -78,12 +78,13 @@ def do_request(request_json):
 
 
 def do_live_chat_request(request_json):
+    g.session_id = request_json['sender_id']
     bibi = False
     bibi = do_dark_debug(request_json) or bibi
     if not bibi and not capture_by_listener(request_json):
         # 进入自动逼逼环节
         dark_chat.do_dark_chat(request_json)
-    return get_live_chat_response(request_json)
+    return get_live_chat_response()
 
 
 def do_listener(json_object):
@@ -133,7 +134,7 @@ def dark_buddy():
 
 @app.route('/dark_buddy/chat', methods=['POST', 'OPTIONS', 'GET'])
 @control_allow
-def dark_buddy():
+def dark_buddy_chat():
     try:
         if request.method == 'OPTIONS':
             response = jsonify(response_lib.SUCCESS_CODE)

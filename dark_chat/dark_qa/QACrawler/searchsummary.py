@@ -168,77 +168,9 @@ def kwquery(query):
 
         if flag == 1:
             return answer
-
-        text += results.get_text()
-
-    # 如果再两家搜索引擎的知识图谱中都没找到答案，那么就分析摘要
+    # 如果再两家搜索引擎的知识图谱中都没找到答案，那么就放弃
     if flag == 0:
-        #分句
-        cutlist = [u"。",u"?",u".", u"_", u"-",u":",u"！",u"？"]
-        temp = ''
-        sentences = []
-        for i in range(0,len(text)):
-            if text[i] in cutlist:
-                if temp == '':
-                    continue
-                else:
-                    # print temp
-                    sentences.append(temp)
-                temp = ''
-            else:
-                temp += text[i]
-
-        # 找到含有关键词的句子,去除无关的句子
-        key_sentences = {}
-        for s in sentences:
-            for k in keywords:
-                if k in s:
-                    key_sentences[s]=1
-
-
-        # 根据问题制定规则
-
-        target_list = {}
-        for ks in key_sentences:
-            # print ks
-            words = T.postag(ks)
-            for w in words:
-                # print "====="
-                # print w.word
-                if w.flag in ["uj","x","d","m"] or w.word in ["百度","快照"] or w.word in keywords:
-                    continue
-                if w.word in target_list:
-                    target_list[w.word]['count'] += 1
-                else:
-                    target_list[w.word] = {'count':1,'type':w.flag}
-
-        # 找出最大词频
-        sorted_lists = sorted(target_list.items(), key=lambda x: x[1]['count'], reverse=True)
-
-        # 各找2个n和2个v，这四个key，以及期间看见的任何key都记1分，然后取得key_sentences中，出现过即得分，权值最高的作为结果。
-        aim_list = []
-        v_count = 0
-        n_count = 0
-        for i, keys in enumerate(sorted_lists):
-            if v_count >= 2 and n_count >= 2:
-                break
-            if keys[1]['type']== 'v':
-                v_count+=1
-            if keys[1]['type']== 'n':
-                n_count+=1
-            aim_list.append(keys[0])
-
-        answer_score={}
-        for key in key_sentences:
-            for aim in aim_list:
-                if aim in key:
-                    if key in answer_score:
-                        answer_score[key] += 1
-                    else:
-                        answer_score[key] = 1
-
-        answer_list = sorted(answer_score.items(), key=lambda x: x[1], reverse=True)
-        answer = {'value': answer_list[0][0], 'type': 'text', 'from': '智能分析词频'}
+        answer = {'value': "我不知道你想问什么，会说你就多说点？", 'type': 'text', 'from': '智能分析词频'}
 
     return answer
 
