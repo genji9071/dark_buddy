@@ -13,6 +13,12 @@ export interface ILiveChatRequest {
     "senderNick": string
 }
 
+export interface IActionCardRequest {
+    "title": string,
+    "text": string,
+    "btns": [{title: any, actionURL: string}]
+}
+
 async function doLiveChat(liveChatRequest: ILiveChatRequest) {
     const res = await axios.post(
         `${domain}/dark_buddy/chat`,
@@ -46,7 +52,7 @@ function getLiveChatResponse(data: any) {
         addResponseMessage(data.markdown.text)
     }
     else if (data.msgtype === "actionCard") {
-        renderCustomComponent(ActionCard, data)
+        renderCustomComponent(ActionCard, data.actionCard as IActionCardRequest)
     }
     else {
         addResponseMessage("???")

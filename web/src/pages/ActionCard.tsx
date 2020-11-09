@@ -1,36 +1,42 @@
-import { Card, Button } from "saltui";
 import React from "react";
 import { addUserMessage } from "react-chat-widget";
-import 'saltui/build/salt-ui.css';
+import messageHandler, { IActionCardRequest } from "utils/messageHandler";
+import { Button } from 'antd';
+import ReactMarkdown from "react-markdown";
 
-const regex = "dtmd://dingtalkclient/sendMessage?content="
 
-export default (data: any)=> {
-    const actionCardInfo = data.actionCard
-    const title = actionCardInfo.title
-    const text = actionCardInfo.text
-    const btns = actionCardInfo.btns
-    const buttons: JSX.Element[] = []
-    btns.forEach((btn: { title: any; actionURL: string; }) => {
-        const btnTitle = btn.title
-        if (btn.actionURL.search(regex)) {
-            const btnAction = btn.actionURL.substr(regex.length)
-            buttons.push(<Button type="minor" size="small" display="inline" onClick={addUserMessage(btnAction)}>${btnTitle}</Button>)
+class ActionCard extends React.Component {
+    data: IActionCardRequest
+
+    constructor(props: Readonly<IActionCardRequest>) {
+        super(props)
+        this.data = {
+            "title": props.title,
+            "text": props.text,
+            "btns": props.btns
         }
-    });
+    }
 
-    return (
-        <Card locale="zh-cn">
-            <Card.Body
-              title={title}
-              content={text}
-            >
-              通过完整还原规范，建立相应的前端组件库，可以更好地与设计师、产品经理进行沟通合作。通过完整还原规范，建立相应的前端组件库，可以更好地与设计师、产品经理进行沟通合作。
-            </Card.Body>
-            <Card.Footer
-              actions={buttons} 
-              content={<span>已等待3小时</span>}>
-            </Card.Footer>
-          </Card>
-      );
+
+    regex = "dtmd://dingtalkclient/sendMessage?content="
+
+    render() {
+        const buttons: JSX.Element[] = []
+        this.data.btns.forEach((btn: { title: any; actionURL: string; }) => {
+            const btnTitle = btn.title
+            if (btn.actionURL.search(this.regex)) {
+                const btnAction = btn.actionURL.substr(this.regex.length)
+                buttons.push(<Button className="actionCardsClassName" type="text" block onClick={() => {addUserMessage(btnAction); messageHandler(btnAction);}}>{btnTitle}</Button>)
+            }
+        });
+    
+        return (
+            <div className="actionCard">
+                <ReactMarkdown source={this.data.text} />
+                {buttons}
+            </div>
+          );
+    }
 }
+
+export default ActionCard
