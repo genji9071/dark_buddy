@@ -1,38 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-import VConsole from "vconsole";
 import ChatApp from './pages/Chat'
-import { v4 as uuidv4 } from 'uuid';
-import localStorage from "utils/localStorage"
+import "./styles/index.scss"
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();
 
 
-const Navbar = () => {
-  const session_id = uuidv4()
-  localStorage.set("session_id", session_id)
+const Heading = () => {
   return (
-    <div className="current_session_id">
-      <p>Welcome!</p>
-      <p>{session_id}</p>
+    <div className="heading">
+        <Logo />
+        <Tagline />
+    </div>);
+  }
+
+const Logo = () => {
+  return (
+    <div className="logo">
+      Dark Buddy
     </div>
   )
 }
 
-
-if (process.env.REACT_APP_ENV !== "production") {
-  new VConsole();
-  
+const Tagline = () => {
+  return (
+    <h1 className="tagline">
+      想到什么，就做点什么。<br/><br/>
+      —— 鲁迅
+    </h1>
+  )
 }
+
+
+// if (process.env.REACT_APP_ENV !== "production") {
+//   new VConsole()
+// }
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      <Heading />
       <ChatApp />
     </div>
   );
