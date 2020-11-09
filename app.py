@@ -78,7 +78,7 @@ def do_request(request_json):
 
 
 def do_live_chat_request(request_json):
-    g.session_id = request_json['sender_id']
+    g.session_id = request_json['senderId']
     bibi = False
     bibi = do_dark_debug(request_json) or bibi
     if not bibi and not capture_by_listener(request_json):

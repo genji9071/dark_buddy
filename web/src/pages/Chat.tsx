@@ -26,7 +26,7 @@ function ChatApp() {
             senderPlaceHolder="请对我说：你好"
         />
         </div>
-    );
+    )
 }
 
 export default ChatApp;

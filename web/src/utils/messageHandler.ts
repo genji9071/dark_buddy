@@ -1,11 +1,12 @@
-import { addResponseMessage } from "react-chat-widget";
+import { addResponseMessage, renderCustomComponent, toggleMsgLoader } from "react-chat-widget";
 import localStorage from "utils/localStorage"
 import axios from "axios";
 import {domain} from "config"
+import ActionCard from "pages/ActionCard";
 
 export interface ILiveChatRequest {
     "chatbotUserId": string,
-    "sender_id": string,
+    "senderId": string,
     "text": {
         "content": string,
     },
@@ -23,7 +24,7 @@ async function doLiveChat(liveChatRequest: ILiveChatRequest) {
 function getLiveChatRequest(session_id: string, newMessage: string) {
     const result = {
         "chatbotUserId": "live_chat_chatbotUserId",
-        "sender_id": session_id,
+        "senderId": session_id,
         "text": {
             "content": newMessage
         },
@@ -36,27 +37,33 @@ function getLiveChatResponse(data: any) {
     console.log(`ready to say! ${JSON.stringify(data)}`);
 
     if (data.msgtype === "text") {
-        return data.text.content
+        addResponseMessage(data.text.content)
     }
-    if (data.msgtype === "exception") {
-        return data.message
+    else if (data.msgtype === "exception") {
+        addResponseMessage(data.message)
     }
-    if (data.msgtype === "markdown") {
-        return data.markdown.text
+    else if (data.msgtype === "markdown") {
+        addResponseMessage(data.markdown.text)
     }
-    return "???"
+    else if (data.msgtype === "actionCard") {
+        renderCustomComponent(ActionCard, data)
+    }
+    else {
+        addResponseMessage("???")
+    }
 }
 
 
 export default async function (newMessage: string) {
     console.log(`New message incoming! ${newMessage}`);
-
+    toggleMsgLoader()
     const session_id = localStorage.get("session_id")
     const liveChatRequest = getLiveChatRequest(session_id, newMessage)
     const response = await doLiveChat(liveChatRequest)
     if (response) {
         response.result.forEach((element: any) => {
-            addResponseMessage(getLiveChatResponse(element));
+            toggleMsgLoader()
+            getLiveChatResponse(element);
         }); 
     }
 }

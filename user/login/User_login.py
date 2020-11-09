@@ -2,11 +2,13 @@
 # -*- coding: UTF-8 -*-
 import uuid
 
-import mapper as mapper
 from config import redis, now_date, public_ip
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
 from lib.chatbot import CardItem, ActionCard
+from mapper.DarkBuddyMessageRecord import insert_message_record
+from mapper.DarkBuddyUser import update_user, select_by_senderId
+from mapper.DarkBuddyUserStatus import update_user_status, select_by_statusId_and_userId
 
 
 class User_login(BaseHandler):
@@ -17,7 +19,7 @@ class User_login(BaseHandler):
                 'user_id': user_id,
                 'message': word.strip()
             }
-            mapper.mapper_message_record.insert_message_record(message_record)
+            insert_message_record(message_record)
 
     def login(self, json):
         user = {
@@ -25,8 +27,8 @@ class User_login(BaseHandler):
             'name': json['senderNick'],
             'status': 0
         }
-        mapper.mapper_user.update_user(user)
-        founded_user = mapper.mapper_user.select_by_senderId(json['senderId'])
+        update_user(user)
+        founded_user = select_by_senderId(json['senderId'])
         if founded_user.get('banned_time') and founded_user.get('banned_time') > now_date.now():
             chatbots.get(json['chatbotUserId']).send_text(
                 "{0}，你被禁言了！解禁时间：{1}".format(json['senderNick'], founded_user.banned_time))
@@ -63,7 +65,7 @@ class User_login(BaseHandler):
         founded_luck_point = self.get_luck_point_by_sender_id(sender_id)
         user_status = {'status_id': 2, 'status_code': 'luck_point', 'user_id': founded_luck_point['user_id'],
                        'value': founded_luck_point['value'] + count}
-        mapper.mapper_user_status.update_user_status(user_status)
+        update_user_status(user_status)
 
     def rewards_to_sender_id(self, count, request_json):
         self.rewards(count, request_json['senderId'], chatbots.get(request_json['chatbotUserId']),
@@ -79,14 +81,14 @@ class User_login(BaseHandler):
         ))
 
     def get_luck_point_by_sender_id(self, sender_id):
-        founded_user = mapper.mapper_user.select_by_senderId(sender_id)
-        number = mapper.mapper_user_status.select_by_statusId_and_userId(
-            2, founded_user.id).value
+        founded_user = select_by_senderId(sender_id)
+        number = select_by_statusId_and_userId(
+            2, founded_user["id"]).value
         if not number:
             number = 0
         else:
             number = int(number)
-        return {'user_id': founded_user.id, 'value': number}
+        return {'user_id': founded_user["id"], 'value': number}
 
 
 user_login = User_login()
