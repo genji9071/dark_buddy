@@ -11,3 +11,5 @@ redis
 
 Pillow
 wordcloud
+
+flask-socketio

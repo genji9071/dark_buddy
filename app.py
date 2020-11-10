@@ -15,7 +15,9 @@ from config.ChatbotsConfig import chatbots
 from dark_chat.DarkChat import dark_chat
 from dark_chat.dark_jikipedia.DarkJiWordCloud import dark_ji_word_cloud
 from dark_listener.DarkListener import dark_listeners
+from dark_live_chat import socketio, namespace, message_event_name
 from dark_live_chat.DarkLiveChat import get_live_chat_response
+from dark_live_chat.DarkLiveChat4Socket import init_dark_live_chat_event
 from dark_maze.DarkMaze import dark_maze
 from dark_menu.DarkMenu import dark_menu
 from dark_spy.DarkSpy import dark_spy
@@ -294,6 +296,20 @@ def web_get(path):
     response = send_from_directory(web_root, "index.html")
     response.headers["Cache-Control"] = "no-cache"
     return response
+
+
+@app.route('/dark_buddy/chat/push', methods=['POST', 'OPTIONS'])
+@control_allow
+def push_once():
+    if request.method == 'OPTIONS':
+        response = jsonify(response_lib.SUCCESS_CODE)
+        return response
+    if request.method == 'POST':
+        event_name = message_event_name
+        json_object = request.json
+        log.info(_json.dumps(json_object, indent=4))
+        socketio.send(json_object, namespace=namespace)
+        return 'send msg successful!'
 
 
 def do_dark_debug(json):
