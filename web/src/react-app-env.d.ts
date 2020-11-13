@@ -1,3 +1,3 @@
 /// <reference types="react-scripts" />
 
-declare module "antd"
+declare module 'socket.io-client'

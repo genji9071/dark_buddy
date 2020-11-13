@@ -1,7 +1,4 @@
-import localStorage from "utils/localStorage"
-import axios from "axios";
-import {domain} from "config"
-import { io } from 'socket.io-client';
+import io from 'socket.io-client';
 import { addResponseMessage, renderCustomComponent } from "react-chat-widget";
 import ActionCard from "pages/ActionCard";
 
@@ -20,10 +17,17 @@ export interface IActionCardRequest {
     "btns": [{title: any, actionURL: string}]
 }
 
-const socket = io(`ws://0.0.0.0:9000`);
+const socket = io("http://0.0.0.0:9000", {
+    transports: ['websocket'],
+    autoConnect: true
+});
 
+socket.on('answer', function (data: any) {
+    getLiveChatResponse(data)
+})
 
 function getLiveChatResponse(data: any) {
+    data = JSON.parse(data)
     console.log(`ready to say! ${JSON.stringify(data)}`);
 
     if (data.msgtype === "text") {
@@ -43,13 +47,14 @@ function getLiveChatResponse(data: any) {
     }
 }
 
-async function doLiveChat(liveChatRequest: ILiveChatRequest) {
-    const res = await axios.post(
-        `${domain}/dark_buddy/chat/push`,
-      liveChatRequest
-    );
-    return res.data;
-  }
+// do socket chat
+ async function doLiveChat(liveChatRequest: ILiveChatRequest) {
+    socket.send(liveChatRequest, (data: any) => {
+        if (data) {
+            console.log('say a word successfully');
+        }
+    });
+}
 
 function getLiveChatRequest(session_id: string, newMessage: string) {
     const result = {
@@ -63,19 +68,13 @@ function getLiveChatRequest(session_id: string, newMessage: string) {
     return result
 }
 
-socket.on('answer', (data: any) => {
-    getLiveChatResponse(data)
-})
-
 export default async function (newMessage: string) {
     console.log(`New message incoming! ${newMessage}`);
-    // toggleMsgLoader()
-    const session_id = localStorage.get("session_id")
+    const session_id = socket.id
     const liveChatRequest = getLiveChatRequest(session_id, newMessage)
     await doLiveChat(liveChatRequest)
 }
 
 export function join() {
-    socket.emit('join', (session_id: string) => {
-      });
+    socket.emit('join room');
 }
