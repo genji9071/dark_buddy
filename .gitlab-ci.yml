@@ -8,6 +8,6 @@ deploy:
     - docker rm -f $CI_PROJECT_NAME || true
     - docker run -e MYSQL_HOST=$MYSQL_HOST -e MYSQL_PORT=$MYSQL_PORT -e MYSQL_USERNAME=$MYSQL_USERNAME -e MYSQL_PASSWORD=$MYSQL_PASSWORD -e MYSQL_DBNAME=$MYSQL_DBNAME -e REDIS_PORT=$REDIS_PORT -e REDIS_PASSWORD=$REDIS_PASSWORD -d --network nginx -p 9000:9000 --name $CI_PROJECT_NAME $CI_PROJECT_NAME:$CI_PIPELINE_ID
   only:
-    - deploy
+    - master
   tags:
-    - deploy
+    - master
