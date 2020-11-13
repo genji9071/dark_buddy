@@ -10,4 +10,4 @@ deploy:
   only:
     - master
   tags:
-    - master
+    - docker
