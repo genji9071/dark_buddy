@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
 import { addResponseMessage, renderCustomComponent } from "react-chat-widget";
 import ActionCard from "pages/ActionCard";
+import { domain } from 'config';
 
 export interface ILiveChatRequest {
     "chatbotUserId": string,
@@ -17,7 +18,7 @@ export interface IActionCardRequest {
     "btns": [{title: any, actionURL: string}]
 }
 
-const socket = io("http://0.0.0.0:9000", {
+const socket = io(domain, {
     transports: ['websocket'],
     autoConnect: true
 });
