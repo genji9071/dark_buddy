@@ -24,7 +24,6 @@ from dark_word_cloud.DarkWordCloud import dark_word_cloud
 from lib.ImageFactory import image_factory
 from lib.Logger import log
 from lib.ResponseLib import response_lib
-from lib.chatbot import ActionCard, CardItem
 from mapper.DarkBuddyUser import select_by_name
 from user.login.User_login import user_login
 
@@ -273,14 +272,14 @@ def do_dark_debug(json):
 if __name__ == '__main__':
     p = Process(target=run_schedule_task)
     p.start()
-    for chatbot in chatbots.values():
-        chatbot.send_action_card(ActionCard(
-            title="最近更新",
-            text="### 最近更新\n- 暗黑梭哈内测版（不花钱）\n- 暗黑日报优化显示格式，新增入职日期/工号/部门/职位，可重复召唤",
-            btns=[CardItem(
-                title="点击开始体验", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑梭哈")]
-        ))
+    # for chatbot in chatbots.values():
+    #     chatbot.send_action_card(ActionCard(
+    #         title="最近更新",
+    #         text="### 最近更新\n- 暗黑梭哈内测版（不花钱）\n- 暗黑日报优化显示格式，新增入职日期/工号/部门/职位，可重复召唤",
+    #         btns=[CardItem(
+    #             title="点击开始体验", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑梭哈")]
+    #     ))
     init_dark_live_chat_event()
     socketio.init_app(app)
-    print('okokok')
+    log.info('okokok')
     socketio.run(app, "0.0.0.0", port=9000, debug=False)
