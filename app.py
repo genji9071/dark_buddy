@@ -3,7 +3,6 @@ import os
 import traceback
 from functools import wraps
 from io import BytesIO
-from multiprocessing import Process
 
 import pytz
 from apscheduler.schedulers.blocking import BlockingScheduler
@@ -270,8 +269,8 @@ def do_dark_debug(json):
 
 
 if __name__ == '__main__':
-    p = Process(target=run_schedule_task)
-    p.start()
+    # p = Process(target=run_schedule_task)
+    # p.start()
     # for chatbot in chatbots.values():
     #     chatbot.send_action_card(ActionCard(
     #         title="最近更新",
@@ -281,5 +280,4 @@ if __name__ == '__main__':
     #     ))
     init_dark_live_chat_event()
     socketio.init_app(app)
-    log.info('okokok')
-    socketio.run(app, "0.0.0.0", port=9000, debug=False)
+    socketio.run(app, "0.0.0.0", port=9000, debug=True)
