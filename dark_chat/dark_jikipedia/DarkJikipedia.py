@@ -1,13 +1,11 @@
 # coding=utf-8
 from urllib.parse import quote
 
-import flask.json as json
 import requests
 
 from config.ChatbotsConfig import chatbots
 from config.JikipediaConfig import auto_complete_url, search_definitions_url, browse_definitions_url, header
 from dark_menu.BaseHandler import BaseHandler
-from lib.Logger import log
 from lib.chatbot import ActionCard, CardItem
 
 
@@ -42,7 +40,7 @@ class DarkJikipedia(BaseHandler):
             "phrase": text
         }
         response = requests.post(self.auto_complete_url, json=body, headers=self.header)
-        log.info(json.dumps(response.json(), indent=4))
+        # log.info(json.dumps(response.json(), indent=4))
         auto_complete_result = response.json()['data']
         if len(auto_complete_result) > 0:
             btns = []
@@ -65,7 +63,7 @@ class DarkJikipedia(BaseHandler):
             "phrase": text
         }
         response = requests.post(self.search_definitions_url, json=body, headers=self.header).json()
-        log.info(json.dumps(response, indent=4))
+        # log.info(json.dumps(response, indent=4))
         datas = response['data']
         # check 同名结果
         max_like = 0
@@ -102,7 +100,7 @@ class DarkJikipedia(BaseHandler):
     def do_handle(self, request_object, request_json):
         body = {}
         response = requests.post(self.browse_definitions_url, json=body, headers=self.header).json()
-        log.info(json.dumps(response, indent=4))
+        # log.info(json.dumps(response, indent=4))
         content = "### 骚词推荐\n"
         for data in response:
             if data.get('scaled_image') != '':
