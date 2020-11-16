@@ -9,6 +9,7 @@ from threading import Lock
 from flask import g
 
 from config.EnvConfig import env_config
+from dark_live_chat import namespace
 
 logging.basicConfig(level=logging.INFO)
 lock = Lock()
@@ -220,7 +221,7 @@ class DingtalkChatbot(object):
         try:
             if self.is_live_chat:
                 from dark_live_chat import socketio
-                socketio.emit("answer", post_data, room=g.session_id)
+                socketio.emit("answer", post_data, room=g.session_id, namespace=namespace)
                 return
             if env_config.get("DEBUG_MODE") == '0':
                 logging.info(post_data.encode('utf-8').decode('unicode_escape'))
