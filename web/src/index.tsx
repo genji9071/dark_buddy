@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import ChatApp from './pages/Chat'
 import "./styles/index.scss"
+import messageHandler from "utils/messageHandler"
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
@@ -34,6 +35,8 @@ const Tagline = () => {
     </h1>
   )
 }
+
+window.messageHandler = messageHandler
 
 
 // if (process.env.REACT_APP_ENV !== "production") {

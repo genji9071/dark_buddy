@@ -19,6 +19,7 @@ function ChatApp() {
         <Widget
             handleNewUserMessage={messageHandler}
             title="Darkbuddy"
+            subtitle="输入 ** 进入菜单"
             senderPlaceHolder="请对我说：你好"
         />
         </div>
