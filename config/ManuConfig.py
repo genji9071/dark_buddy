@@ -19,7 +19,7 @@ from user.ren_she.RenShe import ren_she_handler
 #   |hidden: 是否在菜单中隐藏
 #   |children: 子菜单项，同父结构
 
-menu = {
+default_menu = {
     '人设': {
         'path': '**人设',
         'children': {
@@ -221,4 +221,139 @@ menu = {
         }
     }
 
+}
+
+live_chat_menu = {
+    '骚词': {
+        'path': '**骚词',
+        'children': {
+            '推荐': {
+                'path': '**骚词:推荐',
+                'children': dark_jikipedia
+            }
+        }
+    },
+    '词云': {
+        'path': '**词云',
+        'children': {
+            '小鸡骚词': {
+                'path': '**词云:小鸡骚词',
+                'children': dark_ji_word_cloud
+            }
+        }
+    },
+    '祖安': {
+        'path': '**祖安',
+        'children': zuan_chat
+    },
+    '游戏': {
+        'path': '**游戏',
+        'children': {
+            '迷宫': {
+                'path': '**游戏:迷宫',
+                'children': {
+                    '开启': {
+                        'path': '**游戏:迷宫:开启',
+                        'children': dark_maze
+                    },
+                    '关闭': {
+                        'path': '**游戏:迷宫:关闭',
+                        'children': dark_maze
+                    },
+                    '行动': {
+                        'path': '**游戏:迷宫:行动',
+                        'children': dark_maze,
+                        'hidden': True
+                    }
+                }
+            },
+            '猜数字': {
+                'path': '**游戏:猜数字',
+                'children': {
+                    '开启': {
+                        'path': '**游戏:猜数字:开启',
+                        'children': dark_guess_number
+                    },
+                    '关闭': {
+                        'path': '**游戏:猜数字:关闭',
+                        'children': dark_guess_number
+                    },
+                    '猜': {
+                        'path': '**游戏:猜数字:猜',
+                        'children': dark_guess_number,
+                        'hidden': True
+                    }
+                }
+            },
+            '暗黑答题': {
+                'path': '**游戏:暗黑答题',
+                'children': {
+                    '是非题(10金币)': {
+                        'path': '**游戏:暗黑答题:是非题(10金币)',
+                        'children': dark_quiz
+                    },
+                    '单选题(20金币)': {
+                        'path': '**游戏:暗黑答题:单选题(20金币)',
+                        'children': dark_quiz
+                    },
+                    '答题': {
+                        'path': '**游戏:暗黑答题:答题',
+                        'children': dark_quiz,
+                        'hidden': True
+                    }
+                }
+            },
+            '暗黑梭哈': {
+                'path': '**游戏:暗黑梭哈',
+                'children': {
+                    '来一把': {
+                        'path': '**游戏:暗黑梭哈:来一把',
+                        'children': dark_show_hand
+                    },
+                    '掀桌子': {
+                        'path': '**游戏:暗黑梭哈:掀桌子',
+                        'children': dark_show_hand
+                    },
+                    '操作': {
+                        'path': '**游戏:暗黑梭哈:操作',
+                        'children': dark_show_hand,
+                        'hidden': True
+                    }
+                }
+            }
+        }
+    },
+    '小功能': {
+        'path': '**小功能',
+        'children': {
+            '笑话': {
+                'path': '**小功能:笑话',
+                'children': juhe_api
+            },
+            '新闻': {
+                'path': '**小功能:新闻',
+                'children': juhe_api
+            },
+            '骚东西': {
+                'path': '**小功能:骚东西',
+                'children': juhe_api
+            },
+            '动图': {
+                'path': '**小功能:动图',
+                'children': juhe_api
+            },
+            '今天': {
+                'path': '**小功能:今天',
+                'children': juhe_api
+            },
+            '土味情话': {
+                'path': '**小功能:土味情话',
+                'children': juhe_api
+            },
+            '孟婆汤': {
+                'path': '**小功能:孟婆汤',
+                'children': juhe_api
+            },
+        }
+    }
 }

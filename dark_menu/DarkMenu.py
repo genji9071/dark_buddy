@@ -1,8 +1,7 @@
 # coding=utf-8
 import traceback
 
-from config.ChatbotsConfig import chatbots
-from config.ManuConfig import menu
+from config.ChatbotsConfig import chatbots, tenant_base_info
 from dark_menu.BaseHandler import BaseHandler
 from lib.Logger import log
 from lib.chatbot import CardItem, ActionCard
@@ -10,11 +9,10 @@ from lib.chatbot import CardItem, ActionCard
 
 class DarkMenu:
     def __init__(self):
-        self.keyword_list = menu
         pass
 
     def get_request_and_send(self, request, json):
-        cursor = self.keyword_list
+        cursor = tenant_base_info[json['senderId']]['menu']
         paths = []
         if len(request) == 0:
             return self.send_help_action_card(paths, json)
@@ -52,7 +50,7 @@ class DarkMenu:
             return True
 
     def send_help_action_card(self, paths, request_json):
-        cursor = self.keyword_list
+        cursor = tenant_base_info[request_json['senderId']]['menu']
         for path in paths:
             cursor = cursor.get(path).get('children')
         btns = []
