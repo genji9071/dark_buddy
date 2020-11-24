@@ -20,7 +20,6 @@ from dark_maze.DarkMaze import dark_maze
 from dark_menu.DarkMenu import dark_menu
 from dark_spy.DarkSpy import dark_spy
 from dark_word_cloud.DarkWordCloud import dark_word_cloud
-from lib.ImageFactory import image_factory
 from lib.Logger import log
 from lib.ResponseLib import response_lib
 from mapper.DarkBuddyUser import select_by_name
@@ -149,25 +148,6 @@ def dark_maze_image_get():
         chatbotUserId = request.values.get('session_id')
         image = dark_maze.get_maze_image(chatbotUserId)
         image.save(f, 'png')
-        return f.getvalue()
-    except:
-        log.error(traceback.format_exc())
-        response = jsonify(response_lib.ERROR_CODE)
-        return response
-
-
-@app.route('/dark_buddy/image/get', methods=['GET'])
-@image_control_allow
-def image_get():
-    try:
-        f = BytesIO()
-        chatbotUserId = request.values.get('session_id')
-        uuid = request.values.get('uuid')
-        file_suffix = request.values.get('file_suffix', 'png')
-        image = image_factory.get_image_by_uuid(uuid)
-        if image is None:
-            return None
-        image.save(f, file_suffix)
         return f.getvalue()
     except:
         log.error(traceback.format_exc())
