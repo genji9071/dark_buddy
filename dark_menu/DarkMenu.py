@@ -1,7 +1,8 @@
 # coding=utf-8
 import traceback
 
-from config.ChatbotsConfig import chatbots, tenant_base_info
+from config.ChatbotsConfig import chatbots
+from config.TenantConfig import tenant_base_info
 from dark_menu.BaseHandler import BaseHandler
 from lib.Logger import log
 from lib.chatbot import CardItem, ActionCard
