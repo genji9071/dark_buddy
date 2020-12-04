@@ -13,7 +13,7 @@ class DarkMenu:
         pass
 
     def get_request_and_send(self, request, json):
-        cursor = tenant_base_info[json['senderId']]['menu']
+        cursor = tenant_base_info[json['chatbotUserId']]['menu']
         paths = []
         if len(request) == 0:
             return self.send_help_action_card(paths, json)
@@ -51,7 +51,7 @@ class DarkMenu:
             return True
 
     def send_help_action_card(self, paths, request_json):
-        cursor = tenant_base_info[request_json['senderId']]['menu']
+        cursor = tenant_base_info[request_json['chatbotUserId']]['menu']
         for path in paths:
             cursor = cursor.get(path).get('children')
         btns = []
