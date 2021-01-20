@@ -25,11 +25,11 @@ def init_dark_live_chat_event():
 
     @socketio.on('message', namespace=namespace)
     def on_say_a_word(data):
+        g.session_id = request.sid
         do_live_chat_request(data)
 
 
 def do_live_chat_request(request_json):
-    g.session_id = request.sid
     bibi = False
     bibi = dark_menu.call_api(request_json) or bibi
     if not bibi and not dark_listeners.listen(request_json):
