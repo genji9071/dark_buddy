@@ -219,12 +219,12 @@ class DingtalkChatbot(object):
             lock.release()
         post_data = json.dumps(data)
         try:
+            if env_config.get("DEBUG_MODE") == '0':
+                logging.info(post_data.encode('utf-8').decode('unicode_escape'))
+                return
             if self.is_live_chat:
                 from dark_live_chat import socketio
                 socketio.emit("answer", post_data, room=g.session_id, namespace=namespace)
-                return
-            if env_config.get("DEBUG_MODE") == '0':
-                logging.info(post_data.encode('utf-8').decode('unicode_escape'))
                 return
             response = requests.post(self.webhook, headers=self.headers, data=post_data)
         except requests.exceptions.HTTPError as exc:

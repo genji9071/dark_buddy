@@ -24,7 +24,7 @@ class JuheApi(BaseHandler):
             "constellation": "http://api.tianapi.com/txapi/star?key=e023522efde1f79611b561ce341c0376&astro=%s&y=%s&m=%s&d=%s",
             "laohuangli": "http://v.juhe.cn/laohuangli/d?date=%s&key=c41014c93556a6a3e9580ccd576c020a",
             "dongtu": "https://www.soogif.com/hotGif?start=%s&size=1",
-            "today": "http://api.tianapi.com/txapi/lishi/?key=e023522efde1f79611b561ce341c0376&date=",
+            "today": "http://v.juhe.cn/todayOnhistory/queryEvent.php?key=0a1d8a00deca567a57e107d444c23bef&date=",
             "name": "http://api.tianapi.com/txapi/cname/?key=e023522efde1f79611b561ce341c0376",
             "honey": "http://api.tianapi.com/txapi/saylove/?key=e023522efde1f79611b561ce341c0376",
             "sweet": "http://api.tianapi.com/txapi/caihongpi/index?key=b51ebfea67131117bab4d5252f24b1a7",
@@ -94,18 +94,18 @@ class JuheApi(BaseHandler):
             if not constellation:
                 log.error('{0}这个人星座这个属性乱写：{1}。'.format(json["senderNick"], user_status.value))
                 return None
-            year = time.strftime("%Y", time.localtime(json["createAt"] / 1000))
-            month = time.strftime("%m", time.localtime(json["createAt"] / 1000))
-            day = time.strftime("%d", time.localtime(json["createAt"] / 1000))
+            year = time.strftime("%Y", time.localtime(int(time.time()) / 1000))
+            month = time.strftime("%m", time.localtime(int(time.time()) / 1000))
+            day = time.strftime("%d", time.localtime(int(time.time()) / 1000))
             request = request % (constellation, year, month, day)
         elif matched == "laohuangli":
-            date = time.strftime("%Y-%m-%d", time.localtime(json["createAt"] / 1000))
+            date = time.strftime("%Y-%m-%d", time.localtime(int(time.time()) / 1000))
             request = request % date
         elif matched == "dongtu":
             self.random = random.randint(0,5000)
             request = request % self.random
         elif matched == "today":
-            date = time.strftime("%m%d", time.localtime(json["createAt"] / 1000))
+            date = time.strftime("%-m/%-d", time.localtime(int(time.time()) / 1000))
             request = request + date
         if not request:
             chatbots.get(json['chatbotUserId']).send_text("你并不能得到这个信息，你觉得是为什么呢？")
@@ -158,9 +158,10 @@ class JuheApi(BaseHandler):
             chatbots.get(request_json['chatbotUserId']).send_action_card(action_card)
         elif matched == "today":
             log.info(str(response_json))
-            dataCollection = response_json["newslist"]
+            dataCollection = response_json["result"]
             data = random.choice(dataCollection)
-            chatbots.get(request_json['chatbotUserId']).send_text("早啊！^_^ 历史上的今天--" + data["lsdate"] + " " + data["title"])
+            chatbots.get(request_json['chatbotUserId']).send_text(
+                "早啊！^_^ 历史上的今天--" + data["date"] + " " + data["title"])
         elif matched == "honey":
             log.info(str(response_json))
             chatbots.get(request_json['chatbotUserId']).send_text(response_json["newslist"][0]["content"])
