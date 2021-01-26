@@ -224,7 +224,8 @@ class DingtalkChatbot(object):
                 return
             if self.is_live_chat:
                 from dark_live_chat import socketio
-                with socketio.app_context():
+                from app import app
+                with app.app_context():
                     socketio.emit("answer", post_data, room=g.session_id, namespace=namespace)
                 return
             response = requests.post(self.webhook, headers=self.headers, data=post_data)
