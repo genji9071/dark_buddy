@@ -223,11 +223,11 @@ class DingtalkChatbot(object):
                 logging.info(post_data.encode('utf-8').decode('unicode_escape'))
                 return
             if self.is_live_chat:
-                session_id = g.session_id
-                from dark_live_chat import socketio
                 from app import app
                 with app.app_context():
-                    socketio.emit("answer", post_data, room=session_id, namespace=namespace)
+                    session_id = g.session_id
+                from dark_live_chat import socketio
+                socketio.emit("answer", post_data, room=session_id, namespace=namespace)
                 return
             response = requests.post(self.webhook, headers=self.headers, data=post_data)
         except requests.exceptions.HTTPError as exc:
