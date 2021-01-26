@@ -17,11 +17,11 @@ class DarkShowHand(BaseHandler):
         return False
 
     def start_the_game(self, request_json):
-        existed_dark_show_hand_listener = dark_listeners.get_by_listener_name(request_json,
-                                                                              DarkShowHandListener.LISTENER_NAME)
-        if existed_dark_show_hand_listener and existed_dark_show_hand_listener.user_id != request_json['senderId']:
-            chatbots.get(request_json['chatbotUserId']).send_text("别人的桌子已经开了，有钱你就掀TA桌子吧...")
-            return
+        # existed_dark_show_hand_listener = dark_listeners.get_by_listener_name(request_json,
+        #                                                                       DarkShowHandListener.LISTENER_NAME)
+        # if existed_dark_show_hand_listener and existed_dark_show_hand_listener.user_id != request_json['senderId']:
+        #     chatbots.get(request_json['chatbotUserId']).send_text("别人的桌子已经开了，有钱你就掀TA桌子吧...")
+        #     return
         money = user_login.get_luck_point_by_sender_id(request_json['senderId'])['value']
         if money < Bet.minimum_init_bet:
             chatbots.get(request_json['chatbotUserId']).send_text("100金币开局，没钱你还是先靠边站吧...")

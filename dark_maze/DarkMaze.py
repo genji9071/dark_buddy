@@ -4,6 +4,7 @@ import uuid
 import config
 from config import redis
 from config.ChatbotsConfig import chatbots
+from dark_maze.DarkMazeListener import DarkMazeListener
 from dark_maze.MazeBuilder import MazeBuilder
 from dark_maze.MazePainter import maze_painter
 from dark_menu.BaseHandler import BaseHandler
@@ -18,6 +19,7 @@ class DarkMaze(BaseHandler):
         self.maze_col = 14
         self.maze_type = 0
         self.sight = 2
+        self.listener = None
 
     def start_dark_maze(self, request_json):
         if redis.get(self.get_dark_maze_session_name(request_json['chatbotUserId'])) is None:
@@ -25,6 +27,7 @@ class DarkMaze(BaseHandler):
             maze_session_data = self.build_maze()
             chatbots.get(request_json['chatbotUserId']).send_text('正在生成人物......')
             redis.setex(name=self.get_dark_maze_session_name(request_json['chatbotUserId']), time=3600, value=str(maze_session_data))
+            self.listener = DarkMazeListener(request_json)
         self.treat_maze(' ', request_json=request_json)
         return
 
@@ -107,6 +110,8 @@ class DarkMaze(BaseHandler):
             self.shut_down_dark_maze(request_json=request_json)
             return
         self.display_maze(data, message='接下来是...', request_json=request_json)
+        # 注入监听器
+
         return
 
     def display_maze(self, data, message, request_json):

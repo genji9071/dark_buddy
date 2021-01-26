@@ -5,6 +5,7 @@ from dark_chat.DarkChat import dark_chat
 from dark_listener.DarkListener import dark_listeners
 from dark_live_chat import socketio, namespace
 from dark_menu.DarkMenu import dark_menu
+from user.login.User_login import user_login
 
 rooms = {}
 
@@ -13,6 +14,7 @@ def init_dark_live_chat_event():
     @socketio.on('join room', namespace=namespace)
     def on_join():
         print("on_join, session_id: {0}".format(request.sid))
+        user_login.init_luck_point_4_temp_user(1000, f'/dark_buddy#{request.sid}')
         join_room(request.sid)
 
     @socketio.on('connect', namespace=namespace)

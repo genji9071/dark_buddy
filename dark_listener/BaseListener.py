@@ -17,6 +17,8 @@ class BaseListener(metaclass=ABCMeta):
         self.current_request = request_json
         self.current_answer = None
         self.alive = True
+        from dark_listener.DarkListener import dark_listeners
+        dark_listeners.put(request_json, self)
 
     @abstractmethod
     def get_listener_name(self) -> str:

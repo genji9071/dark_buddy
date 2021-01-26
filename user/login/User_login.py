@@ -61,11 +61,22 @@ class User_login(BaseHandler):
     def get_sign_in_lock_name(self, sender_id):
         return 'tianhao:dark_buddy:sign_in_lock:{0}'.format(sender_id)
 
+    def get_temp_user_money_name(self, sender_id):
+        return 'tianhao:dark_buddy:user_temp_money:{0}'.format(sender_id)
+
+    def init_luck_point_4_temp_user(self, count, sender_id):
+        redis.setex(name=self.get_temp_user_money_name(
+            sender_id), time=3600, value=count)
+
     def give_the_lucky_point_to(self, count, sender_id):
         founded_luck_point = self.get_luck_point_by_sender_id(sender_id)
-        user_status = {'status_id': 2, 'status_code': 'luck_point', 'user_id': founded_luck_point['user_id'],
-                       'value': founded_luck_point['value'] + count}
-        update_user_status(user_status)
+        if sender_id.startswith('/dark_buddy#'):
+            redis.setex(name=self.get_temp_user_money_name(
+                sender_id), time=3600, value=founded_luck_point['value'] + count)
+        else:
+            user_status = {'status_id': 2, 'status_code': 'luck_point', 'user_id': founded_luck_point['user_id'],
+                           'value': founded_luck_point['value'] + count}
+            update_user_status(user_status)
 
     def rewards_to_sender_id(self, count, request_json):
         self.rewards(count, request_json['senderId'], chatbots.get(request_json['chatbotUserId']),
@@ -80,7 +91,9 @@ class User_login(BaseHandler):
                 title="查看当前金币剩余", url="dtmd://dingtalkclient/sendMessage?content=**人设:显示:金币")]
         ))
 
-    def get_luck_point_by_sender_id(self, sender_id):
+    def get_luck_point_by_sender_id(self, sender_id: str):
+        if sender_id.startswith('/dark_buddy#'):
+            return {'user_id': -1, 'value': int(redis.get(self.get_temp_user_money_name(sender_id)))}
         founded_user = select_by_senderId(sender_id)
         number = select_by_statusId_and_userId(
             2, founded_user["id"]).value

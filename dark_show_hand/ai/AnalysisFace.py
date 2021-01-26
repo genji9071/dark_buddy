@@ -204,6 +204,6 @@ def make_cards(input):
 
 
 if __name__ == "__main__":
-    player_cards = make_cards(['♦️10', '♥️9', '♣️7', '♥️6', '♠️5'])
+    player_cards = make_cards(['♦️8', '♥️9', '♣️7', '♥️6', '♠️5'])
     ai_cards = make_cards(['♣️10', '♦️9', '♠️8', '♠️2', '♥️3'])
     print(judge(player_cards, ai_cards))
