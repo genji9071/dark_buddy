@@ -9,10 +9,6 @@ from dark_show_hand.desk.GameProcess import GameProcess
 class DarkShowHandListener(BaseListener):
     LISTENER_NAME = 'DarkShowHandListener'
 
-    def destroy(self):
-        super().destroy()
-        pass
-
     def initialize(self):
         self.task.start()
         pass

@@ -39,7 +39,6 @@ class BaseListener(metaclass=ABCMeta):
         else:
             return False
 
-    @abstractmethod
     def destroy(self):
         redis.delete(self.get_dark_listener_session_name())
         self.alive = False

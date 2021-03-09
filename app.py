@@ -29,6 +29,7 @@ app = Flask(__name__, static_url_path="")
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 app.config['JSON_AS_ASCII'] = False
 
+
 #
 def control_allow(fun):
     @wraps(fun)

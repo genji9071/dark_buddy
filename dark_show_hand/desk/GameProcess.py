@@ -1,3 +1,4 @@
+from config.ThreadLocalSource import local
 from dark_show_hand.ai.AnalysisFace import judge
 from dark_show_hand.desk.Bet import Bet
 from dark_show_hand.desk.Draw import Draw
@@ -13,6 +14,7 @@ class GameProcess:
         self.listener = listener
 
     def main_process(self):
+        local.session_id = self.player_id[12:]
         self.bet.init_bet()
         self.draw.draw(is_hidden=True)
         showed_hand = False

@@ -9,6 +9,7 @@ from threading import Lock
 from flask import g
 
 from config.EnvConfig import env_config
+from config.ThreadLocalSource import local
 from dark_live_chat import namespace
 
 logging.basicConfig(level=logging.INFO)
@@ -223,10 +224,11 @@ class DingtalkChatbot(object):
                 logging.info(post_data.encode('utf-8').decode('unicode_escape'))
                 return
             if self.is_live_chat:
-                from app import app
-                with app.app_context():
-                    session_id = g.session_id
                 from dark_live_chat import socketio
+                try:
+                    session_id = local.session_id
+                except:
+                    session_id = g.session_id
                 socketio.emit("answer", post_data, room=session_id, namespace=namespace)
                 return
             response = requests.post(self.webhook, headers=self.headers, data=post_data)
