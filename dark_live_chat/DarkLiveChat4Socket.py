@@ -2,7 +2,7 @@ from flask import g, request
 from flask_socketio import join_room
 
 from dark_chat.DarkChat import dark_chat
-from dark_listener.DarkListener import dark_listeners
+from dark_listener.ListenerManagerLauncher import listener_manager_launcher
 from dark_live_chat import socketio, namespace
 from dark_menu.DarkMenu import dark_menu
 from user.login.User_login import user_login
@@ -34,6 +34,13 @@ def init_dark_live_chat_event():
 def do_live_chat_request(request_json):
     bibi = False
     bibi = dark_menu.call_api(request_json) or bibi
-    if not bibi and not dark_listeners.listen(request_json):
+    if not bibi and not capture_by_listener(request_json):
         # 进入自动逼逼环节
         dark_chat.do_dark_chat(request_json)
+
+
+def capture_by_listener(request_json):
+    current_listenable_handler = listener_manager_launcher.get_current_listenable_handler(request_json)
+    if current_listenable_handler is None:
+        return False
+    return current_listenable_handler.listener_manager.listen(request_json)

@@ -20,7 +20,7 @@ tenant_base_info = {
         'chatbotUserId': '$:LWCP_v1:$JS+tN5ZeAGnF/xrtw0wd5olE2WwhNQ1Y',
         'description': '钉钉更新的第一个外部租户。',
         'tenant_group_name': '暗黑小哥的一小步',
-        'isExternal': True,
+        'isExternal': False,
         'menu': default_menu
     },
     'live_chat_chatbotUserId': {
