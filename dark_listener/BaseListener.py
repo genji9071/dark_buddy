@@ -1,9 +1,11 @@
 # coding=utf-8
-import threading
 from abc import ABCMeta, abstractmethod
+
+import eventlet
 
 from config import redis
 from config.ChatbotsConfig import chatbots
+from dark_live_chat import socketio
 
 
 class BaseListener(metaclass=ABCMeta):
@@ -12,7 +14,6 @@ class BaseListener(metaclass=ABCMeta):
         self.user_id = request_json['senderId']
         self.chatbot_user_id = request_json['chatbotUserId']
         self.listener_manager = listener_manager
-        self.condition = threading.Condition()
         self.current_request = request_json
         self.current_answer = None
         self.alive = True
@@ -22,16 +23,23 @@ class BaseListener(metaclass=ABCMeta):
         raise RuntimeError("Empty listener name!")
 
     @abstractmethod
+    def get_task_function(self):
+        raise RuntimeError("Empty task define!")
+
     def initialize(self):
-        raise RuntimeError("Empty initialize impl!")
+        task = self.get_task_function()
+        if not hasattr(task, '__call__'):
+            raise RuntimeError("task is not callable!")
+        socketio.start_background_task(target=task)
 
     def ask(self, choices, question: str):
-        self.set_listener_session_choices(choices)
+        self.current_answer = None
+        self.set_listener_session_choices(str(choices.encode()))
         if question:
             chatbots.get(self.chatbot_user_id).send_text(question)
-        with self.condition:
-            self.condition.wait()
-            return self.current_answer
+        while self.current_answer is None:
+            eventlet.sleep(1)
+        return self.current_answer
 
     def get_dark_listener_session_name(self):
         return 'tianhao:dark_buddy:dark_listener:{0}:{1}'.format(self.get_listener_name(),
@@ -43,3 +51,6 @@ class BaseListener(metaclass=ABCMeta):
 
     def is_alive(self):
         return self.alive
+
+    def destroy(self):
+        self.listener_manager.delete(self.user_id, self.chatbot_user_id)

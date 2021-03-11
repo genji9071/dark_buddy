@@ -1,3 +1,3 @@
-import threading
+from threading import local
 
-local = threading.local()
+dark_local = local()

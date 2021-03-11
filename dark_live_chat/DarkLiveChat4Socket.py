@@ -1,6 +1,7 @@
-from flask import g, request
+from flask import request
 from flask_socketio import join_room
 
+from config.ThreadLocalSource import dark_local
 from dark_chat.DarkChat import dark_chat
 from dark_listener.ListenerManagerLauncher import listener_manager_launcher
 from dark_live_chat import socketio, namespace
@@ -27,7 +28,7 @@ def init_dark_live_chat_event():
 
     @socketio.on('message', namespace=namespace)
     def on_say_a_word(data):
-        g.session_id = request.sid
+        dark_local.session_id = request.sid
         do_live_chat_request(data)
 
 
@@ -40,7 +41,7 @@ def do_live_chat_request(request_json):
 
 
 def capture_by_listener(request_json):
-    current_listenable_handler = listener_manager_launcher.get_current_listenable_handler(request_json)
+    current_listenable_handler = listener_manager_launcher.get_current_listener_manager(request_json)
     if current_listenable_handler is None:
         return False
-    return current_listenable_handler.listener_manager.listen(request_json)
+    return current_listenable_handler.listen(request_json)

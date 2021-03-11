@@ -5,8 +5,8 @@ from dark_show_hand.desk.Draw import Draw
 from lib.chatbot import ActionCard, CardItem
 from user.login.User_login import user_login
 
-bet_operation_str = str(BaseOperator(OPERATOR_OR, [BaseSymbol(SYMBOL_EQUALS, 'giveup'),
-                                                   BaseSymbol(SYMBOL_MATCH, REGEX_ANY_NUMBER)]).encode())
+bet_operation = BaseOperator(OPERATOR_OR, [BaseSymbol(SYMBOL_EQUALS, 'giveup'),
+                                           BaseSymbol(SYMBOL_MATCH, REGEX_ANY_NUMBER)])
 
 class Bet:
     minimum_per_bet = 10
@@ -103,7 +103,7 @@ class Bet:
         if ai_order:
             prefix = 'AI下注了{0}个金币。'.format(ai_order)
             minimum = self.ai_bet - self.player_bet
-        bet_money = self.listener.ask(bet_operation_str, '{0}请输入金额，不少于{1}块，或者输入giveup放弃，颗粒无收！'.format(prefix, minimum))
+        bet_money = self.listener.ask(bet_operation, '{0}请输入金额，不少于{1}块，或者输入giveup放弃，颗粒无收！'.format(prefix, minimum))
         if bet_money == 'giveup':
             result['bet_type'] = 'player_give_up'
             return result

@@ -6,10 +6,8 @@ import logging
 import time
 from threading import Lock
 
-from flask import g
-
 from config.EnvConfig import env_config
-from config.ThreadLocalSource import local
+from config.ThreadLocalSource import dark_local
 from dark_live_chat import namespace
 
 logging.basicConfig(level=logging.INFO)
@@ -225,10 +223,17 @@ class DingtalkChatbot(object):
                 return
             if self.is_live_chat:
                 from dark_live_chat import socketio
-                try:
-                    session_id = local.session_id
-                except:
-                    session_id = g.session_id
+                # try:
+                session_id = dark_local.session_id
+                # except AttributeError:
+                # thread = current_thread()
+                # try:
+                #     session_id = thread.parent_local['session_id']
+                # except AttributeError:
+                #     raise ValueError("session id is empty")
+                # except KeyError:
+                #     raise ValueError("session id is empty")
+                print(f"session id is {session_id}")
                 socketio.emit("answer", post_data, room=session_id, namespace=namespace)
                 return
             response = requests.post(self.webhook, headers=self.headers, data=post_data)

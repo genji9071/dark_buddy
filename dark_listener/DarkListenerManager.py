@@ -81,8 +81,6 @@ class DarkListenerManager():
         if matched:
             related_listener.current_request = request_json
             related_listener.current_answer = answer
-            with related_listener.condition:
-                related_listener.condition.notify()
-                return True
+            return True
         else:
             return False

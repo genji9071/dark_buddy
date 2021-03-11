@@ -136,6 +136,10 @@ def build_mock_operator():
     return BaseOperator(OPERATOR_NOT, BaseSymbol(SYMBOL_MATCH, REGEX_ANY_THING))
 
 
+def build_all_accept_operator():
+    return BaseSymbol(SYMBOL_MATCH, REGEX_ANY_THING)
+
+
 if __name__ == "__main__":
     test_operation = BaseOperator(OPERATOR_OR, [BaseSymbol(SYMBOL_EQUALS, 'giveup'),
                                                 BaseSymbol(SYMBOL_MATCH, REGEX_ANY_NUMBER)]).encode()

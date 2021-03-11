@@ -3,6 +3,7 @@ from dark_chat.dark_jikipedia.DarkJiWordCloud import dark_ji_word_cloud
 from dark_chat.dark_jikipedia.DarkJikipedia import dark_jikipedia
 from dark_chat.zuan_chat.ZuAnChat import zuan_chat
 from dark_guess_number.DarkGuessNumber import dark_guess_number
+from dark_listener.DarkDebugListenerHandler import dark_debug_listener
 from dark_maze.DarkMaze import dark_maze
 from dark_quiz.DarkQuiz import dark_quiz
 from dark_show_hand.DarkShowHand import dark_show_hand
@@ -355,5 +356,9 @@ live_chat_menu = {
                 'children': juhe_api
             },
         }
+    },
+    '测试鬼': {
+        'path': '**测试鬼',
+        'children': dark_debug_listener
     }
 }

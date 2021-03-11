@@ -1,20 +1,17 @@
-from config.ThreadLocalSource import local
 from dark_show_hand.ai.AnalysisFace import judge
 from dark_show_hand.desk.Bet import Bet
 from dark_show_hand.desk.Draw import Draw
 
 
 class GameProcess:
-    def __init__(self, id, player_id, chatbot, condition, listener):
+    def __init__(self, id, player_id, chatbot, listener):
         self.id = id
         self.player_id = player_id
         self.draw = Draw()
         self.bet = Bet(player_id, chatbot, listener)
-        self.condition = condition
         self.listener = listener
 
     def main_process(self):
-        local.session_id = self.player_id[12:]
         self.bet.init_bet()
         self.draw.draw(is_hidden=True)
         showed_hand = False
