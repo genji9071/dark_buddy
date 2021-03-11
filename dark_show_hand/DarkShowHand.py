@@ -32,7 +32,6 @@ class DarkShowHand(BaseListenableHandler):
         chatbot_user_id = request_json['chatbotUserId']
         self.listener_manager.delete(user_id, chatbot_user_id)
         chatbots.get(request_json['chatbotUserId']).send_text("桌子掀了...")
-        pass
 
 
 dark_show_hand = DarkShowHand(DarkShowHandListener.LISTENER_NAME)

@@ -15,7 +15,7 @@ from dark_chat.DarkChat import dark_chat
 from dark_chat.dark_jikipedia.DarkJiWordCloud import dark_ji_word_cloud
 from dark_live_chat import socketio
 from dark_live_chat.DarkLiveChat4Socket import init_dark_live_chat_event, capture_by_listener
-from dark_maze.DarkMaze import dark_maze
+from dark_maze.DarkMazeHandler import dark_maze
 from dark_menu.DarkMenu import dark_menu
 from dark_spy.DarkSpy import dark_spy
 from dark_word_cloud.DarkWordCloud import dark_word_cloud

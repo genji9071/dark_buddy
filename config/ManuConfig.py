@@ -4,7 +4,7 @@ from dark_chat.dark_jikipedia.DarkJikipedia import dark_jikipedia
 from dark_chat.zuan_chat.ZuAnChat import zuan_chat
 from dark_guess_number.DarkGuessNumber import dark_guess_number
 from dark_listener.DarkDebugListenerHandler import dark_debug_listener
-from dark_maze.DarkMaze import dark_maze
+from dark_maze.DarkMazeHandler import dark_maze
 from dark_quiz.DarkQuiz import dark_quiz
 from dark_show_hand.DarkShowHand import dark_show_hand
 from dark_spy.DarkSpy import dark_spy
@@ -77,11 +77,6 @@ default_menu = {
                     '关闭': {
                         'path': '**游戏:迷宫:关闭',
                         'children': dark_maze
-                    },
-                    '行动': {
-                        'path': '**游戏:迷宫:行动',
-                        'children': dark_maze,
-                        'hidden': True
                     }
                 }
             },
@@ -260,11 +255,6 @@ live_chat_menu = {
                     '关闭': {
                         'path': '**游戏:迷宫:关闭',
                         'children': dark_maze
-                    },
-                    '行动': {
-                        'path': '**游戏:迷宫:行动',
-                        'children': dark_maze,
-                        'hidden': True
                     }
                 }
             },
