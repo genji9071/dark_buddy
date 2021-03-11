@@ -359,6 +359,7 @@ live_chat_menu = {
     },
     '测试鬼': {
         'path': '**测试鬼',
-        'children': dark_debug_listener
+        'children': dark_debug_listener,
+        'hidden': True
     }
 }

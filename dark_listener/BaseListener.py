@@ -16,7 +16,6 @@ class BaseListener(metaclass=ABCMeta):
         self.listener_manager = listener_manager
         self.current_request = request_json
         self.current_answer = None
-        self.alive = True
 
     @abstractmethod
     def get_listener_name(self) -> str:
@@ -48,9 +47,3 @@ class BaseListener(metaclass=ABCMeta):
     def set_listener_session_choices(self, choices):
         redis.setex(name=self.get_dark_listener_session_name(), time=3600,
                     value=str(choices))
-
-    def is_alive(self):
-        return self.alive
-
-    def destroy(self):
-        self.listener_manager.delete(self.user_id, self.chatbot_user_id)

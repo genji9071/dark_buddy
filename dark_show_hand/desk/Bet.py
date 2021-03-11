@@ -33,7 +33,6 @@ class Bet:
                 title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑梭哈:来一把")]
         ))
         user_login.rewards(total_money, player_id, self.chatbot, '玩家')
-        self.listener.destroy()
 
     def lose(self, player_id):
         self.chatbot.send_action_card(ActionCard(
@@ -42,7 +41,6 @@ class Bet:
             btns=[CardItem(
                 title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑梭哈:来一把")]
         ))
-        self.listener.destroy()
 
     def bet(self, start_from, draw: Draw, order=None) -> str:
         # 返回值：
