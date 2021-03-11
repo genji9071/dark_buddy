@@ -7,6 +7,7 @@ class DarkDebugListener(BaseListener):
 
     def ask_sth(self):
         print(self.ask(build_all_accept_operator(), '测试测试测试测试测试测试测试测试'))
+        print(self.listener_manager.listeners)
         pass
 
     def get_task_function(self):

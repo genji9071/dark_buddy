@@ -40,6 +40,9 @@ class DarkListenerManager():
             return None
         return eval(redis.get(self.get_dark_listener_session_name(user_id, chatbot_user_id)).decode())
 
+    def clear_listener_session_choices(self, user_id: str, chatbot_user_id: str):
+        redis.delete(self.get_dark_listener_session_name(user_id, chatbot_user_id))
+
     @lock
     def put_new_listener(self, dark_listener: BaseListener) -> None:
         tenant_id = dark_listener.chatbot_user_id
@@ -79,6 +82,7 @@ class DarkListenerManager():
             return False
         matched = validate(answer, listen_words)
         if matched:
+            self.clear_listener_session_choices(user_id, chatbot_user_id)
             related_listener.current_request = request_json
             related_listener.current_answer = answer
             return True
