@@ -21,18 +21,35 @@ def shut_down_dark_maze(chatbot_user_id):
     return
 
 
+def get_maze_image(chatbotUserId):
+    data = redis.get(get_dark_maze_session_name(chatbotUserId))
+    if data == None:
+        return
+    data = eval(redis.get(get_dark_maze_session_name(chatbotUserId)).decode())
+    return maze_painter.draw_maze(maze_data=data, horizon=sight, row_size=maze_row,
+                                  col_size=maze_col)
+
+
 REGEX_ANY_STEP = r'[wsadWSAD]+'
 
 maze_operator = BaseSymbol(SYMBOL_MATCH, REGEX_ANY_STEP)
+
+maze_row = 14
+
+maze_col = 14
+
+maze_type = 0
+
+sight = 2
 
 
 class DarkMaze:
 
     def __init__(self, user_id, chatbot_user_id, listener):
-        self.maze_row = 14
-        self.maze_col = 14
-        self.maze_type = 0
-        self.sight = 2
+        self.maze_row = maze_row
+        self.maze_col = maze_col
+        self.maze_type = maze_type
+        self.sight = sight
         self.user_id = user_id
         self.chatbot_user_id = chatbot_user_id
         self.listener = listener
@@ -114,11 +131,3 @@ class DarkMaze:
         action_card = ActionCard(title=title, text=text, btns=[])
         chatbots.get(self.chatbot_user_id).send_action_card(action_card)
         return
-
-    def get_maze_image(self, chatbotUserId):
-        data = redis.get(get_dark_maze_session_name(chatbotUserId))
-        if data == None:
-            return
-        data = eval(redis.get(get_dark_maze_session_name(chatbotUserId)).decode())
-        return maze_painter.draw_maze(maze_data=data, horizon=self.sight, row_size=self.maze_row,
-                                      col_size=self.maze_col)
