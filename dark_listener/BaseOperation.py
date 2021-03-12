@@ -17,6 +17,7 @@ SYMBOL_LESS_EQUAL = 'le'
 SYMBOL_MATCH = 'match'
 
 REGEX_ANY_NUMBER = r'\d+'
+REGEX_ANY_THING = r'.+'
 
 base_symbol_map = {
     'eq': SYMBOL_EQUALS,
@@ -129,6 +130,14 @@ def _validate_operator(source, target, operator) -> bool:
     elif operator == OPERATOR_NOT:
         return not validate(source, target)
     return False
+
+
+def build_mock_operator():
+    return BaseOperator(OPERATOR_NOT, BaseSymbol(SYMBOL_MATCH, REGEX_ANY_THING))
+
+
+def build_all_accept_operator():
+    return BaseSymbol(SYMBOL_MATCH, REGEX_ANY_THING)
 
 
 if __name__ == "__main__":

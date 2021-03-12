@@ -1,55 +1,44 @@
 # coding=utf-8
-import threading
 from abc import ABCMeta, abstractmethod
+
+import eventlet
 
 from config import redis
 from config.ChatbotsConfig import chatbots
-from dark_listener.BaseOperation import validate
+from dark_live_chat import socketio
 
 
 class BaseListener(metaclass=ABCMeta):
-    LISTENER_NAME = 'base_listener'
 
-    def __init__(self, request_json: dict):
+    def __init__(self, request_json: dict, listener_manager):
         self.user_id = request_json['senderId']
         self.chatbot_user_id = request_json['chatbotUserId']
-        self.condition = threading.Condition()
+        self.listener_manager = listener_manager
         self.current_request = request_json
         self.current_answer = None
-        self.alive = True
 
     @abstractmethod
     def get_listener_name(self) -> str:
-        return BaseListener.LISTENER_NAME
-
-    def do_listen(self, request_json: dict) -> bool:
-        answer = request_json["text"]["content"].strip()
-        listen_words = self.get_listener_session_choices()
-        if not listen_words:
-            return False
-        matched = validate(answer, listen_words)
-        if matched:
-            self.current_request = request_json
-            self.current_answer = answer
-            with self.condition:
-                self.condition.notify()
-                return True
-        else:
-            return False
+        raise RuntimeError("Empty listener name!")
 
     @abstractmethod
-    def destroy(self):
-        redis.delete(self.get_dark_listener_session_name())
-        self.alive = False
-        pass
+    def get_task_function(self):
+        raise RuntimeError("Empty task define!")
+
+    def initialize(self):
+        task = self.get_task_function()
+        if not hasattr(task, '__call__'):
+            raise RuntimeError("task is not callable!")
+        socketio.start_background_task(target=task)
 
     def ask(self, choices, question: str):
-        self.set_listener_session_choices(choices)
+        self.current_answer = None
+        self.set_listener_session_choices(str(choices.encode()))
         if question:
             chatbots.get(self.chatbot_user_id).send_text(question)
-        with self.condition:
-            self.condition.wait()
-            return self.current_answer
+        while self.current_answer is None:
+            eventlet.sleep(1)
+        return self.current_answer
 
     def get_dark_listener_session_name(self):
         return 'tianhao:dark_buddy:dark_listener:{0}:{1}'.format(self.get_listener_name(),
@@ -58,12 +47,3 @@ class BaseListener(metaclass=ABCMeta):
     def set_listener_session_choices(self, choices):
         redis.setex(name=self.get_dark_listener_session_name(), time=3600,
                     value=str(choices))
-
-    def get_listener_session_choices(self):
-        choices = redis.get(self.get_dark_listener_session_name())
-        if not choices:
-            return None
-        return eval(redis.get(self.get_dark_listener_session_name()).decode())
-
-    def is_alive(self):
-        return self.alive

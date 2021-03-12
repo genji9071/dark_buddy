@@ -4,12 +4,11 @@ from dark_show_hand.desk.Draw import Draw
 
 
 class GameProcess:
-    def __init__(self, id, player_id, chatbot, condition, listener):
+    def __init__(self, id, player_id, chatbot, listener):
         self.id = id
         self.player_id = player_id
         self.draw = Draw()
         self.bet = Bet(player_id, chatbot, listener)
-        self.condition = condition
         self.listener = listener
 
     def main_process(self):
@@ -42,7 +41,6 @@ class GameProcess:
             self.bet.win(self.player_id, self.bet.ai_bet + self.bet.player_bet)
         else:
             self.bet.lose(self.player_id)
-        self.listener.destroy()
 
     def render_cards(self, is_final=False):
         player_cards = self.draw.player_cards
@@ -58,4 +56,4 @@ class GameProcess:
                 ai_cards_str.append(card['card'].describe())
         text = "# 你的牌：\n {0}\n # AI的牌：\n {1} \n## 桌上金币：${2}".format(player_cards_str, ai_cards_str,
                                                                     self.bet.ai_bet + self.bet.player_bet)
-        self.bet.chatbot.send_markdown(title="猜数字", text=text)
+        self.bet.chatbot.send_markdown(title="暗黑梭哈", text=text)
