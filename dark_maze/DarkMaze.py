@@ -23,7 +23,7 @@ def shut_down_dark_maze(chatbot_user_id):
 
 def get_maze_image(chatbotUserId):
     data = redis.get(get_dark_maze_session_name(chatbotUserId))
-    if data == None:
+    if data is None:
         return
     data = eval(redis.get(get_dark_maze_session_name(chatbotUserId)).decode())
     return maze_painter.draw_maze(maze_data=data, horizon=sight, row_size=maze_row,
