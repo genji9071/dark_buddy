@@ -2,7 +2,7 @@ from dark_cai_hong_pi.DarkCaiHongPi import dark_cai_hong_pi
 from dark_chat.dark_jikipedia.DarkJiWordCloud import dark_ji_word_cloud
 from dark_chat.dark_jikipedia.DarkJikipedia import dark_jikipedia
 from dark_chat.zuan_chat.ZuAnChat import zuan_chat
-from dark_guess_number.DarkGuessNumber import dark_guess_number
+from dark_guess_number.DarkGuessNumberHandler import dark_guess_number_handler
 from dark_listener.DarkDebugListenerHandler import dark_debug_listener
 from dark_maze.DarkMazeHandler import dark_maze
 from dark_quiz.DarkQuiz import dark_quiz
@@ -120,16 +120,11 @@ default_menu = {
                 'children': {
                     '开启': {
                         'path': '**游戏:猜数字:开启',
-                        'children': dark_guess_number
+                        'children': dark_guess_number_handler
                     },
                     '关闭': {
                         'path': '**游戏:猜数字:关闭',
-                        'children': dark_guess_number
-                    },
-                    '猜': {
-                        'path': '**游戏:猜数字:猜',
-                        'children': dark_guess_number,
-                        'hidden': True
+                        'children': dark_guess_number_handler
                     }
                 }
             },
@@ -263,16 +258,11 @@ live_chat_menu = {
                 'children': {
                     '开启': {
                         'path': '**游戏:猜数字:开启',
-                        'children': dark_guess_number
+                        'children': dark_guess_number_handler
                     },
                     '关闭': {
                         'path': '**游戏:猜数字:关闭',
-                        'children': dark_guess_number
-                    },
-                    '猜': {
-                        'path': '**游戏:猜数字:猜',
-                        'children': dark_guess_number,
-                        'hidden': True
+                        'children': dark_guess_number_handler
                     }
                 }
             },
