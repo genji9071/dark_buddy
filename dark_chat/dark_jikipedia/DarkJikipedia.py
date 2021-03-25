@@ -72,7 +72,7 @@ class DarkJikipedia(BaseHandler):
         max_the_same_like_data = {}
         for data in datas:
             score = data['like_count']
-            if len(data['full_image']) > 0:
+            if len(data.get('images')) > 0:
                 score = score * 1.5
             if data['term']['title'] == text:
                 if score > max_the_same_like:
@@ -90,12 +90,13 @@ class DarkJikipedia(BaseHandler):
     def action_card_content(self, search_definition_data):
         title = search_definition_data['term']['title']
         content = search_definition_data['plaintext']
-        scaled_image_url = search_definition_data['scaled_image']
-        if len(scaled_image_url) == 0:
+        image_url = search_definition_data.get('images')
+        if len(image_url) == 0:
             text = '### {0}\n{1}\n'.format(title, content)
         else:
-            text = '![screenshot]({0})\n### {1}\n{2}\n'.format(scaled_image_url, title, content.strip())
-        return ActionCard(title=title, text=text, btns=[CardItem(title="查看更多", url="dtmd://dingtalkclient/sendMessage?content=**骚词:推荐")])
+            text = '![screenshot]({0})\n### {1}\n{2}\n'.format(image_url[0]['scaled']['path'], title, content.strip())
+        return ActionCard(title=title, text=text,
+                          btns=[CardItem(title="查看更多", url="dtmd://dingtalkclient/sendMessage?content=**骚词:推荐")])
 
     def do_handle(self, request_object, request_json):
         body = {}
