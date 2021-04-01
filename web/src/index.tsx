@@ -46,7 +46,7 @@ window.messageHandler = messageHandler
 function App() {
   return (
     <div className="App">
-      <Heading />
+      <Heading/>
       <ChatApp />
     </div>
   );
