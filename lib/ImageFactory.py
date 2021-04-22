@@ -39,5 +39,4 @@ class ImageFactory():
         return Image.open(image_data)
 
 
-
 image_factory = ImageFactory()

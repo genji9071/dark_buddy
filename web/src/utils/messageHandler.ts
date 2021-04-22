@@ -2,6 +2,7 @@ import io from 'socket.io-client';
 import { addResponseMessage, renderCustomComponent } from "react-chat-widget";
 import ActionCard from "pages/ActionCard";
 import { domain } from 'config';
+import CardsList, { ICard } from 'pages/feedlist/CardsList';
 
 export interface ILiveChatRequest {
     "chatbotUserId": string,
@@ -23,6 +24,12 @@ const socket = io(domain, {
     autoConnect: true
 });
 
+const cardInfo = {
+    subtext: '',
+    image: 'https://dfzximg02.dftoutiao.com/news/20210331/20210331154746_579c8ef07816b5e82889a0a7ce963c76_1_mwpm_03201609.png',
+    heading: '沪剧电影《挑山女人》开启长三角巡回演映'
+  }  
+
 socket.on('answer', function (data: any) {
     getLiveChatResponse(data)
 })
@@ -42,6 +49,16 @@ function getLiveChatResponse(data: any) {
     }
     else if (data.msgtype === "actionCard") {
         renderCustomComponent(ActionCard, data.actionCard as IActionCardRequest)
+    }
+    else if (data.msgtype === "feedCard") {
+        const cardInfos = {cards: data.feedCard.links.map(link => {
+            return {
+                messageLink: link.messageURL,
+                image: link.picURL,
+                heading: link.title
+            }
+        })}
+        renderCustomComponent(CardsList, cardInfos)
     }
     else {
         addResponseMessage("???")

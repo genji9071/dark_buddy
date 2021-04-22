@@ -17,9 +17,8 @@ class BaseListener(metaclass=ABCMeta):
         self.current_request = request_json
         self.current_answer = None
 
-    @abstractmethod
     def get_listener_name(self) -> str:
-        raise RuntimeError("Empty listener name!")
+        return self.listener_manager.LISTENER_NAME
 
     @abstractmethod
     def get_task_function(self):

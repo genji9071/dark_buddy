@@ -1,0 +1,35 @@
+.container {
+    margin: 30px 440px 0 440px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 15px 4px #ccc;
+    border-radius: 8px;
+    height: 600px;
+    width: 400px;
+  }
+  .container img {
+    height: 225px;
+    width: 400px;
+  }
+  .content {
+    text-align: left;
+  }
+  .heading {
+    padding: 5px 40px 0 10px;
+    font-weight: bolder;
+    font-size: 7mm;
+  }
+  
+  .brief {
+    padding: 0px 40px 0px 10px;
+  
+    line-height: 1.6;
+    font-size: 6mm;
+    font-style: italic;
+  }
+  .detail {
+    padding: 35px 40px 0 10px;
+    font-weight: 2mm;
+    font-size: 5mm;
+    color: red;
+  }
+  

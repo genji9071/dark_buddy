@@ -1,0 +1,21 @@
+.names {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(197, 197, 197);
+    width: 500px;
+    height: 150px;
+    margin: 10px 440px 0 440px;
+    border-radius: 4px;
+    background-color: rgb(212, 208, 208);
+    cursor: pointer;
+  }
+  .creator {
+    margin: 80px 0 0 360px;
+    font-style: italic;
+  }
+  .feed {
+    margin: 10px;
+    color: rgb(197, 68, 21);
+    font-size: 7mm;
+  }
+  

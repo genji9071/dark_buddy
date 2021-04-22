@@ -4,8 +4,10 @@ from dark_show_hand.desk.Bet import Bet
 from dark_show_hand.listener.DarkShowHandListener import DarkShowHandListener
 from user.login.User_login import user_login
 
+LISTENER_NAME = 'DarkShowHandListener'
 
-class DarkShowHand(BaseListenableHandler):
+
+class DarkShowHandHandler(BaseListenableHandler):
 
     def initialize(self):
         super().initialize()
@@ -34,4 +36,4 @@ class DarkShowHand(BaseListenableHandler):
         chatbots.get(request_json['chatbotUserId']).send_text("桌子掀了...")
 
 
-dark_show_hand = DarkShowHand(DarkShowHandListener.LISTENER_NAME)
+dark_show_hand = DarkShowHandHandler(LISTENER_NAME)
