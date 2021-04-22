@@ -6,7 +6,7 @@ from dark_guess_number.DarkGuessNumberHandler import dark_guess_number_handler
 from dark_listener.DarkDebugListenerHandler import dark_debug_listener
 from dark_maze.DarkMazeHandler import dark_maze
 from dark_quiz.DarkQuiz import dark_quiz
-from dark_show_hand.DarkShowHand import dark_show_hand
+from dark_show_hand.DarkShowHandHandler import dark_show_hand
 from dark_spy.DarkSpy import dark_spy
 from dark_word_cloud.DarkWordCloud import dark_word_cloud
 from juhe_api.JuheApi import juhe_api

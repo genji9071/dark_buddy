@@ -4,6 +4,7 @@ from dark_listener.BaseListenableHandler import BaseListenableHandler
 from dark_maze.DarkMaze import shut_down_dark_maze
 from dark_maze.DarkMazeListener import DarkMazeListener
 
+LISTENER_NAME = 'DarkMazeListener'
 
 class DarkMazeHandler(BaseListenableHandler):
 
@@ -31,5 +32,5 @@ class DarkMazeHandler(BaseListenableHandler):
         pass
 
 
-dark_maze = DarkMazeHandler(DarkMazeListener.LISTENER_NAME)
+dark_maze = DarkMazeHandler(LISTENER_NAME)
 ####

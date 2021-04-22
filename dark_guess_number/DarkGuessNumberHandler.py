@@ -3,6 +3,7 @@ from dark_guess_number.DarkGuessNumber import shut_down_guess_number
 from dark_guess_number.DarkGuessNumberListener import DarkGuessNumberListener
 from dark_listener.BaseListenableHandler import BaseListenableHandler
 
+LISTENER_NAME = 'DarkGuessNumberListener'
 
 class DarkGuessNumberHandler(BaseListenableHandler):
 
@@ -30,5 +31,5 @@ class DarkGuessNumberHandler(BaseListenableHandler):
         pass
 
 
-dark_guess_number_handler = DarkGuessNumberHandler(DarkGuessNumberListener.LISTENER_NAME)
+dark_guess_number_handler = DarkGuessNumberHandler(LISTENER_NAME)
 ####

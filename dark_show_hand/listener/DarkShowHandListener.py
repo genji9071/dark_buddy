@@ -10,8 +10,3 @@ class DarkShowHandListener(BaseListener):
     def get_task_function(self):
         self.game_process = GameProcess(uuid.uuid1(), self.user_id, chatbots.get(self.chatbot_user_id), self)
         return self.game_process.main_process
-
-    LISTENER_NAME = 'DarkShowHandListener'
-
-    def get_listener_name(self) -> str:
-        return DarkShowHandListener.LISTENER_NAME

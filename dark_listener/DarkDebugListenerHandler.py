@@ -2,6 +2,7 @@ from dark_listener.BaseListenableHandler import BaseListenableHandler
 from dark_listener.BaseListener import BaseListener
 from dark_listener.BaseOperation import build_all_accept_operator
 
+LISTENER_NAME = 'DarkDebugListener'
 
 class DarkDebugListener(BaseListener):
 
@@ -12,11 +13,6 @@ class DarkDebugListener(BaseListener):
 
     def get_task_function(self):
         return self.ask_sth
-
-    LISTENER_NAME = 'DarkDebugListener'
-
-    def get_listener_name(self) -> str:
-        return DarkDebugListener.LISTENER_NAME
 
 
 class DarkDebugListenerHandler(BaseListenableHandler):
@@ -30,4 +26,4 @@ class DarkDebugListenerHandler(BaseListenableHandler):
         return True
 
 
-dark_debug_listener = DarkDebugListenerHandler(DarkDebugListener.LISTENER_NAME)
+dark_debug_listener = DarkDebugListenerHandler(LISTENER_NAME)
