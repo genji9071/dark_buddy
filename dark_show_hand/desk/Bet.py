@@ -1,3 +1,5 @@
+import eventlet
+
 from dark_listener.BaseOperation import BaseOperator, OPERATOR_OR, BaseSymbol, SYMBOL_EQUALS, SYMBOL_MATCH, \
     REGEX_ANY_NUMBER
 from dark_show_hand.ai.Ai import Ai
@@ -75,6 +77,7 @@ class Bet:
                 ai_bet_result = self.ai.think_show_hand(draw, order)
                 if ai_bet_result['bet_type'] == 'ai_give_up':
                     return 'ai_give_up'
+                self.ai_bet = self.player_bet
                 return 'player_show_hand'
             if self.player_bet == self.ai_bet:
                 return 'ok'
@@ -109,6 +112,7 @@ class Bet:
         bet_money = int(bet_money)
         if bet_money >= current_money:
             self.chatbot.send_text('你梭哈了，当前的所有金币：「{0}」全部用于下注！'.format(current_money))
+            eventlet.sleep(1)
             result['bet_type'] = 'player_show_hand'
             result['bet_count'] = current_money
         else:
