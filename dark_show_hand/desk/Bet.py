@@ -65,6 +65,7 @@ class Bet:
                 ai_bet_result = self.ai.think_show_hand(draw, order)
                 if ai_bet_result['bet_type'] == 'ai_give_up':
                     return 'ai_give_up'
+                self.ai_bet = self.player_bet
                 return 'player_show_hand'
             if self.player_bet > self.ai_bet:
                 return self.bet('ai', draw, player_bet_result['bet_count'])
