@@ -22,7 +22,6 @@ def predict_point(cards) -> dict:
     sum = 0
     num_a = 0
     num_jqk = 0
-    num_all = 0
     status = 'none'
     for card in cards:
         if card['card'].number == 14:
@@ -36,10 +35,12 @@ def predict_point(cards) -> dict:
                 sum += card['card'].number
     if sum > 21:
         status = 'boom'
-    elif num_a == 1 and num_jqk == 1:
-        status = 'blackjack'
-        sum = 21
-    elif num_all >= 5 and sum <= 21:
+    elif num_a == 1 and num_jqk == 1 and len(cards) == 2:
+        return {
+            'status': 'blackjack',
+            'num': 21
+        }
+    elif len(cards) >= 5 and sum <= 21:
         status = 'five'
     elif num_a > 0 and sum <= 11:
         sum += 10
@@ -77,6 +78,6 @@ def judge(draw: BasicDraw) -> int:
 
 if __name__ == "__main__":
     draw = BasicDraw()
-    draw.ai_cards = make_cards(['♥️2', '♥️9', '♦️14'])
-    draw.player_cards = make_cards(['♣️7', '♦️7', '♥️6'])
-    print(calculate_decision(draw))
+    draw.ai_cards = make_cards(['♥️8', '♥️7'])
+    draw.player_cards = make_cards(['♠️14', '♥️3', '♣️10'])
+    print(predict_point(draw.player_cards))
