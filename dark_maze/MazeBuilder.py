@@ -1,7 +1,7 @@
 # coding=utf-8
 import numpy as np
 
-from config import random
+from lib.RandomLib import random
 
 
 class MazeBuilder:

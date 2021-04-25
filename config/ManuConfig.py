@@ -8,6 +8,7 @@ from dark_maze.DarkMazeHandler import dark_maze
 from dark_quiz.DarkQuiz import dark_quiz
 from dark_show_hand.DarkShowHandHandler import dark_show_hand
 from dark_spy.DarkSpy import dark_spy
+from dark_twenty_one.DarkTwentyOneHandler import dark_twenty_one
 from dark_word_cloud.DarkWordCloud import dark_word_cloud
 from juhe_api.JuheApi import juhe_api
 from user.login.User_login import user_login
@@ -163,6 +164,24 @@ default_menu = {
                         'hidden': True
                     }
                 }
+            },
+            '暗黑二十一点': {
+                'path': '**游戏:暗黑二十一点',
+                'children': {
+                    '来一把': {
+                        'path': '**游戏:暗黑二十一点:来一把',
+                        'children': dark_twenty_one
+                    },
+                    '掀桌子': {
+                        'path': '**游戏:暗黑二十一点:掀桌子',
+                        'children': dark_twenty_one
+                    },
+                    '操作': {
+                        'path': '**游戏:暗黑二十一点:操作',
+                        'children': dark_twenty_one,
+                        'hidden': True
+                    }
+                }
             }
         }
     },
@@ -298,6 +317,24 @@ live_chat_menu = {
                     '操作': {
                         'path': '**游戏:暗黑梭哈:操作',
                         'children': dark_show_hand,
+                        'hidden': True
+                    }
+                }
+            },
+            '暗黑二十一点': {
+                'path': '**游戏:暗黑二十一点',
+                'children': {
+                    '来一把': {
+                        'path': '**游戏:暗黑二十一点:来一把',
+                        'children': dark_twenty_one
+                    },
+                    '掀桌子': {
+                        'path': '**游戏:暗黑二十一点:掀桌子',
+                        'children': dark_twenty_one
+                    },
+                    '操作': {
+                        'path': '**游戏:暗黑二十一点:操作',
+                        'children': dark_twenty_one,
                         'hidden': True
                     }
                 }

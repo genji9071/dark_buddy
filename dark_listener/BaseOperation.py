@@ -141,6 +141,14 @@ def build_all_accept_operator():
 
 
 if __name__ == "__main__":
-    test_operation = BaseOperator(OPERATOR_OR, [BaseSymbol(SYMBOL_EQUALS, 'giveup'),
-                                                BaseSymbol(SYMBOL_MATCH, REGEX_ANY_NUMBER)]).encode()
-    print(validate('303', test_operation))
+    bet_operation = BaseOperator(
+        OPERATOR_OR,
+        [
+            BaseSymbol(SYMBOL_EQUALS, 'giveup'),
+            BaseOperator(OPERATOR_AND, [
+                BaseSymbol(SYMBOL_MATCH, REGEX_ANY_NUMBER),
+                BaseSymbol(SYMBOL_GREATER, 10)
+            ])
+        ]
+    ).encode()
+    print(validate('1', bet_operation))

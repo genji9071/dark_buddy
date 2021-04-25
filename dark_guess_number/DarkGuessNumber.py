@@ -1,7 +1,7 @@
-from config import random
 from config import redis
 from config.ChatbotsConfig import chatbots
 from dark_listener.BaseOperation import BaseSymbol, SYMBOL_MATCH, REGEX_ANY_NUMBER
+from lib.RandomLib import random
 from lib.chatbot import CardItem, ActionCard
 from user.login.User_login import user_login
 

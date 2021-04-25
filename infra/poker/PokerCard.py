@@ -1,4 +1,4 @@
-class Card:
+class PokerCard:
     __FANG_KUAI = '♦️'
     __HEI_TAO = '♠️'
     __CAO_HUA = '♣️'
@@ -29,3 +29,10 @@ class Card:
 
     def bigger_than(self, card_b):
         return self.number > card_b.number
+
+
+def make_cards(input):
+    cards = []
+    for per in input:
+        cards.append({'card': PokerCard(per[0:1], int(per[2:]))})
+    return cards
