@@ -4,6 +4,7 @@ from dark_chat.dark_jikipedia.DarkJikipedia import dark_jikipedia
 from dark_chat.zuan_chat.ZuAnChat import zuan_chat
 from dark_guess_number.DarkGuessNumberHandler import dark_guess_number_handler
 from dark_listener.DarkDebugListenerHandler import dark_debug_listener
+from dark_live_chat.DarkLiveChatUserHandler import dark_live_chat_user_handler
 from dark_maze.DarkMazeHandler import dark_maze
 from dark_quiz.DarkQuiz import dark_quiz
 from dark_show_hand.DarkShowHandHandler import dark_show_hand
@@ -234,6 +235,21 @@ default_menu = {
 }
 
 live_chat_menu = {
+    '人设': {
+        'path': '**人设',
+        'children': {
+            '显示': {
+                'path': '**人设:显示',
+                'children': {
+                    '金币': {
+                        'path': '**人设:显示:金币',
+                        'children': dark_live_chat_user_handler
+                    }
+                }
+            }
+        },
+        'hidden': True
+    },
     '骚词': {
         'path': '**骚词',
         'children': {

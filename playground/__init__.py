@@ -1,6 +1,5 @@
-import cv2
+from fontTools.ttLib import TTFont
 
-rect1 = ((0, 0), (1, 1), 45)
-rect2 = ((1.5, 0), (4, 3), 0)
-r1 = cv2.rotatedRectangleIntersection(rect1, rect2)
-print(r1)
+font = TTFont('/Users/tianhaozhang/Downloads/字由芳华体.otf')
+font_code = str(font.get('name').__dict__.get('names')[6])
+print(font_code)
