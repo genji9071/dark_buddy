@@ -19,6 +19,8 @@ SYMBOL_MATCH = 'match'
 REGEX_ANY_NUMBER = r'\d+'
 REGEX_ANY_THING = r'.+'
 
+REGEX_ANY_FLOAT = r'^\d+(\.\d+)?$'
+
 base_symbol_map = {
     'eq': SYMBOL_EQUALS,
     'ne': SYMBOL_NOT_EQUALS,
@@ -99,14 +101,14 @@ def validate(source, target):
 
 
 def _validate_symbol(source: str, target, symbol) -> bool:
-    if source.isdecimal() and symbol == SYMBOL_GREATER:
-        return int(source) > target
-    elif source.isdecimal() and symbol == SYMBOL_LESS:
-        return int(source) < target
-    elif source.isdecimal() and symbol == SYMBOL_GREATER_EQUAL:
-        return int(source) >= target
-    elif source.isdecimal() and symbol == SYMBOL_LESS_EQUAL:
-        return int(source) <= target
+    if is_number(source) and symbol == SYMBOL_GREATER:
+        return float(source) > target
+    elif is_number(source) and symbol == SYMBOL_LESS:
+        return float(source) < target
+    elif is_number(source) and symbol == SYMBOL_GREATER_EQUAL:
+        return float(source) >= target
+    elif is_number(source) and symbol == SYMBOL_LESS_EQUAL:
+        return float(source) <= target
     elif symbol == SYMBOL_MATCH:
         return re.fullmatch(target, source) is not None
     elif symbol == SYMBOL_EQUALS:
@@ -132,6 +134,14 @@ def _validate_operator(source, target, operator) -> bool:
     return False
 
 
+def is_number(num: str):
+    try:
+        float(num)
+        return True
+    except:
+        return False
+
+
 def build_mock_operator():
     return BaseOperator(OPERATOR_NOT, BaseSymbol(SYMBOL_MATCH, REGEX_ANY_THING))
 
@@ -141,14 +151,9 @@ def build_all_accept_operator():
 
 
 if __name__ == "__main__":
-    bet_operation = BaseOperator(
-        OPERATOR_OR,
-        [
-            BaseSymbol(SYMBOL_EQUALS, 'giveup'),
-            BaseOperator(OPERATOR_AND, [
-                BaseSymbol(SYMBOL_MATCH, REGEX_ANY_NUMBER),
-                BaseSymbol(SYMBOL_GREATER, 10)
-            ])
-        ]
-    ).encode()
-    print(validate('1', bet_operation))
+    bet_operation = BaseOperator(OPERATOR_AND, [
+        BaseSymbol(SYMBOL_MATCH, REGEX_ANY_FLOAT),
+        BaseSymbol(SYMBOL_GREATER, 0),
+        BaseSymbol(SYMBOL_LESS, 24),
+    ]).encode()
+    print(validate('1.5', bet_operation))

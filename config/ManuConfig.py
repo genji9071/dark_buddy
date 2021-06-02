@@ -11,6 +11,7 @@ from dark_show_hand.DarkShowHandHandler import dark_show_hand
 from dark_spy.DarkSpy import dark_spy
 from dark_twenty_one.DarkTwentyOneHandler import dark_twenty_one
 from dark_word_cloud.DarkWordCloud import dark_word_cloud
+from dark_work_shuang_rank.DarkWorkShuangRankHandler import dark_work_shuang_rank
 from juhe_api.JuheApi import juhe_api
 from user.login.User_login import user_login
 from user.ren_she.RenShe import ren_she_handler
@@ -388,6 +389,19 @@ live_chat_menu = {
                 'path': '**小功能:孟婆汤',
                 'children': juhe_api
             },
+        }
+    },
+    '工作性价比': {
+        'path': '**工作性价比',
+        'children': {
+            '开启': {
+                'path': '**工作性价比:开启',
+                'children': dark_work_shuang_rank
+            },
+            '关闭': {
+                'path': '**工作性价比:关闭',
+                'children': dark_work_shuang_rank
+            }
         }
     },
     '测试鬼': {

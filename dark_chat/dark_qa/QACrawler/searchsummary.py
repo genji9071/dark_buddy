@@ -175,7 +175,8 @@ def kwquery(query):
     return answer
 
 
-# if __name__ == '__main__':
-#     pass
-#     query = "9*234"
-#     ans = kwquery(query)
+if __name__ == '__main__':
+    pass
+    query = "FC"
+    ans = kwquery(query)
+    print(ans)
