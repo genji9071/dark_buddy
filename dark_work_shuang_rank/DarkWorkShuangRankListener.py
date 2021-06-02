@@ -1,5 +1,3 @@
-from engineio.async_drivers import eventlet
-
 from config import redis
 from config.ChatbotsConfig import chatbots
 from dark_listener.BaseListener import BaseListener
@@ -136,8 +134,7 @@ class DarkWorkShuangRankListener(BaseListener):
             answer = self.ask(phase['operator'], phase['question'])
             scores[phase['answer_type']] = answer
         self.display_result(scores)
-        eventlet.sleep(1)
-        shut_down_work_shuang_rank(self.chatbot_user_id)
+        redis.delete(get_dark_work_shuang_rank_session_name(self.chatbot_user_id))
 
     def display_result(self, scores):
         daily_salary = float(scores['DAILY_SALARY'])
@@ -168,4 +165,3 @@ class DarkWorkShuangRankListener(BaseListener):
                 btns=[CardItem(
                     title="重新计算", url="dtmd://dingtalkclient/sendMessage?content=**工作性价比:开启")]
             ))
-        redis.delete(get_dark_work_shuang_rank_session_name(self.chatbot_user_id))
