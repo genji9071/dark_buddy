@@ -247,4 +247,4 @@ def do_dark_debug(json):
 if __name__ == '__main__':
     init_dark_live_chat_event()
     socketio.init_app(app)
-    socketio.run(app, "0.0.0.0", port=9000, debug=False)
+    socketio.run(app, "0.0.0.0", port=9000, debug=True)
