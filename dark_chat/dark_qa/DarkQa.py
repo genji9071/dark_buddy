@@ -27,9 +27,9 @@ class DarkQa:
 
         if datas:
             log.info(str(datas))
-            if datas['type'] is 'text':
+            if datas['type'] == 'text':
                 chatbots.get(request_json['chatbotUserId']).send_markdown(str(datas['from']), str(datas['value']))
-            if datas['type'] is 'img':
+            if datas['type'] == 'img':
                 chatbots.get(request_json['chatbotUserId']).send_image(datas['value'][0])
 
         return True

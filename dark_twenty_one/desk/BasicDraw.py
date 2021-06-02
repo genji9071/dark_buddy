@@ -2,7 +2,7 @@ from infra.poker.PokerCard import PokerCard
 from lib.RandomLib import random
 
 
-class Draw:
+class BasicDraw:
     def __init__(self):
         self.cards = []
         self.player_cards = []
@@ -15,15 +15,18 @@ class Draw:
         random.seed()
         random.shuffle(self.cards)
 
-    def draw(self, is_hidden: bool) -> (PokerCard, PokerCard):
+    def player_draw(self, is_hidden: bool) -> (PokerCard, PokerCard):
         player_card = self.cards.pop()
-        ai_card = self.cards.pop()
         self.player_cards.append({
             'is_hidden': is_hidden,
             'card': player_card
         })
+        return player_card
+
+    def ai_draw(self, is_hidden: bool) -> (PokerCard, PokerCard):
+        ai_card = self.cards.pop()
         self.ai_cards.append({
             'is_hidden': is_hidden,
             'card': ai_card
         })
-        return player_card, ai_card
+        return ai_card

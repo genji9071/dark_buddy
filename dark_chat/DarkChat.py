@@ -35,11 +35,11 @@ class Dark_chat():
             return
         if dark_mode_flag < 0:
             dark_mode_flag = self.dark_mode_flag
-        if dark_mode_flag is 0:
+        if dark_mode_flag == 0:
             simsimi_chat.get_simsimi_chat(request_json)
-        elif dark_mode_flag is 2:
+        elif dark_mode_flag == 2:
             dark_qa.get_dark_qa(request_json)
-        elif dark_mode_flag is 3:
+        elif dark_mode_flag == 3:
             dark_jikipedia.get_dark_jikipedia(request_json)
 
 dark_chat = Dark_chat()

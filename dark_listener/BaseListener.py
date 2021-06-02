@@ -18,7 +18,7 @@ class BaseListener(metaclass=ABCMeta):
         self.current_answer = None
 
     def get_listener_name(self) -> str:
-        return self.listener_manager.LISTENER_NAME
+        return self.listener_manager.get_listener_name()
 
     @abstractmethod
     def get_task_function(self):

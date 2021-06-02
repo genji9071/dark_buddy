@@ -6,10 +6,10 @@ import traceback
 import requests
 
 import mapper
-from config import random
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
 from lib.Logger import log
+from lib.RandomLib import random
 from lib.chatbot import ActionCard, CardItem, FeedLink
 
 

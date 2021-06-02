@@ -55,7 +55,7 @@ class RenShe(BaseHandler):
                     chatbots.get(request_json['chatbotUserId']).send_text(
                         '{0}，我还不认识这个叫做"{1}"的属性，请联系管理员添加。'.format(request_json['senderNick'], status_name.strip()))
                     return True
-                if founded_status_property.get('editable') is not 0:
+                if founded_status_property.get('editable') != 0:
                     chatbots.get(request_json['chatbotUserId']).send_text(
                         '{0}，"{1}"的属性不能被修改，请不要作弊！'.format(request_json['senderNick'], status_name.strip()))
                     return True

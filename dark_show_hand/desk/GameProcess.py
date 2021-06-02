@@ -1,3 +1,5 @@
+import eventlet
+
 from dark_show_hand.ai.AnalysisFace import judge
 from dark_show_hand.desk.Bet import Bet
 from dark_show_hand.desk.Draw import Draw
@@ -54,6 +56,7 @@ class GameProcess:
                 ai_cards_str.append("??")
             else:
                 ai_cards_str.append(card['card'].describe())
-        text = "# 你的牌：\n {0}\n # AI的牌：\n {1} \n## 桌上金币：${2}".format(player_cards_str, ai_cards_str,
+        text = "# AI的牌：\n {0} \n # 你的牌：\n {1}\n## 桌上金币：${2}".format(ai_cards_str, player_cards_str,
                                                                     self.bet.ai_bet + self.bet.player_bet)
         self.bet.chatbot.send_markdown(title="暗黑梭哈", text=text)
+        eventlet.sleep(1)

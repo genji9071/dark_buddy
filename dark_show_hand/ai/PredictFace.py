@@ -68,5 +68,5 @@ def predict_face(target_cards: list) -> dict:
 
 
 if __name__ == "__main__":
-    print(predict_face(make_cards(['♣️13', '♥️13', '♠️9', '♠️9'])))
+    print(predict_face(make_cards(['♣️11', '♥️12', '♠️9', '♠️8'])))
     # print(_is_straight([3, 4, 5, 7]))

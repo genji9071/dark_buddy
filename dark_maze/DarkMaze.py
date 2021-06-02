@@ -116,7 +116,7 @@ class DarkMaze:
                 continue
         if preview_location[1] == self.maze_col - 1 and preview_location[0] == self.maze_row - 1:
             chatbots.get(self.chatbot_user_id).send_text('卧槽牛逼啊！这你都走出来了！')
-            user_login.get_luck_point_by_sender_id(50, self.user_id)
+            user_login.rewards(50, self.user_id, chatbots.get(self.chatbot_user_id), '')
             return False
         self.display_maze(data, message='接下来是...')
         return True

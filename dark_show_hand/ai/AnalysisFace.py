@@ -1,4 +1,4 @@
-from dark_show_hand.facade.Card import Card
+from infra.poker.PokerCard import make_cards
 
 
 def _is_straight(ranks):
@@ -194,13 +194,6 @@ def judge(player_cards, ai_cards) -> int:
     result = _solo_high(player_cards, ai_cards)
     if result is not None:
         return result
-
-
-def make_cards(input):
-    cards = []
-    for per in input:
-        cards.append({'card': Card(per[0:1], int(per[2:]))})
-    return cards
 
 
 if __name__ == "__main__":

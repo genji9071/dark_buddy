@@ -88,3 +88,6 @@ class DarkListenerManager():
             return True
         else:
             return False
+
+    def get_listener_name(self):
+        return self.listener_name

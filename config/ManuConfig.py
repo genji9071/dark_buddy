@@ -4,11 +4,14 @@ from dark_chat.dark_jikipedia.DarkJikipedia import dark_jikipedia
 from dark_chat.zuan_chat.ZuAnChat import zuan_chat
 from dark_guess_number.DarkGuessNumberHandler import dark_guess_number_handler
 from dark_listener.DarkDebugListenerHandler import dark_debug_listener
+from dark_live_chat.DarkLiveChatUserHandler import dark_live_chat_user_handler
 from dark_maze.DarkMazeHandler import dark_maze
 from dark_quiz.DarkQuiz import dark_quiz
 from dark_show_hand.DarkShowHandHandler import dark_show_hand
 from dark_spy.DarkSpy import dark_spy
+from dark_twenty_one.DarkTwentyOneHandler import dark_twenty_one
 from dark_word_cloud.DarkWordCloud import dark_word_cloud
+from dark_work_shuang_rank.DarkWorkShuangRankHandler import dark_work_shuang_rank
 from juhe_api.JuheApi import juhe_api
 from user.login.User_login import user_login
 from user.ren_she.RenShe import ren_she_handler
@@ -163,6 +166,24 @@ default_menu = {
                         'hidden': True
                     }
                 }
+            },
+            '暗黑二十一点': {
+                'path': '**游戏:暗黑二十一点',
+                'children': {
+                    '来一把': {
+                        'path': '**游戏:暗黑二十一点:来一把',
+                        'children': dark_twenty_one
+                    },
+                    '掀桌子': {
+                        'path': '**游戏:暗黑二十一点:掀桌子',
+                        'children': dark_twenty_one
+                    },
+                    '操作': {
+                        'path': '**游戏:暗黑二十一点:操作',
+                        'children': dark_twenty_one,
+                        'hidden': True
+                    }
+                }
             }
         }
     },
@@ -215,6 +236,21 @@ default_menu = {
 }
 
 live_chat_menu = {
+    '人设': {
+        'path': '**人设',
+        'children': {
+            '显示': {
+                'path': '**人设:显示',
+                'children': {
+                    '金币': {
+                        'path': '**人设:显示:金币',
+                        'children': dark_live_chat_user_handler
+                    }
+                }
+            }
+        },
+        'hidden': True
+    },
     '骚词': {
         'path': '**骚词',
         'children': {
@@ -301,6 +337,24 @@ live_chat_menu = {
                         'hidden': True
                     }
                 }
+            },
+            '暗黑二十一点': {
+                'path': '**游戏:暗黑二十一点',
+                'children': {
+                    '来一把': {
+                        'path': '**游戏:暗黑二十一点:来一把',
+                        'children': dark_twenty_one
+                    },
+                    '掀桌子': {
+                        'path': '**游戏:暗黑二十一点:掀桌子',
+                        'children': dark_twenty_one
+                    },
+                    '操作': {
+                        'path': '**游戏:暗黑二十一点:操作',
+                        'children': dark_twenty_one,
+                        'hidden': True
+                    }
+                }
             }
         }
     },
@@ -335,6 +389,19 @@ live_chat_menu = {
                 'path': '**小功能:孟婆汤',
                 'children': juhe_api
             },
+        }
+    },
+    '工作性价比': {
+        'path': '**工作性价比',
+        'children': {
+            '开启': {
+                'path': '**工作性价比:开启',
+                'children': dark_work_shuang_rank
+            },
+            '关闭': {
+                'path': '**工作性价比:关闭',
+                'children': dark_work_shuang_rank
+            }
         }
     },
     '测试鬼': {

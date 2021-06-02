@@ -1,6 +1,6 @@
-from config import random
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
+from lib.RandomLib import random
 from mapper.DarkBuddySweetTalk import select_by_user_id
 from mapper.DarkBuddyUser import select_by_senderId
 
