@@ -9,9 +9,6 @@ LISTENER_NAME = 'DarkShowHandListener'
 
 class DarkShowHandHandler(BaseListenableHandler):
 
-    def initialize(self):
-        super().initialize()
-
     def do_handle(self, request_object, request_json):
         if '来一把' in request_object[2]:
             self.start_the_game(request_json)

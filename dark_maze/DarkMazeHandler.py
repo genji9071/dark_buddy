@@ -6,10 +6,8 @@ from dark_maze.DarkMazeListener import DarkMazeListener
 
 LISTENER_NAME = 'DarkMazeListener'
 
-class DarkMazeHandler(BaseListenableHandler):
 
-    def initialize(self):
-        super().initialize()
+class DarkMazeHandler(BaseListenableHandler):
 
     def do_handle(self, request_object, request_json):
         if request_object[2] == '开启':
