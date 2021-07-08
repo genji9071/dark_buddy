@@ -91,6 +91,34 @@ def run_schedule_task():
     scheduler.start()
 
 
+@app.route('/feishu', methods=['POST', 'OPTIONS', 'GET'])
+@control_allow
+def dark_buddy():
+    try:
+        if request.method == 'OPTIONS':
+            response = jsonify(response_lib.SUCCESS_CODE)
+            return response
+        if request.method == 'POST':
+            json_object = request.json
+            log.info(_json.dumps(json_object, indent=4))
+            # do verification
+            if json_object.get('type') == "url_verification":
+                return json_object.get('challenge')
+            response = jsonify(response_lib.SUCCESS_CODE)
+            return response
+        if request.method == 'GET':
+            log.error('Why you got GET method?')
+            log.info(request)
+            response = jsonify(response_lib.SUCCESS_CODE)
+            return response
+    except:
+        log.error(traceback.format_exc())
+        response = jsonify(response_lib.ERROR_CODE)
+        chatbots.get(request.json['chatbotUserId']
+                     ).send_text(traceback.format_exc())
+        return response
+
+
 @app.route('/dark_buddy', methods=['POST', 'OPTIONS', 'GET'])
 @control_allow
 def dark_buddy():
