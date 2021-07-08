@@ -93,7 +93,7 @@ def run_schedule_task():
 
 @app.route('/feishu', methods=['POST', 'OPTIONS', 'GET'])
 @control_allow
-def dark_buddy():
+def feishu():
     try:
         if request.method == 'OPTIONS':
             response = jsonify(response_lib.SUCCESS_CODE)
