@@ -103,7 +103,7 @@ def feishu():
             log.info(_json.dumps(json_object, indent=4))
             # do verification
             if json_object.get('type') == "url_verification":
-                return json_object.get('challenge')
+                return json_object
             response = jsonify(response_lib.SUCCESS_CODE)
             return response
         if request.method == 'GET':
