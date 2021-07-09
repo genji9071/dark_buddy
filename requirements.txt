@@ -1,18 +1,18 @@
-requests
-apscheduler
-bs4
-lxml
+requests==2.24.0
+apscheduler==3.6.3
+bs4==8.0.1
+lxml==4.6.1
 
-Flask
-flask-cors
+Flask==1.1.2
+flask-cors==3.0.9
 
-pymysql
-redis
+pymysql==0.10.1
+redis==3.5.3
 
-Pillow
-wordcloud
+Pillow==8.0.1
+wordcloud==1.8.0
 
-flask-socketio
-eventlet
+flask-socketio==4.3.1
+eventlet==0.29.1
 
-larksuite-oapi
+larksuite-oapi==1.0.23
