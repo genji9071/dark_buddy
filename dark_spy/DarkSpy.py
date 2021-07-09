@@ -6,8 +6,8 @@ from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
 from dark_spy.DarkSpyGameSessionData import DarkSpyGameSessionData, GameStatusEnum, GamerRolesEnum, Gamers
 from dark_spy.DarkSpyGameSessionDataEncoder import DarkSpyGameSessionDataEncoder
+from lib.BaseChatbot import ActionCard, CardItem
 from lib.RandomLib import random
-from lib.chatbot import ActionCard, CardItem
 from mapper.DarkBuddyDarkSpyWords import select_all
 
 gamer_icon = "{0}\t"

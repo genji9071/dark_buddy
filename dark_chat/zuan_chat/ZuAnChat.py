@@ -4,7 +4,7 @@ import requests
 
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
-from lib.chatbot import ActionCard, CardItem
+from lib.BaseChatbot import ActionCard, CardItem
 
 
 class ZuAnChat(BaseHandler):

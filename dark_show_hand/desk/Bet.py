@@ -4,7 +4,7 @@ from dark_listener.BaseOperation import BaseOperator, OPERATOR_OR, BaseSymbol, S
     REGEX_ANY_NUMBER
 from dark_show_hand.ai.Ai import Ai
 from dark_show_hand.desk.Draw import Draw
-from lib.chatbot import ActionCard, CardItem
+from lib.BaseChatbot import ActionCard, CardItem
 from user.login.User_login import user_login
 
 bet_operation = BaseOperator(OPERATOR_OR, [BaseSymbol(SYMBOL_EQUALS, 'giveup'),

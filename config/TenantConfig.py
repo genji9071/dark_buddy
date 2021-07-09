@@ -1,4 +1,4 @@
-from config.ManuConfig import default_menu, live_chat_menu
+from config.ManuConfig import default_menu, live_chat_menu, feishu_menu
 
 # 租户信息
 tenant_base_info = {
@@ -29,5 +29,14 @@ tenant_base_info = {
         'tenant_group_name': 'www.darkbuddy.cn',
         'isExternal': True,
         'menu': live_chat_menu
+    },
+
+    'oc_d805c8382e6ca0097c163f1767bf7fd3': {
+        'chatbotUserId': 'oc_d805c8382e6ca0097c163f1767bf7fd3',
+        'description': '飞书的内容应用群机器人',
+        'tenant_group_name': 'Tezign内容应用',
+        'isExternal': False,
+        'menu': feishu_menu
     }
+
 }

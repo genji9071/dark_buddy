@@ -11,8 +11,8 @@ from config import redis
 from config.ChatbotsConfig import chatbots
 from dark_chat.dark_jikipedia.DarkJikipedia import dark_jikipedia
 from dark_menu.BaseHandler import BaseHandler
+from lib.BaseChatbot import ActionCard
 from lib.ImageFactory import image_factory
-from lib.chatbot import ActionCard
 
 
 class DarkJiWordCloud(BaseHandler):

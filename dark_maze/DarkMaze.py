@@ -7,7 +7,7 @@ from config.ChatbotsConfig import chatbots
 from dark_listener.BaseOperation import BaseSymbol, SYMBOL_MATCH
 from dark_maze.MazeBuilder import MazeBuilder
 from dark_maze.MazePainter import maze_painter
-from lib.chatbot import ActionCard
+from lib.BaseChatbot import ActionCard
 from user.login.User_login import user_login
 
 

@@ -3,7 +3,7 @@ from config.ChatbotsConfig import chatbots
 from dark_listener.BaseListener import BaseListener
 from dark_listener.BaseOperation import BaseOperator, OPERATOR_AND, SYMBOL_MATCH, BaseSymbol, \
     SYMBOL_GREATER, SYMBOL_LESS, SYMBOL_EQUALS, OPERATOR_OR, REGEX_ANY_FLOAT
-from lib.chatbot import ActionCard, CardItem
+from lib.BaseChatbot import ActionCard, CardItem
 
 
 def build_daily_salary_operator():

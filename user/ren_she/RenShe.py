@@ -4,8 +4,8 @@ import traceback
 import mapper as mapper
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
+from lib.BaseChatbot import ActionCard, CardItem
 from lib.Logger import log
-from lib.chatbot import ActionCard, CardItem
 
 
 class RenShe(BaseHandler):

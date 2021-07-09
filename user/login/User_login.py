@@ -5,7 +5,7 @@ import uuid
 from config import redis, now_date, public_ip
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
-from lib.chatbot import CardItem, ActionCard
+from lib.BaseChatbot import CardItem, ActionCard
 from mapper.DarkBuddyMessageRecord import insert_message_record
 from mapper.DarkBuddyUser import update_user, select_by_senderId
 from mapper.DarkBuddyUserStatus import update_user_status, select_by_statusId_and_userId

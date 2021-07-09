@@ -4,8 +4,8 @@ import traceback
 from config.ChatbotsConfig import chatbots
 from config.TenantConfig import tenant_base_info
 from dark_menu.BaseHandler import BaseHandler
+from lib.BaseChatbot import CardItem, ActionCard
 from lib.Logger import log
-from lib.chatbot import CardItem, ActionCard
 
 
 class DarkMenu:

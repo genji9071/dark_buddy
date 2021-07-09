@@ -2,7 +2,7 @@ from config import redis
 from config.ChatbotsConfig import chatbots
 from config.TianApi import get_true_or_false, get_multiple_choice
 from dark_menu.BaseHandler import BaseHandler
-from lib.chatbot import ActionCard, CardItem
+from lib.BaseChatbot import ActionCard, CardItem
 from user.login.User_login import user_login
 
 

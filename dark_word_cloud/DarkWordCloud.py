@@ -7,8 +7,8 @@ import mapper
 from config import redis
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
+from lib.BaseChatbot import ActionCard
 from lib.ImageFactory import image_factory
-from lib.chatbot import ActionCard
 
 
 class DarkWordCloud(BaseHandler):

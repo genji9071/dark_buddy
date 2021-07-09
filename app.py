@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+import threading
 import traceback
 from functools import wraps
 from io import BytesIO
@@ -91,6 +92,18 @@ def run_schedule_task():
     scheduler.start()
 
 
+def convert_feishu_json(json_object):
+    result = {
+        "senderId": json_object.get('event').get("user_open_id"),
+        "senderNick": "Unknown user",
+        "chatbotUserId": json_object.get('event').get("open_chat_id"),
+        "text": {
+            "content": json_object.get('event').get("text_without_at_bot")
+        }
+    }
+    return result
+
+
 @app.route('/feishu', methods=['POST', 'OPTIONS', 'GET'])
 @control_allow
 def feishu():
@@ -104,6 +117,8 @@ def feishu():
             # do verification
             if json_object.get('type') == "url_verification":
                 return json_object
+            json_object = convert_feishu_json(json_object)
+            threading.Thread(target=do_request, kwargs={'request_json': json_object}).start()
             response = jsonify(response_lib.SUCCESS_CODE)
             return response
         if request.method == 'GET':

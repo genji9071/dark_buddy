@@ -8,9 +8,9 @@ import requests
 import mapper
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
+from lib.BaseChatbot import ActionCard, CardItem, FeedLink
 from lib.Logger import log
 from lib.RandomLib import random
-from lib.chatbot import ActionCard, CardItem, FeedLink
 
 
 class JuheApi(BaseHandler):

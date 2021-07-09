@@ -410,3 +410,5 @@ live_chat_menu = {
         'hidden': True
     }
 }
+
+feishu_menu = {}
