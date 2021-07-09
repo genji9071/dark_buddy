@@ -9,7 +9,7 @@ from threading import Lock
 from config.EnvConfig import env_config
 from config.ThreadLocalSource import dark_local
 from dark_live_chat import namespace
-from lib.BaseChatbot import BaseChatbot, is_not_null_and_blank_str
+from lib.BaseChatbot import BaseChatbot, is_not_null_and_blank_str, ActionCard
 
 logging.basicConfig(level=logging.INFO)
 lock = Lock()
