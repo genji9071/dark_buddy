@@ -1,6 +1,6 @@
 requests==2.24.0
 apscheduler==3.6.3
-bs4==8.0.1
+bs4
 lxml==4.6.1
 
 Flask==1.1.2
