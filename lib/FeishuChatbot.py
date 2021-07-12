@@ -4,6 +4,7 @@ from larksuiteoapi import Config, ACCESS_TOKEN_TYPE_TENANT, DOMAIN_LARK_SUITE, D
 from larksuiteoapi.api import Request, set_timeout
 
 from lib.BaseChatbot import BaseChatbot, ActionCard
+from lib.Logger import log
 
 feishu_app_id = os.environ.get("FEISHU_APP_ID")
 feishu_app_secret = os.environ.get("FEISHU_APP_SECRET")
@@ -33,13 +34,11 @@ class FeishuChatbot(BaseChatbot):
         req = Request('im/v1/messages?receive_id_type=chat_id', 'POST', ACCESS_TOKEN_TYPE_TENANT, body,
                       request_opts=[set_timeout(3)])
         resp = req.do(self.conf)
-        print('request id = %s' % resp.get_request_id())
-        print(resp.code)
-        if resp.code == 0:
-            print(resp.data)
-        else:
-            print(resp.msg)
-            print(resp.error)
+        log.info('request id = %s' % resp.get_request_id())
+        log.info('request code = %s' % resp.code)
+        if resp.code != 0:
+            log.info(resp.msg)
+            log.info(resp.error)
 
     def send_image(self, pic_url):
         pass
