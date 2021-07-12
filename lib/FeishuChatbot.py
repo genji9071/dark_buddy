@@ -30,7 +30,8 @@ class FeishuChatbot(BaseChatbot):
             'msg_type': 'text'
 
         }
-        req = Request('im/v1/messages', 'POST', ACCESS_TOKEN_TYPE_TENANT, body, request_opts=[set_timeout(3)])
+        req = Request('im/v1/messages?receive_id_type=chat_id', 'POST', ACCESS_TOKEN_TYPE_TENANT, body,
+                      request_opts=[set_timeout(3)])
         resp = req.do(self.conf)
         print('request id = %s' % resp.get_request_id())
         print(resp.code)
