@@ -26,14 +26,9 @@ class FeishuChatbot(BaseChatbot):
 
     def send_text(self, msg, is_at_all=False, at_mobiles=[], at_dingtalk_ids=[]):
         body = {
-            'receive_id': self.receive_id,
-            'content': {
-                'text': msg
-            },
-            'msg_type': 'text'
-
+            'text': msg
         }
-        self.post(body)
+        self.post(body, "text")
 
     def send_image(self, pic_url):
         pass
@@ -93,16 +88,21 @@ class FeishuChatbot(BaseChatbot):
                 ]
             }
         }
-        self.post(body)
+        self.post(body, "interactive")
 
     def send_feed_card(self, links):
         pass
 
-    def post(self, body):
+    def post(self, body, msg_type):
         if env_config.get("DEBUG_MODE") == '0':
             log.info(_json.dumps(body, indent=4))
             return
-        req = Request('im/v1/messages?receive_id_type=chat_id', 'POST', ACCESS_TOKEN_TYPE_TENANT, body,
+        post_data = {
+            "receive_id": self.receive_id,
+            "msg_type": msg_type,
+            "content": str(body)
+        }
+        req = Request('im/v1/messages?receive_id_type=chat_id', 'POST', ACCESS_TOKEN_TYPE_TENANT, post_data,
                       request_opts=[set_timeout(3)])
         resp = req.do(self.conf)
         log.info('request id = %s' % resp.get_request_id())
