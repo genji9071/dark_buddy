@@ -9,9 +9,13 @@ from lib.BaseChatbot import BaseChatbot, ActionCard
 from lib.Logger import log
 
 feishu_app_id = os.environ.get("FEISHU_APP_ID")
+log.info(feishu_app_id)
 feishu_app_secret = os.environ.get("FEISHU_APP_SECRET")
+log.info(feishu_app_secret)
 feishu_app_verification_token = os.environ.get("FEISHU_VERIFICATION_TOKEN")
+log.info(feishu_app_verification_token)
 feishu_app_encrypt_key = os.environ.get("FEISHU_APP_ENCRYPT_KEY")
+log.info(feishu_app_encrypt_key)
 
 
 class FeishuChatbot(BaseChatbot):
