@@ -1,6 +1,8 @@
 # coding=utf-8
 from abc import ABCMeta, abstractmethod
 
+from lib.Logger import log
+
 
 def is_not_null_and_blank_str(content):
     """
@@ -72,43 +74,6 @@ class ActionCard(object):
             btns = btn_list  # 兼容：1、传入CardItem示例列表；2、传入数据字典列表
         self.btns = btns
 
-    def get_data(self):
-        """
-        获取ActionCard类型消息数据（字典）
-        :return: 返回ActionCard数据
-        """
-        if is_not_null_and_blank_str(self.title) and is_not_null_and_blank_str(self.text):
-            # if len(self.btns) == 1:
-            #     # 整体跳转ActionCard类型
-            #     data = {
-            #         "msgtype": "actionCard",
-            #         "actionCard": {
-            #             "title": self.title,
-            #             "text": self.text,
-            #             "hideAvatar": self.hide_avatar,
-            #             "btnOrientation": self.btn_orientation,
-            #             "singleTitle": self.btns[0]["title"],
-            #             "singleURL": self.btns[0]["actionURL"]
-            #         }
-            #     }
-            #     return data
-            # else:
-            # 独立跳转ActionCard类型
-            data = {
-                "msgtype": "actionCard",
-                "actionCard": {
-                    "title": self.title,
-                    "text": self.text,
-                    "hideAvatar": self.hide_avatar,
-                    "btnOrientation": self.btn_orientation,
-                    "btns": self.btns
-                }
-            }
-            return data
-        else:
-            logging.error("ActionCard类型，消息标题或内容或按钮数量不能为空！")
-            raise ValueError("ActionCard类型，消息标题或内容或按钮数量不能为空！")
-
 
 class FeedLink(object):
     """
@@ -141,7 +106,7 @@ class FeedLink(object):
             }
             return data
         else:
-            logging.error("FeedCard类型单条消息文本、消息链接、图片链接不能为空！")
+            log.error("FeedCard类型单条消息文本、消息链接、图片链接不能为空！")
             raise ValueError("FeedCard类型单条消息文本、消息链接、图片链接不能为空！")
 
 
@@ -184,5 +149,5 @@ class CardItem(object):
             }
             return data
         else:
-            logging.error("CardItem是ActionCard的子控件时，title、url不能为空；是FeedCard的子控件时，title、url、pic_url不能为空！")
+            log.error("CardItem是ActionCard的子控件时，title、url不能为空；是FeedCard的子控件时，title、url、pic_url不能为空！")
             raise ValueError("CardItem是ActionCard的子控件时，title、url不能为空；是FeedCard的子控件时，title、url、pic_url不能为空！")

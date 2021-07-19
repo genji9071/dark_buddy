@@ -40,9 +40,9 @@ class DarkQuiz(BaseHandler):
                 text="### 回答正确！6六6！",
                 btns=[
                     CardItem(
-                        title="再来一题是非题", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑答题:是非题(10金币)"),
+                        title="再来一题是非题", url="**游戏:暗黑答题:是非题(10金币)"),
                     CardItem(
-                        title="再来一题单选题", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑答题:单选题(20金币)")
+                        title="再来一题单选题", url="**游戏:暗黑答题:单选题(20金币)")
                 ]
             ))
             if type == '0':
@@ -55,9 +55,9 @@ class DarkQuiz(BaseHandler):
                 text="### GG！回答错误！正确答案是「{0}」,相关信息：{1}".format(redis_data['answer_str'], redis_data['analytic']),
                 btns=[
                     CardItem(
-                        title="再来一题是非题", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑答题:是非题(10金币)"),
+                        title="再来一题是非题", url="**游戏:暗黑答题:是非题(10金币)"),
                     CardItem(
-                        title="再来一题单选题", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑答题:单选题(20金币)")
+                        title="再来一题单选题", url="**游戏:暗黑答题:单选题(20金币)")
                 ]
             ))
             user_login.rewards_to_sender_id(-5, request_json)
@@ -105,7 +105,7 @@ class DarkQuiz(BaseHandler):
         btns = []
         for i, choice in enumerate(redis_data['choices']):
             btns.append(CardItem(
-                    title=choice, url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑答题:答题:0:{0}".format(i)))
+                title=choice, url="**游戏:暗黑答题:答题:0:{0}".format(i)))
         chatbots.get(request_json['chatbotUserId']).send_action_card(ActionCard(
             title="暗黑答题",
             text="### 答对加10金币，答错扣5金币\n{0}".format(redis_data['title']),
@@ -116,7 +116,7 @@ class DarkQuiz(BaseHandler):
         btns = []
         for i, choice in enumerate(redis_data['choices']):
             btns.append(CardItem(
-                title=choice, url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑答题:答题:1:{0}".format(i)))
+                title=choice, url="**游戏:暗黑答题:答题:1:{0}".format(i)))
         chatbots.get(request_json['chatbotUserId']).send_action_card(ActionCard(
             title="暗黑答题",
             text="### 答对加20金币，答错扣5金币\n{0}".format(redis_data['title']),

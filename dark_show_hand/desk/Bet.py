@@ -32,7 +32,7 @@ class Bet:
             title="暗黑梭哈",
             text="### 你赢了！「{0}」金币都是你的！".format(total_money),
             btns=[CardItem(
-                title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑梭哈:来一把")]
+                title="再来一把", url="**游戏:暗黑梭哈:来一把")]
         ))
         user_login.rewards(total_money, player_id, self.chatbot, '玩家')
 
@@ -41,7 +41,7 @@ class Bet:
             title="暗黑梭哈",
             text="### 你输了！呵呵...",
             btns=[CardItem(
-                title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑梭哈:来一把")]
+                title="再来一把", url="**游戏:暗黑梭哈:来一把")]
         ))
 
     def bet(self, start_from, draw: Draw, order=None) -> str:

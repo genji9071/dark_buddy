@@ -122,7 +122,7 @@ def shut_down_work_shuang_rank(chatbot_user_id):
             title="计算已关闭",
             text="### 计算已关闭......",
             btns=[CardItem(
-                title="重新计算", url="dtmd://dingtalkclient/sendMessage?content=**工作性价比:开启")]
+                title="重新计算", url="**工作性价比:开启")]
         ))
     return
 
@@ -163,5 +163,5 @@ class DarkWorkShuangRankListener(BaseListener):
                 title="计算完成",
                 text="### 得分：{0}\n ### 你的工作性价比：「{1}」".format(result, text),
                 btns=[CardItem(
-                    title="重新计算", url="dtmd://dingtalkclient/sendMessage?content=**工作性价比:开启")]
+                    title="重新计算", url="**工作性价比:开启")]
             ))

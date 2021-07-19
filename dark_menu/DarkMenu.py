@@ -59,7 +59,7 @@ class DarkMenu:
             if cursor.get(key).get('hidden') == True:
                 continue
             btn = CardItem(
-                title=key, url="dtmd://dingtalkclient/sendMessage?content={0}".format(cursor.get(key).get('path')))
+                title=key, url=cursor.get(key).get('path'))
             btns.append(btn)
         title = "你是想问？"
         if len(paths) == 0:

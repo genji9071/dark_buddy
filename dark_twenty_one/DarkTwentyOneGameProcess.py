@@ -28,7 +28,7 @@ class DarkTwentyOneGameProcess():
                 title="暗黑二十一点",
                 text="### 你输了！呵呵...",
                 btns=[CardItem(
-                    title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑二十一点:来一把")]
+                    title="再来一把", url="**游戏:暗黑二十一点:来一把")]
             ))
             return
         bet_money = int(bet_money)
@@ -68,7 +68,7 @@ class DarkTwentyOneGameProcess():
                 title="暗黑二十一点",
                 text="### 你赢了！「{0}」金币都是你的！".format(bet_money * 2),
                 btns=[CardItem(
-                    title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑二十一点:来一把")]
+                    title="再来一把", url="**游戏:暗黑二十一点:来一把")]
             ))
             user_login.rewards(bet_money * 2, self.player_id, self.chatbot, '玩家')
         elif judgement < 0:
@@ -76,14 +76,14 @@ class DarkTwentyOneGameProcess():
                 title="暗黑二十一点",
                 text="### 你输了！呵呵...",
                 btns=[CardItem(
-                    title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑二十一点:来一把")]
+                    title="再来一把", url="**游戏:暗黑二十一点:来一把")]
             ))
         else:
             self.chatbot.send_action_card(ActionCard(
                 title="暗黑二十一点",
                 text="### 平局！「{0}」金币还给你...".format(bet_money),
                 btns=[CardItem(
-                    title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑二十一点:来一把")]
+                    title="再来一把", url="**游戏:暗黑二十一点:来一把")]
             ))
             user_login.rewards(bet_money, self.player_id, self.chatbot, '玩家')
 

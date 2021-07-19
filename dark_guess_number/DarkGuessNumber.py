@@ -21,7 +21,7 @@ def shut_down_guess_number(chatbot_user_id):
             title="游戏结束",
             text="### 数字已经忘记......",
             btns=[CardItem(
-                title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:猜数字:开启")]
+                title="再来一把", url="**游戏:猜数字:开启")]
         ))
     return
 

@@ -9,7 +9,7 @@ from threading import Lock
 from config.EnvConfig import env_config
 from config.ThreadLocalSource import dark_local
 from dark_live_chat import namespace
-from lib.BaseChatbot import BaseChatbot, is_not_null_and_blank_str, ActionCard
+from lib.BaseChatbot import BaseChatbot, is_not_null_and_blank_str, ActionCard, FeedLink, CardItem
 
 logging.basicConfig(level=logging.INFO)
 lock = Lock()
@@ -130,12 +130,37 @@ class DingtalkChatbot(BaseChatbot):
         :return: 返回消息发送结果
         """
         if isinstance(action_card, ActionCard):
-            data = action_card.get_data()
+            data = self.get_data(action_card)
             logging.debug("ActionCard类型：%s" % data)
             return self.post(data)
         else:
             logging.error("ActionCard类型：传入的实例类型不正确！")
             raise TypeError("ActionCard类型：传入的实例类型不正确！")
+
+    def get_data(self, action_card: ActionCard):
+        """
+        获取ActionCard类型消息数据（字典）
+        :return: 返回ActionCard数据
+        """
+        if is_not_null_and_blank_str(action_card.title) and is_not_null_and_blank_str(action_card.text):
+            url_prefix = 'dtmd://dingtalkclient/sendMessage?content='
+            for btn in action_card.btns:
+                if "actionURL" in btn:
+                    btn["actionURL"] = url_prefix + btn["actionURL"]
+            data = {
+                "msgtype": "actionCard",
+                "actionCard": {
+                    "title": action_card.title,
+                    "text": action_card.text,
+                    "hideAvatar": action_card.hide_avatar,
+                    "btnOrientation": action_card.btn_orientation,
+                    "btns": action_card.btns
+                }
+            }
+            return data
+        else:
+            logging.error("ActionCard类型，消息标题或内容或按钮数量不能为空！")
+            raise ValueError("ActionCard类型，消息标题或内容或按钮数量不能为空！")
 
     def send_feed_card(self, links):
         """

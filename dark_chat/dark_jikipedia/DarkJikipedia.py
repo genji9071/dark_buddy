@@ -48,7 +48,7 @@ class DarkJikipedia(BaseHandler):
                 if text == word['word']:
                     return False
                 title = word['word']
-                btn = CardItem(title=title,url="dtmd://dingtalkclient/sendMessage?content={0}".format(quote(title)))
+                btn = CardItem(title=title, url=quote(title))
                 btns.append(btn)
             title = "你是想问？"
             text = "### 你是想问？"
@@ -96,7 +96,7 @@ class DarkJikipedia(BaseHandler):
         else:
             text = '![screenshot]({0})\n### {1}\n{2}\n'.format(image_url[0]['scaled']['path'], title, content.strip())
         return ActionCard(title=title, text=text,
-                          btns=[CardItem(title="查看更多", url="dtmd://dingtalkclient/sendMessage?content=**骚词:推荐")])
+                          btns=[CardItem(title="查看更多", url="**骚词:推荐")])
 
     def do_handle(self, request_object, request_json):
         body = {}
@@ -110,7 +110,7 @@ class DarkJikipedia(BaseHandler):
         action_card = ActionCard(
             title="骚词推荐",
             text=content[:-1],
-            btns=[CardItem(title="查看更多", url="dtmd://dingtalkclient/sendMessage?content=**骚词:推荐")]
+            btns=[CardItem(title="查看更多", url="**骚词:推荐")]
         )
         chatbots.get(request_json['chatbotUserId']).send_action_card(action_card)
         return True

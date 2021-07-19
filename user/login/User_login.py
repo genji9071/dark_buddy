@@ -88,7 +88,7 @@ class User_login(BaseHandler):
             title="财富变动",
             text='### 「{0}」{1}{2}金币！'.format(sender_nick, '获得' if count > 0 else '失去', abs(count)),
             btns=[CardItem(
-                title="查看当前金币剩余", url="dtmd://dingtalkclient/sendMessage?content=**人设:显示:金币")]
+                title="查看当前金币剩余", url="**人设:显示:金币")]
         ))
 
     def get_luck_point_by_sender_id(self, sender_id: str):

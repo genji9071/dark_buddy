@@ -98,7 +98,7 @@ def convert_feishu_json(json_object):
         "senderNick": "Unknown user",
         "chatbotUserId": json_object.get('event').get("open_chat_id"),
         "text": {
-            "content": json_object.get('event').get("text_without_at_bot")
+            "content": json_object.get('event').get("text_without_at_bot", "")
         }
     }
     return result
