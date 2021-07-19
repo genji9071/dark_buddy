@@ -100,7 +100,7 @@ class FeishuChatbot(BaseChatbot):
         post_data = {
             "receive_id": self.receive_id,
             "msg_type": msg_type,
-            "content": str(body)
+            "content": _json.dumps(body)
         }
         req = Request('im/v1/messages?receive_id_type=chat_id', 'POST', ACCESS_TOKEN_TYPE_TENANT, post_data,
                       request_opts=[set_timeout(3)])
