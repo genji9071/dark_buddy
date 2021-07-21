@@ -1,6 +1,6 @@
+import json
 import os
 
-from flask.json import _json
 from larksuiteoapi import Config, ACCESS_TOKEN_TYPE_TENANT, DOMAIN_LARK_SUITE, DefaultLogger, LEVEL_DEBUG
 from larksuiteoapi.api import Request, set_timeout
 
@@ -95,13 +95,13 @@ class FeishuChatbot(BaseChatbot):
 
     def post(self, body, msg_type):
         if env_config.get("DEBUG_MODE") == '0':
-            log.info(_json.dumps(body, indent=4))
+            log.info(json.dumps(body, indent=4, ensure_ascii=False))
             return
         receive_info = dark_local.receive_info
         post_data = {
             "receive_id": receive_info['receive_id'],
             "msg_type": msg_type,
-            "content": _json.dumps(body)
+            "content": json.dumps(body)
         }
         if receive_info['call_type'] == 'send':
             req = Request(f'im/v1/messages?receive_id_type={receive_info["receive_id_type"]}', 'POST',

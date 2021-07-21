@@ -96,7 +96,7 @@ class DarkJikipedia(BaseHandler):
         else:
             text = '![screenshot]({0})\n### {1}\n{2}\n'.format(image_url[0]['scaled']['path'], title, content.strip())
         return ActionCard(title=title, text=text,
-                          btns=[CardItem(title="查看更多", url="**骚词:推荐")])
+                          btns=[CardItem(title="查看更多", url="**骚词:推荐")], img_url=image_url[0]['scaled']['path'])
 
     def do_handle(self, request_object, request_json):
         body = {}

@@ -156,7 +156,8 @@ class JuheApi(BaseHandler):
             datas = response_json["data"]["result"][0]
             action_card = ActionCard(title=datas["title"],
                                      text="![screenshot](" + datas["gifurl"] + ")\n" + "#### " + datas["title"],
-                                     btns=[CardItem(title="查看更多", url="**小功能:动图")])
+                                     btns=[CardItem(title="查看更多", url="**小功能:动图")],
+                                     img_url=datas["gifurl"])
             chatbots.get(request_json['chatbotUserId']).send_action_card(action_card)
         elif matched == "today":
             log.info(str(response_json))

@@ -20,7 +20,8 @@ class DarkWordCloud(BaseHandler):
             image = self.get_word_cloud_image()
             self.put_image(image)
         title = "暗黑热搜"
-        text = "![screenshot](http://{2}/dark_buddy/dark_word_cloud/image/get?session_id={0}&uuid={1})\n# 暗黑热搜榜".format(request_json['chatbotUserId'], id, config.public_ip)
+        img_url = f"http://{config.public_ip}/dark_buddy/dark_word_cloud/image/get?session_id={request_json['chatbotUserId']}&uuid={id}"
+        text = f"![screenshot]({img_url})\n# 暗黑热搜榜"
         action_card = ActionCard(title=title, text=text, btns=[])
         chatbots.get(request_json['chatbotUserId']).send_action_card(action_card)
 

@@ -52,7 +52,7 @@ class ActionCard(object):
     ActionCard类型消息格式（整体跳转、独立跳转）
     """
 
-    def __init__(self, title, text, btns, btn_orientation=0, hide_avatar=0):
+    def __init__(self, title, text, btns, img_url=None, btn_orientation=0, hide_avatar=0):
         """
         ActionCard初始化
         :param title: 首屏会话透出的展示内容
@@ -66,6 +66,7 @@ class ActionCard(object):
         self.text = text
         self.btn_orientation = btn_orientation
         self.hide_avatar = hide_avatar
+        self.img_url = img_url
         btn_list = []
         for btn in btns:
             if isinstance(btn, CardItem):

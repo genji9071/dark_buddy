@@ -1,4 +1,5 @@
 # coding=utf-8
+import json
 import os
 import traceback
 from functools import wraps
@@ -7,7 +8,7 @@ from io import BytesIO
 import pytz
 from apscheduler.schedulers.blocking import BlockingScheduler
 from flask import Flask, request, make_response, send_from_directory
-from flask.json import jsonify, _json
+from flask.json import jsonify
 from flask_cors import CORS
 
 from config.ChatbotsConfig import chatbots
@@ -133,7 +134,7 @@ def feishu():
             return response
         if request.method == 'POST':
             json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
+            log.info(json.dumps(json_object, indent=4, ensure_ascii=False))
             # do verification
             if json_object.get('type') == "url_verification":
                 return json_object
@@ -148,8 +149,6 @@ def feishu():
     except:
         log.error(traceback.format_exc())
         response = jsonify(response_lib.ERROR_CODE)
-        chatbots.get(request.json['chatbotUserId']
-                     ).send_text(traceback.format_exc())
         return response
 
 
@@ -162,7 +161,7 @@ def dark_buddy():
             return response
         if request.method == 'POST':
             json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
+            log.info(json.dumps(json_object, indent=4, ensure_ascii=False))
             do_request(json_object)
             response = jsonify(response_lib.SUCCESS_CODE)
             return response
@@ -188,7 +187,7 @@ def dark_buddy_listener():
             return response
         if request.method == 'POST':
             json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
+            log.info(json.dumps(json_object, indent=4, ensure_ascii=False))
             do_listener(json_object)
             response = jsonify(response_lib.SUCCESS_CODE)
             return response
@@ -252,7 +251,7 @@ def sign_in():
             return response
         if request.method == 'POST':
             json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
+            log.info(json.dumps(json_object, indent=4, ensure_ascii=False))
             sender_id = json_object['sender_id']
             if user_login.check_lock(sender_id):
                 return jsonify(response_lib.SUCCESS_CODE)
@@ -274,7 +273,7 @@ def darkSpyGetWord():
             return response
         if request.method == 'POST':
             json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
+            log.info(json.dumps(json_object, indent=4, ensure_ascii=False))
             return dark_spy.show_gamer_info(json_object)
     except:
         log.error(traceback.format_exc())
