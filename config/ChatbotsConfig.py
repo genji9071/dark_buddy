@@ -11,5 +11,5 @@ chatbots = {
     '$:LWCP_v1:$JS+tN5ZeAGnF/xrtw0wd5olE2WwhNQ1Y': DingtalkChatbot(
         webhook='https://oapi.dingtalk.com/robot/send?access_token=39039504f38252257c5755dbbd310546f89741277d4cf7d8251a89df02a0064e'),
     'live_chat_chatbotUserId': DingtalkChatbot(webhook='live_chat', is_live_chat=True),
-    'oc_d805c8382e6ca0097c163f1767bf7fd3': FeishuChatbot('oc_d805c8382e6ca0097c163f1767bf7fd3')
+    '2d24ec36584f175d': FeishuChatbot('2d24ec36584f175d')
 }

@@ -93,14 +93,24 @@ def run_schedule_task():
 
 
 def convert_feishu_json(json_object):
-    result = {
-        "senderId": json_object.get('event').get("user_open_id"),
-        "senderNick": "Unknown user",
-        "chatbotUserId": json_object.get('event').get("open_chat_id"),
-        "text": {
-            "content": json_object.get('event').get("text_without_at_bot", "")
+    if 'event' in json_object:
+        result = {
+            "senderId": json_object.get('event').get("user_open_id"),
+            "senderNick": "Unknown user",
+            "chatbotUserId": json_object.get('event').get("tenant_key"),
+            "text": {
+                "content": json_object.get('event').get("text_without_at_bot", "")
+            }
         }
-    }
+    else:
+        result = {
+            "senderId": json_object.get("open_id"),
+            "senderNick": "Unknown user",
+            "chatbotUserId": json_object.get("tenant_key"),
+            "text": {
+                "content": json_object.get('action').get("option", "")
+            }
+        }
     return result
 
 

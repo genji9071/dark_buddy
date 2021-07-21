@@ -156,4 +156,4 @@ if __name__ == "__main__":
         BaseSymbol(SYMBOL_GREATER, 0),
         BaseSymbol(SYMBOL_LESS, 24),
     ]).encode()
-    print(validate('1.5', bet_operation))
+    print(validate('31.5', bet_operation))
