@@ -7,9 +7,6 @@ LISTENER_NAME = 'DarkWorkShuangRankListener'
 
 class DarkWorkShuangRankHandler(BaseListenableHandler):
 
-    def initialize(self):
-        super().initialize()
-
     def do_handle(self, request_object, request_json):
         if request_object[1] == '开启':
             self.start_test(request_json)

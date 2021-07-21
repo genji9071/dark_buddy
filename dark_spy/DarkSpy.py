@@ -6,8 +6,8 @@ from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
 from dark_spy.DarkSpyGameSessionData import DarkSpyGameSessionData, GameStatusEnum, GamerRolesEnum, Gamers
 from dark_spy.DarkSpyGameSessionDataEncoder import DarkSpyGameSessionDataEncoder
+from lib.BaseChatbot import ActionCard, CardItem
 from lib.RandomLib import random
-from lib.chatbot import ActionCard, CardItem
 from mapper.DarkBuddyDarkSpyWords import select_all
 
 gamer_icon = "{0}\t"
@@ -52,7 +52,7 @@ class Darkspy(BaseHandler):
                 title="游戏结束",
                 text="### 游戏已经回归虚无......",
                 btns=[CardItem(
-                    title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:谁是卧底:开启")]
+                    title="再来一把", url="**游戏:谁是卧底:开启")]
             )
         )
         return
@@ -102,7 +102,7 @@ class Darkspy(BaseHandler):
                     title="游戏结束",
                     text="### 游戏已经结束......",
                     btns=[CardItem(
-                        title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:谁是卧底:开启")]
+                        title="再来一把", url="**游戏:谁是卧底:开启")]
                 ))
         if game_session_data.game_status == GameStatusEnum.PREPARE:
             gamers = game_session_data.get_gamers()

@@ -4,6 +4,7 @@ from dark_listener.BaseOperation import build_all_accept_operator
 
 LISTENER_NAME = 'DarkDebugListener'
 
+
 class DarkDebugListener(BaseListener):
 
     def ask_sth(self):
@@ -16,9 +17,6 @@ class DarkDebugListener(BaseListener):
 
 
 class DarkDebugListenerHandler(BaseListenableHandler):
-
-    def initialize(self):
-        super().initialize()
 
     def do_handle(self, request_object, request_json):
         listener = DarkDebugListener(request_json, self.listener_manager)

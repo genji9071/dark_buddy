@@ -8,9 +8,9 @@ import requests
 import mapper
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
+from lib.BaseChatbot import ActionCard, CardItem, FeedLink
 from lib.Logger import log
 from lib.RandomLib import random
-from lib.chatbot import ActionCard, CardItem, FeedLink
 
 
 class JuheApi(BaseHandler):
@@ -146,7 +146,7 @@ class JuheApi(BaseHandler):
                 text+=": "
                 text+=response_json["newslist"][i]["content"]
                 text+="\n\n"
-            chatbots.get(request_json['chatbotUserId']).send_markdown(title="%s，这就是你今天的暗黑星座运势" % name, text=text, is_at_all=False)
+            chatbots.get(request_json['chatbotUserId']).send_markdown(title="%s，这就是你今天的暗黑星座运势" % name, text=text)
         elif matched == "laohuangli":
             log.info(str(response_json))
             datas = response_json.get('result')
@@ -154,7 +154,9 @@ class JuheApi(BaseHandler):
         elif matched == "dongtu":
             log.info(str(response_json))
             datas = response_json["data"]["result"][0]
-            action_card = ActionCard(title=datas["title"],text = "![screenshot](" + datas["gifurl"] + ")\n"  +"#### "+datas["title"],btns=[CardItem(title="查看更多", url="dtmd://dingtalkclient/sendMessage?content=**小功能:动图")])
+            action_card = ActionCard(title=datas["title"],
+                                     text="![screenshot](" + datas["gifurl"] + ")\n" + "#### " + datas["title"],
+                                     btns=[CardItem(title="查看更多", url="**小功能:动图")])
             chatbots.get(request_json['chatbotUserId']).send_action_card(action_card)
         elif matched == "today":
             log.info(str(response_json))

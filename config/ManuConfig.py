@@ -410,3 +410,50 @@ live_chat_menu = {
         'hidden': True
     }
 }
+
+feishu_menu = {'小功能': {
+    'path': '**小功能',
+    'children': {
+        '笑话': {
+            'path': '**小功能:笑话',
+            'children': juhe_api
+        },
+        '新闻': {
+            'path': '**小功能:新闻',
+            'children': juhe_api
+        },
+        '骚东西': {
+            'path': '**小功能:骚东西',
+            'children': juhe_api
+        },
+        '动图': {
+            'path': '**小功能:动图',
+            'children': juhe_api
+        },
+        '今天': {
+            'path': '**小功能:今天',
+            'children': juhe_api
+        },
+        '土味情话': {
+            'path': '**小功能:土味情话',
+            'children': juhe_api
+        },
+        '孟婆汤': {
+            'path': '**小功能:孟婆汤',
+            'children': juhe_api
+        },
+    }
+},
+    '工作性价比': {
+        'path': '**工作性价比',
+        'children': {
+            '开启': {
+                'path': '**工作性价比:开启',
+                'children': dark_work_shuang_rank
+            },
+            '关闭': {
+                'path': '**工作性价比:关闭',
+                'children': dark_work_shuang_rank
+            }
+        }
+    }, }

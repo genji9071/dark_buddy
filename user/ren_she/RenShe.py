@@ -4,8 +4,8 @@ import traceback
 import mapper as mapper
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
+from lib.BaseChatbot import ActionCard, CardItem
 from lib.Logger import log
-from lib.chatbot import ActionCard, CardItem
 
 
 class RenShe(BaseHandler):
@@ -82,14 +82,14 @@ class RenShe(BaseHandler):
         btns = []
         if len(all_status_property) == 0:
             btn = CardItem(title='增加',
-                           url="dtmd://dingtalkclient/sendMessage?content=**人设:增加")
+                           url="**人设:增加")
             btns.append(btn)
             title = "你是想问？"
             text = "# 目前尚未拥有人设，请增加你的人设。"
             return ActionCard(title=title, text=text, btns=btns, btn_orientation=1)
         for status_property in all_status_property:
             btn = CardItem(title=status_property.get('name'),
-                           url="dtmd://dingtalkclient/sendMessage?content=**人设:显示:{0}".format(
+                           url="**人设:显示:{0}".format(
                                status_property.get('name')))
             btns.append(btn)
         title = "你是想问？"

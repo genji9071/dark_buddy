@@ -1,11 +1,9 @@
-from engineio.async_drivers import eventlet
-
 from config import redis
 from config.ChatbotsConfig import chatbots
 from dark_listener.BaseListener import BaseListener
 from dark_listener.BaseOperation import BaseOperator, OPERATOR_AND, SYMBOL_MATCH, BaseSymbol, \
     SYMBOL_GREATER, SYMBOL_LESS, SYMBOL_EQUALS, OPERATOR_OR, REGEX_ANY_FLOAT
-from lib.chatbot import ActionCard, CardItem
+from lib.BaseChatbot import ActionCard, CardItem
 
 
 def build_daily_salary_operator():
@@ -124,7 +122,7 @@ def shut_down_work_shuang_rank(chatbot_user_id):
             title="计算已关闭",
             text="### 计算已关闭......",
             btns=[CardItem(
-                title="重新计算", url="dtmd://dingtalkclient/sendMessage?content=**工作性价比:开启")]
+                title="重新计算", url="**工作性价比:开启")]
         ))
     return
 
@@ -136,8 +134,7 @@ class DarkWorkShuangRankListener(BaseListener):
             answer = self.ask(phase['operator'], phase['question'])
             scores[phase['answer_type']] = answer
         self.display_result(scores)
-        eventlet.sleep(1)
-        shut_down_work_shuang_rank(self.chatbot_user_id)
+        redis.delete(get_dark_work_shuang_rank_session_name(self.chatbot_user_id))
 
     def display_result(self, scores):
         daily_salary = float(scores['DAILY_SALARY'])
@@ -166,6 +163,5 @@ class DarkWorkShuangRankListener(BaseListener):
                 title="计算完成",
                 text="### 得分：{0}\n ### 你的工作性价比：「{1}」".format(result, text),
                 btns=[CardItem(
-                    title="重新计算", url="dtmd://dingtalkclient/sendMessage?content=**工作性价比:开启")]
+                    title="重新计算", url="**工作性价比:开启")]
             ))
-        redis.delete(get_dark_work_shuang_rank_session_name(self.chatbot_user_id))

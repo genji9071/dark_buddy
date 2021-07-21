@@ -1,5 +1,6 @@
 # coding=utf-8
 import os
+import threading
 import traceback
 from functools import wraps
 from io import BytesIO
@@ -11,6 +12,7 @@ from flask.json import jsonify, _json
 from flask_cors import CORS
 
 from config.ChatbotsConfig import chatbots
+from config.ThreadLocalSource import dark_local
 from dark_chat.DarkChat import dark_chat
 from dark_chat.dark_jikipedia.DarkJiWordCloud import dark_ji_word_cloud
 from dark_live_chat import socketio
@@ -89,6 +91,67 @@ def run_schedule_task():
         print('parent process:', os.getppid())
     print('process id:', os.getpid())
     scheduler.start()
+
+
+def convert_feishu_json_and_do_request(json_object):
+    if 'event' in json_object:
+        result = {
+            "senderId": json_object.get('event').get("user_open_id"),
+            "senderNick": "Unknown user",
+            "chatbotUserId": json_object.get('event').get("app_id"),
+            "text": {
+                "content": json_object.get('event').get("text_without_at_bot", "")
+            }
+        }
+        dark_local.receive_info = {
+            'call_type': 'send',
+            'receive_id_type': 'chat_id',
+            'receive_id': json_object.get('event').get("open_chat_id")
+        }
+    else:
+        result = {
+            "senderId": json_object.get("open_id"),
+            "senderNick": "Unknown user",
+            "chatbotUserId": "cli_a06c6d4a3d799013",
+            "text": {
+                "content": json_object.get('action').get("option", "")
+            }
+        }
+        dark_local.receive_info = {
+            'call_type': 'reply',
+            'receive_id_type': 'message_id',
+            'receive_id': json_object.get("open_message_id")
+        }
+    return do_request(result)
+
+
+@app.route('/feishu', methods=['POST', 'OPTIONS', 'GET'])
+@control_allow
+def feishu():
+    try:
+        if request.method == 'OPTIONS':
+            response = jsonify(response_lib.SUCCESS_CODE)
+            return response
+        if request.method == 'POST':
+            json_object = request.json
+            log.info(_json.dumps(json_object, indent=4))
+            # do verification
+            if json_object.get('type') == "url_verification":
+                return json_object
+            threading.Thread(target=convert_feishu_json_and_do_request, kwargs={'json_object': json_object}).start()
+            response = jsonify(response_lib.SUCCESS_CODE)
+            return response
+        if request.method == 'GET':
+            log.error('Why you got GET method?')
+            log.info(request)
+            response = jsonify(response_lib.SUCCESS_CODE)
+            return response
+    except:
+        log.error(traceback.format_exc())
+        response = jsonify(response_lib.ERROR_CODE)
+        chatbots.get(request.json['chatbotUserId']
+                     ).send_text(traceback.format_exc())
+        return response
 
 
 @app.route('/dark_buddy', methods=['POST', 'OPTIONS', 'GET'])

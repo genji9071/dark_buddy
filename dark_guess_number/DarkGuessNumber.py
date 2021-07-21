@@ -1,8 +1,8 @@
 from config import redis
 from config.ChatbotsConfig import chatbots
 from dark_listener.BaseOperation import BaseSymbol, SYMBOL_MATCH, REGEX_ANY_NUMBER
+from lib.BaseChatbot import CardItem, ActionCard
 from lib.RandomLib import random
-from lib.chatbot import CardItem, ActionCard
 from user.login.User_login import user_login
 
 digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -21,7 +21,7 @@ def shut_down_guess_number(chatbot_user_id):
             title="游戏结束",
             text="### 数字已经忘记......",
             btns=[CardItem(
-                title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:猜数字:开启")]
+                title="再来一把", url="**游戏:猜数字:开启")]
         ))
     return
 

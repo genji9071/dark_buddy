@@ -4,7 +4,7 @@ import requests
 
 from config.ChatbotsConfig import chatbots
 from dark_menu.BaseHandler import BaseHandler
-from lib.chatbot import ActionCard, CardItem
+from lib.BaseChatbot import ActionCard, CardItem
 
 
 class ZuAnChat(BaseHandler):
@@ -21,7 +21,7 @@ class ZuAnChat(BaseHandler):
     def do_handle(self, request_object, request_json):
         action_card = ActionCard(title='祖安',
                                  text='# ' + self.getZuAn(), btns=[
-                CardItem(title="你再骂？！", url="dtmd://dingtalkclient/sendMessage?content=**祖安")])
+                CardItem(title="你再骂？！", url="**祖安")])
         chatbots.get(request_json['chatbotUserId']).send_action_card(action_card)
 
     def getZuAn(self):

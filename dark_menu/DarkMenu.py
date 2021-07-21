@@ -4,8 +4,8 @@ import traceback
 from config.ChatbotsConfig import chatbots
 from config.TenantConfig import tenant_base_info
 from dark_menu.BaseHandler import BaseHandler
+from lib.BaseChatbot import CardItem, ActionCard
 from lib.Logger import log
-from lib.chatbot import CardItem, ActionCard
 
 
 class DarkMenu:
@@ -59,7 +59,7 @@ class DarkMenu:
             if cursor.get(key).get('hidden') == True:
                 continue
             btn = CardItem(
-                title=key, url="dtmd://dingtalkclient/sendMessage?content={0}".format(cursor.get(key).get('path')))
+                title=key, url=cursor.get(key).get('path'))
             btns.append(btn)
         title = "你是想问？"
         if len(paths) == 0:

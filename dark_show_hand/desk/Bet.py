@@ -4,7 +4,7 @@ from dark_listener.BaseOperation import BaseOperator, OPERATOR_OR, BaseSymbol, S
     REGEX_ANY_NUMBER
 from dark_show_hand.ai.Ai import Ai
 from dark_show_hand.desk.Draw import Draw
-from lib.chatbot import ActionCard, CardItem
+from lib.BaseChatbot import ActionCard, CardItem
 from user.login.User_login import user_login
 
 bet_operation = BaseOperator(OPERATOR_OR, [BaseSymbol(SYMBOL_EQUALS, 'giveup'),
@@ -32,7 +32,7 @@ class Bet:
             title="暗黑梭哈",
             text="### 你赢了！「{0}」金币都是你的！".format(total_money),
             btns=[CardItem(
-                title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑梭哈:来一把")]
+                title="再来一把", url="**游戏:暗黑梭哈:来一把")]
         ))
         user_login.rewards(total_money, player_id, self.chatbot, '玩家')
 
@@ -41,7 +41,7 @@ class Bet:
             title="暗黑梭哈",
             text="### 你输了！呵呵...",
             btns=[CardItem(
-                title="再来一把", url="dtmd://dingtalkclient/sendMessage?content=**游戏:暗黑梭哈:来一把")]
+                title="再来一把", url="**游戏:暗黑梭哈:来一把")]
         ))
 
     def bet(self, start_from, draw: Draw, order=None) -> str:
