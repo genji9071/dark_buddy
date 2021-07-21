@@ -5,6 +5,7 @@ from larksuiteoapi import Config, ACCESS_TOKEN_TYPE_TENANT, DOMAIN_LARK_SUITE, D
 from larksuiteoapi.api import Request, set_timeout
 
 from config.EnvConfig import env_config
+from config.ThreadLocalSource import dark_local
 from lib.BaseChatbot import BaseChatbot, ActionCard
 from lib.Logger import log
 
@@ -16,15 +17,14 @@ feishu_app_encrypt_key = os.environ.get("FEISHU_APP_ENCRYPT_KEY")
 
 class FeishuChatbot(BaseChatbot):
 
-    def __init__(self, receive_id):
-        self.receive_id = receive_id
+    def __init__(self):
         self.app_settings = Config.new_internal_app_settings(feishu_app_id, feishu_app_secret,
                                                              feishu_app_verification_token, feishu_app_encrypt_key)
         # Currently, you are visiting larksuite, which uses default storage and default log (debug level). More optional configurations are as follows: README.md->Advanced use->How to build overall configuration(Config)。
         self.conf = Config.new_config_with_memory_store(DOMAIN_LARK_SUITE, self.app_settings, DefaultLogger(),
                                                         LEVEL_DEBUG)
 
-    def send_text(self, msg, is_at_all=False, at_mobiles=[], at_dingtalk_ids=[]):
+    def send_text(self, msg):
         body = {
             'text': msg
         }
@@ -33,7 +33,7 @@ class FeishuChatbot(BaseChatbot):
     def send_image(self, pic_url):
         pass
 
-    def send_markdown(self, title, text, is_at_all=False, at_mobiles=[], at_dingtalk_ids=[]):
+    def send_markdown(self, title, text):
         pass
 
     def send_action_card(self, action_card: ActionCard):
@@ -97,8 +97,9 @@ class FeishuChatbot(BaseChatbot):
         if env_config.get("DEBUG_MODE") == '0':
             log.info(_json.dumps(body, indent=4))
             return
+        receive_id = dark_local.receive_id
         post_data = {
-            "receive_id": self.receive_id,
+            "receive_id": receive_id,
             "msg_type": msg_type,
             "content": _json.dumps(body)
         }

@@ -38,7 +38,7 @@ class DingtalkChatbot(BaseChatbot):
         self.start_time = time.time()
         self.is_live_chat = is_live_chat
 
-    def send_text(self, msg, is_at_all=False, at_mobiles=[], at_dingtalk_ids=[]):
+    def send_text(self, msg):
         """
         text类型
         :param msg: 消息内容
@@ -53,17 +53,6 @@ class DingtalkChatbot(BaseChatbot):
         else:
             logging.error("text类型，消息内容不能为空！")
             raise ValueError("text类型，消息内容不能为空！")
-
-        if is_at_all:
-            data["at"]["isAtAll"] = is_at_all
-
-        if at_mobiles:
-            at_mobiles = list(map(str, at_mobiles))
-            data["at"]["atMobiles"] = at_mobiles
-
-        if at_dingtalk_ids:
-            at_dingtalk_ids = list(map(str, at_dingtalk_ids))
-            data["at"]["atDingtalkIds"] = at_dingtalk_ids
 
         logging.debug('text类型：%s' % data)
         return self.post(data)
@@ -87,7 +76,7 @@ class DingtalkChatbot(BaseChatbot):
             logging.error("image类型中图片链接不能为空！")
             raise ValueError("image类型中图片链接不能为空！")
 
-    def send_markdown(self, title, text, is_at_all=False, at_mobiles=[], at_dingtalk_ids=[]):
+    def send_markdown(self, title, text):
         """
         markdown类型
         :param title: 首屏会话透出的展示内容
@@ -106,16 +95,6 @@ class DingtalkChatbot(BaseChatbot):
                 },
                 "at": {}
             }
-            if is_at_all:
-                data["at"]["isAtAll"] = is_at_all
-
-            if at_mobiles:
-                at_mobiles = list(map(str, at_mobiles))
-                data["at"]["atMobiles"] = at_mobiles
-
-            if at_dingtalk_ids:
-                at_dingtalk_ids = list(map(str, at_dingtalk_ids))
-                data["at"]["atDingtalkIds"] = at_dingtalk_ids
 
             logging.debug("markdown类型：%s" % data)
             return self.post(data)

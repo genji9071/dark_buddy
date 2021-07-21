@@ -146,7 +146,7 @@ class JuheApi(BaseHandler):
                 text+=": "
                 text+=response_json["newslist"][i]["content"]
                 text+="\n\n"
-            chatbots.get(request_json['chatbotUserId']).send_markdown(title="%s，这就是你今天的暗黑星座运势" % name, text=text, is_at_all=False)
+            chatbots.get(request_json['chatbotUserId']).send_markdown(title="%s，这就是你今天的暗黑星座运势" % name, text=text)
         elif matched == "laohuangli":
             log.info(str(response_json))
             datas = response_json.get('result')

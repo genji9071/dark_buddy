@@ -27,7 +27,7 @@ def is_not_null_and_blank_str(content):
 
 class BaseChatbot(metaclass=ABCMeta):
     @abstractmethod
-    def send_text(self, msg, is_at_all=False, at_mobiles=[], at_dingtalk_ids=[]):
+    def send_text(self, msg):
         pass
 
     @abstractmethod
@@ -35,7 +35,7 @@ class BaseChatbot(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def send_markdown(self, title, text, is_at_all=False, at_mobiles=[], at_dingtalk_ids=[]):
+    def send_markdown(self, title, text):
         pass
 
     @abstractmethod

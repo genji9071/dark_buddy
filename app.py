@@ -12,6 +12,7 @@ from flask.json import jsonify, _json
 from flask_cors import CORS
 
 from config.ChatbotsConfig import chatbots
+from config.ThreadLocalSource import dark_local
 from dark_chat.DarkChat import dark_chat
 from dark_chat.dark_jikipedia.DarkJiWordCloud import dark_ji_word_cloud
 from dark_live_chat import socketio
@@ -92,7 +93,7 @@ def run_schedule_task():
     scheduler.start()
 
 
-def convert_feishu_json(json_object):
+def convert_feishu_json_and_do_request(json_object):
     if 'event' in json_object:
         result = {
             "senderId": json_object.get('event').get("user_open_id"),
@@ -102,6 +103,7 @@ def convert_feishu_json(json_object):
                 "content": json_object.get('event').get("text_without_at_bot", "")
             }
         }
+        dark_local.receive_id = json_object.get('event').get("open_chat_id")
     else:
         result = {
             "senderId": json_object.get("open_id"),
@@ -111,7 +113,8 @@ def convert_feishu_json(json_object):
                 "content": json_object.get('action').get("option", "")
             }
         }
-    return result
+        dark_local.receive_id = json_object.get("open_message_id")
+    return do_request(result)
 
 
 @app.route('/feishu', methods=['POST', 'OPTIONS', 'GET'])
@@ -127,8 +130,7 @@ def feishu():
             # do verification
             if json_object.get('type') == "url_verification":
                 return json_object
-            json_object = convert_feishu_json(json_object)
-            threading.Thread(target=do_request, kwargs={'request_json': json_object}).start()
+            threading.Thread(target=convert_feishu_json_and_do_request, kwargs={'json_object': json_object}).start()
             response = jsonify(response_lib.SUCCESS_CODE)
             return response
         if request.method == 'GET':
