@@ -52,6 +52,7 @@ class DarkListenerManager():
         self.listeners[tenant_id] = listeners_dict
         # 注册租户当前焦点
         listener_manager_launcher.set_current_listener_manager(user_id, tenant_id, self)
+        dark_listener.initialize()
 
     @lock
     def get_listener(self, user_id: str, tenant_id: str) -> BaseListener:
