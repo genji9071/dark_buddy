@@ -31,8 +31,8 @@ tenant_base_info = {
         'menu': live_chat_menu
     },
 
-    'oc_d805c8382e6ca0097c163f1767bf7fd3': {
-        'chatbotUserId': 'oc_d805c8382e6ca0097c163f1767bf7fd3',
+    'cli_a06c6d4a3d799013': {
+        'chatbotUserId': 'cli_a06c6d4a3d799013',
         'description': '飞书的内容应用群机器人',
         'tenant_group_name': 'Tezign内容应用',
         'isExternal': False,
