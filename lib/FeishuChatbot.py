@@ -103,9 +103,14 @@ class FeishuChatbot(BaseChatbot):
             "msg_type": msg_type,
             "content": _json.dumps(body)
         }
-        req = Request(f'im/v1/messages?receive_id_type={receive_info["receive_id_type"]}', 'POST',
-                      ACCESS_TOKEN_TYPE_TENANT, post_data,
-                      request_opts=[set_timeout(3)])
+        if receive_info['call_type'] == 'send':
+            req = Request(f'im/v1/messages?receive_id_type={receive_info["receive_id_type"]}', 'POST',
+                          ACCESS_TOKEN_TYPE_TENANT, post_data,
+                          request_opts=[set_timeout(3)])
+        elif receive_info['call_type'] == 'reply':
+            req = Request(f'im/v1/messages/{receive_info["receive_id"]}/reply', 'POST',
+                          ACCESS_TOKEN_TYPE_TENANT, post_data,
+                          request_opts=[set_timeout(3)])
         resp = req.do(self.conf)
         log.info('request id = %s' % resp.get_request_id())
         log.info('request code = %s' % resp.code)

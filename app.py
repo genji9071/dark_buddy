@@ -104,6 +104,7 @@ def convert_feishu_json_and_do_request(json_object):
             }
         }
         dark_local.receive_info = {
+            'call_type': 'send',
             'receive_id_type': 'chat_id',
             'receive_id': json_object.get('event').get("open_chat_id")
         }
@@ -117,8 +118,9 @@ def convert_feishu_json_and_do_request(json_object):
             }
         }
         dark_local.receive_info = {
-            'receive_id_type': 'open_id',
-            'receive_id': json_object.get("open_id")
+            'call_type': 'reply',
+            'receive_id_type': 'message_id',
+            'receive_id': json_object.get("open_message_id")
         }
     return do_request(result)
 
