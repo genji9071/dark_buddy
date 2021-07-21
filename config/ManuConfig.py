@@ -442,7 +442,8 @@ feishu_menu = {'小功能': {
             'path': '**小功能:孟婆汤',
             'children': juhe_api
         },
-    }
+    },
+    'hidden': True
 },
     '工作性价比': {
         'path': '**工作性价比',
