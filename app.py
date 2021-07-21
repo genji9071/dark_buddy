@@ -1,6 +1,5 @@
 # coding=utf-8
 import os
-import threading
 import traceback
 from functools import wraps
 from io import BytesIO
@@ -138,7 +137,7 @@ def feishu():
             # do verification
             if json_object.get('type') == "url_verification":
                 return json_object
-            threading.Thread(target=convert_feishu_json_and_do_request, kwargs={'json_object': json_object}).start()
+            socketio.start_background_task(target=convert_feishu_json_and_do_request, json_object=json_object)
             response = jsonify(response_lib.SUCCESS_CODE)
             return response
         if request.method == 'GET':

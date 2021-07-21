@@ -25,7 +25,7 @@ class BaseListener(metaclass=ABCMeta):
         raise RuntimeError("Empty task define!")
 
     def initialize(self):
-        task = self.get_task_function()
+        task = self.get_task_function
         if not hasattr(task, '__call__'):
             raise RuntimeError("task is not callable!")
         socketio.start_background_task(target=task)

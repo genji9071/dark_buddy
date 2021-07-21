@@ -40,7 +40,7 @@ tenant_base_info = {
         'chatbotUserId': 'cli_a06c6d4a3d799013',
         'description': '飞书的内容应用群机器人',
         'tenant_group_name': 'Tezign内容应用',
-        'isExternal': False,
+        'isExternal': True,
         'menu': feishu_menu
     }
 
