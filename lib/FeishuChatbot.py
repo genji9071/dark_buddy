@@ -97,13 +97,14 @@ class FeishuChatbot(BaseChatbot):
         if env_config.get("DEBUG_MODE") == '0':
             log.info(_json.dumps(body, indent=4))
             return
-        receive_id = dark_local.receive_id
+        receive_info = dark_local.receive_info
         post_data = {
-            "receive_id": receive_id,
+            "receive_id": receive_info['receive_id'],
             "msg_type": msg_type,
             "content": _json.dumps(body)
         }
-        req = Request('im/v1/messages?receive_id_type=chat_id', 'POST', ACCESS_TOKEN_TYPE_TENANT, post_data,
+        req = Request(f'im/v1/messages?receive_id_type={receive_info["receive_id_type"]}', 'POST',
+                      ACCESS_TOKEN_TYPE_TENANT, post_data,
                       request_opts=[set_timeout(3)])
         resp = req.do(self.conf)
         log.info('request id = %s' % resp.get_request_id())

@@ -103,7 +103,10 @@ def convert_feishu_json_and_do_request(json_object):
                 "content": json_object.get('event').get("text_without_at_bot", "")
             }
         }
-        dark_local.receive_id = json_object.get('event').get("open_chat_id")
+        dark_local.receive_info = {
+            'receive_id_type': 'chat_id',
+            'receive_id': json_object.get('event').get("open_chat_id")
+        }
     else:
         result = {
             "senderId": json_object.get("open_id"),
@@ -113,7 +116,10 @@ def convert_feishu_json_and_do_request(json_object):
                 "content": json_object.get('action').get("option", "")
             }
         }
-        dark_local.receive_id = json_object.get("open_message_id")
+        dark_local.receive_info = {
+            'receive_id_type': 'open_id',
+            'receive_id': json_object.get("open_message_id")
+        }
     return do_request(result)
 
 
