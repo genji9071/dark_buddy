@@ -152,6 +152,19 @@ def feishu():
         return response
 
 
+@app.route('/wechat', methods=['GET'])
+@control_allow
+def wechat():
+    try:
+        if request.method == 'GET':
+            params = request.values
+            return params['echostr']
+    except:
+        log.error(traceback.format_exc())
+        response = jsonify(response_lib.ERROR_CODE)
+        return response
+
+
 @app.route('/dark_buddy', methods=['POST', 'OPTIONS', 'GET'])
 @control_allow
 def dark_buddy():
