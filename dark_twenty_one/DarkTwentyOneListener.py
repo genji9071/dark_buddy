@@ -30,10 +30,10 @@ call_operation = BaseOperator(
 
 class DarkTwentyOneListener(BaseListener):
 
-    def get_task_function(self):
+    def get_listener_task(self):
         self.game_process = DarkTwentyOneGameProcess(uuid.uuid1(), self.user_id, chatbots.get(self.chatbot_user_id),
                                                      self)
-        return self.game_process.main_process
+        return self.game_process.main_process()
 
     def ask_for_bet(self):
         return self.ask(bet_operation, '请输入金额，不少于{0}块，或者输入giveup放弃，颗粒无收！'.format(minimum_bet))

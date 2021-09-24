@@ -7,6 +7,6 @@ from dark_show_hand.desk.GameProcess import GameProcess
 
 class DarkShowHandListener(BaseListener):
 
-    def get_task_function(self):
+    def get_listener_task(self):
         self.game_process = GameProcess(uuid.uuid1(), self.user_id, chatbots.get(self.chatbot_user_id), self)
-        return self.game_process.main_process
+        return self.game_process.main_process()

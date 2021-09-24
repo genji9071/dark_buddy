@@ -128,7 +128,7 @@ def shut_down_work_shuang_rank(chatbot_user_id):
 
 
 class DarkWorkShuangRankListener(BaseListener):
-    def get_task_function(self):
+    def get_listener_task(self):
         scores = {}
         for phase in phase_list:
             answer = self.ask(phase['operator'], phase['question'])

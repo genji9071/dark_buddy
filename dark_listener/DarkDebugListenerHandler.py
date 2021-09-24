@@ -12,8 +12,8 @@ class DarkDebugListener(BaseListener):
         print(self.listener_manager.listeners)
         pass
 
-    def get_task_function(self):
-        return self.ask_sth
+    def get_listener_task(self):
+        return self.ask_sth()
 
 
 class DarkDebugListenerHandler(BaseListenableHandler):
