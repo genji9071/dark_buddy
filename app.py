@@ -21,7 +21,7 @@ from dark_maze.DarkMaze import get_maze_image
 from dark_menu.DarkMenu import dark_menu
 from dark_spy.DarkSpy import dark_spy
 from dark_word_cloud.DarkWordCloud import dark_word_cloud
-from lib.Logger import log
+from lib.Logger import log, socketio_log
 from lib.ResponseLib import response_lib
 from mapper.DarkBuddyUser import select_by_name
 from user.login.User_login import user_login
@@ -321,5 +321,5 @@ def do_dark_debug(json):
 
 if __name__ == '__main__':
     init_dark_live_chat_event()
-    socketio.init_app(app, logger=log)
+    socketio.init_app(app, logger=socketio_log)
     socketio.run(app, "0.0.0.0", port=9000, debug=True)
