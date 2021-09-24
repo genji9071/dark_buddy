@@ -1,7 +1,7 @@
 import json
 import os
 
-from larksuiteoapi import Config, ACCESS_TOKEN_TYPE_TENANT, DOMAIN_LARK_SUITE, DefaultLogger, LEVEL_DEBUG
+from larksuiteoapi import Config, ACCESS_TOKEN_TYPE_TENANT, DefaultLogger, LEVEL_DEBUG, DOMAIN_FEISHU
 from larksuiteoapi.api import Request, set_timeout
 
 from config.EnvConfig import env_config
@@ -21,7 +21,7 @@ class FeishuChatbot(BaseChatbot):
         self.app_settings = Config.new_internal_app_settings(feishu_app_id, feishu_app_secret,
                                                              feishu_app_verification_token, feishu_app_encrypt_key)
         # Currently, you are visiting larksuite, which uses default storage and default log (debug level). More optional configurations are as follows: README.md->Advanced use->How to build overall configuration(Config)。
-        self.conf = Config.new_config_with_memory_store(DOMAIN_LARK_SUITE, self.app_settings, DefaultLogger(),
+        self.conf = Config.new_config_with_memory_store(DOMAIN_FEISHU, self.app_settings, DefaultLogger(),
                                                         LEVEL_DEBUG)
 
     def send_text(self, msg):
@@ -94,8 +94,9 @@ class FeishuChatbot(BaseChatbot):
         pass
 
     def post(self, body, msg_type):
+        log.info(
+            f"Sending: \n {json.dumps(body, indent=4, ensure_ascii=False)}")
         if env_config.get("DEBUG_MODE") == '0':
-            log.info(json.dumps(body, indent=4, ensure_ascii=False))
             return
         receive_info = dark_local.receive_info
         post_data = {

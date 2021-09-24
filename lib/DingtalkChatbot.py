@@ -2,7 +2,6 @@
 # _*_ coding:utf-8 _*_
 
 import json
-import logging
 import time
 from threading import Lock
 
@@ -10,8 +9,8 @@ from config.EnvConfig import env_config
 from config.ThreadLocalSource import dark_local
 from dark_live_chat import namespace
 from lib.BaseChatbot import BaseChatbot, is_not_null_and_blank_str, ActionCard, FeedLink, CardItem
+from lib.Logger import log
 
-logging.basicConfig(level=logging.INFO)
 lock = Lock()
 import requests
 
@@ -51,10 +50,10 @@ class DingtalkChatbot(BaseChatbot):
         if is_not_null_and_blank_str(msg):
             data["text"] = {"content": msg}
         else:
-            logging.error("text类型，消息内容不能为空！")
+            log.error("text类型，消息内容不能为空！")
             raise ValueError("text类型，消息内容不能为空！")
 
-        logging.debug('text类型：%s' % data)
+        log.debug('text类型：%s' % data)
         return self.post(data)
 
     def send_image(self, pic_url):
@@ -70,10 +69,10 @@ class DingtalkChatbot(BaseChatbot):
                     "picURL": pic_url
                 }
             }
-            logging.debug('image类型：%s' % data)
+            log.debug('image类型：%s' % data)
             return self.post(data)
         else:
-            logging.error("image类型中图片链接不能为空！")
+            log.error("image类型中图片链接不能为空！")
             raise ValueError("image类型中图片链接不能为空！")
 
     def send_markdown(self, title, text):
@@ -96,10 +95,10 @@ class DingtalkChatbot(BaseChatbot):
                 "at": {}
             }
 
-            logging.debug("markdown类型：%s" % data)
+            log.debug("markdown类型：%s" % data)
             return self.post(data)
         else:
-            logging.error("markdown类型中消息标题或内容不能为空！")
+            log.error("markdown类型中消息标题或内容不能为空！")
             raise ValueError("markdown类型中消息标题或内容不能为空！")
 
     def send_action_card(self, action_card):
@@ -110,10 +109,10 @@ class DingtalkChatbot(BaseChatbot):
         """
         if isinstance(action_card, ActionCard):
             data = self.get_data(action_card)
-            logging.debug("ActionCard类型：%s" % data)
+            log.debug("ActionCard类型：%s" % data)
             return self.post(data)
         else:
-            logging.error("ActionCard类型：传入的实例类型不正确！")
+            log.error("ActionCard类型：传入的实例类型不正确！")
             raise TypeError("ActionCard类型：传入的实例类型不正确！")
 
     def get_data(self, action_card: ActionCard):
@@ -138,7 +137,7 @@ class DingtalkChatbot(BaseChatbot):
             }
             return data
         else:
-            logging.error("ActionCard类型，消息标题或内容或按钮数量不能为空！")
+            log.error("ActionCard类型，消息标题或内容或按钮数量不能为空！")
             raise ValueError("ActionCard类型，消息标题或内容或按钮数量不能为空！")
 
     def send_feed_card(self, links):
@@ -155,7 +154,7 @@ class DingtalkChatbot(BaseChatbot):
             # 兼容：1、传入FeedLink或CardItem实例列表；2、传入数据字典列表；
             links = link_data_list
         data = {"msgtype": "feedCard", "feedCard": {"links": links}}
-        logging.debug("FeedCard类型：%s" % data)
+        log.debug("FeedCard类型：%s" % data)
         return self.post(data)
 
     def post(self, data):
@@ -169,13 +168,13 @@ class DingtalkChatbot(BaseChatbot):
             self.times += 1
             if self.times % 20 == 0:
                 if time.time() - self.start_time < 60:
-                    logging.info('钉钉官方限制每个机器人每分钟最多发送20条，当前消息发送频率已达到限制条件，休眠一分钟')
+                    log.info('钉钉官方限制每个机器人每分钟最多发送20条，当前消息发送频率已达到限制条件，休眠一分钟')
                     time.sleep(61 - time.time() + self.start_time)
                 self.start_time = time.time()
             lock.release()
         post_data = json.dumps(data)
         try:
-            logging.info(
+            log.info(
                 f"Sending: \n {json.dumps(json.loads(post_data, encoding='utf-8'), indent=4, ensure_ascii=False)}")
             if env_config.get("DEBUG_MODE") == '0':
                 return
@@ -187,25 +186,25 @@ class DingtalkChatbot(BaseChatbot):
                 return
             response = requests.post(self.webhook, headers=self.headers, data=post_data)
         except requests.exceptions.HTTPError as exc:
-            logging.error("消息发送失败， HTTP error: %d, reason: %s" % (exc.response.status_code, exc.response.reason))
+            log.error("消息发送失败， HTTP error: %d, reason: %s" % (exc.response.status_code, exc.response.reason))
             raise
         except requests.exceptions.ConnectionError:
-            logging.error("消息发送失败，HTTP connection error!")
+            log.error("消息发送失败，HTTP connection error!")
             raise
         except requests.exceptions.Timeout:
-            logging.error("消息发送失败，Timeout error!")
+            log.error("消息发送失败，Timeout error!")
             raise
         except requests.exceptions.RequestException:
-            logging.error("消息发送失败, Request Exception!")
+            log.error("消息发送失败, Request Exception!")
             raise
         else:
             try:
                 result = response.json()
             except JSONDecodeError:
-                logging.error("服务器响应异常，状态码：%s，响应内容：%s" % (response.status_code, response.text))
+                log.error("服务器响应异常，状态码：%s，响应内容：%s" % (response.status_code, response.text))
                 return {'errcode': 500, 'errmsg': '服务器响应异常'}
             else:
-                logging.debug('发送结果：%s' % result)
+                log.debug('发送结果：%s' % result)
                 # if result['punish']:
                 #     error_data = {"msgtype": "text", "text": {"content": "钉钉机器人消息发送失败，原因：%s" % str(result)},
                 #                   "at": {"isAtAll": True}}

@@ -17,4 +17,4 @@ python-engineio==3.13.2
 python-socketio==4.6.0
 eventlet==0.29.1
 
-larksuite-oapi==1.0.23
+larksuite-oapi==1.0.25rc5
