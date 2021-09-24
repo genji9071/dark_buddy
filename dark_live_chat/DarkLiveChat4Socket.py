@@ -1,3 +1,5 @@
+import json
+
 from flask import request
 from flask_socketio import join_room
 
@@ -30,6 +32,7 @@ def init_dark_live_chat_event():
 
     @socketio.on('message', namespace=namespace)
     def on_say_a_word(data):
+        log.info(f"Receiving: \n {json.dumps(json.loads(data, encoding='utf-8'), indent=4, ensure_ascii=False)}")
         dark_local.session_id = request.sid
         do_live_chat_request(data)
 
