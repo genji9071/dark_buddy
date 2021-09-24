@@ -21,6 +21,7 @@ def init_dark_live_chat_event():
 
     @socketio.on('connect', namespace=namespace)
     def on_connect():
+        user_login.init_luck_point_4_temp_user(1000, f'/dark_buddy#{request.sid}')
         log.info('Client connected')
 
     @socketio.on('disconnect', namespace=namespace)

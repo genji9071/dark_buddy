@@ -65,6 +65,8 @@ class User_login(BaseHandler):
         return 'tianhao:dark_buddy:user_temp_money:{0}'.format(sender_id)
 
     def init_luck_point_4_temp_user(self, count, sender_id):
+        if self.get_luck_point_by_sender_id(sender_id):
+            pass
         redis.setex(name=self.get_temp_user_money_name(
             sender_id), time=3600, value=count)
 
@@ -93,7 +95,7 @@ class User_login(BaseHandler):
 
     def get_luck_point_by_sender_id(self, sender_id: str):
         if sender_id.startswith('/dark_buddy#'):
-            return {'user_id': -1, 'value': int(redis.get(self.get_temp_user_money_name(sender_id)) or 0)}
+            return {'user_id': -1, 'value': int(redis.get(self.get_temp_user_money_name(sender_id)))}
         founded_user = select_by_senderId(sender_id)
         number = select_by_statusId_and_userId(
             2, founded_user["id"]).value
