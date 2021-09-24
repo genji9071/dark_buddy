@@ -2,7 +2,7 @@ from config import redis
 from config.ChatbotsConfig import chatbots
 from dark_listener.BaseListener import BaseListener
 from dark_listener.BaseOperation import BaseOperator, OPERATOR_AND, SYMBOL_MATCH, BaseSymbol, \
-    SYMBOL_GREATER, SYMBOL_LESS, SYMBOL_EQUALS, OPERATOR_OR, REGEX_ANY_FLOAT
+    SYMBOL_GREATER, SYMBOL_LESS, SYMBOL_EQUALS, OPERATOR_OR, REGEX_ANY_FLOAT, SYMBOL_GREATER_EQUAL
 from lib.BaseChatbot import ActionCard, CardItem
 
 
@@ -16,7 +16,7 @@ def build_daily_salary_operator():
 def build_hours_operator():
     return BaseOperator(OPERATOR_AND, [
         BaseSymbol(SYMBOL_MATCH, REGEX_ANY_FLOAT),
-        BaseSymbol(SYMBOL_GREATER, 0),
+        BaseSymbol(SYMBOL_GREATER_EQUAL, 0),
         BaseSymbol(SYMBOL_LESS, 24),
     ])
 

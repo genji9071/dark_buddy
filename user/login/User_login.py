@@ -93,7 +93,7 @@ class User_login(BaseHandler):
 
     def get_luck_point_by_sender_id(self, sender_id: str):
         if sender_id.startswith('/dark_buddy#'):
-            return {'user_id': -1, 'value': int(redis.get(self.get_temp_user_money_name(sender_id)))}
+            return {'user_id': -1, 'value': int(redis.get(self.get_temp_user_money_name(sender_id)) or 0)}
         founded_user = select_by_senderId(sender_id)
         number = select_by_statusId_and_userId(
             2, founded_user["id"]).value

@@ -314,6 +314,7 @@ def web_get(path):
     response.headers["Cache-Control"] = "no-cache"
     return response
 
+
 def do_dark_debug(json):
     return dark_menu.call_api(json)
 
