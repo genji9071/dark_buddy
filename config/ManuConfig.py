@@ -411,40 +411,51 @@ live_chat_menu = {
     }
 }
 
-feishu_menu = {'小功能': {
-    'path': '**小功能',
-    'children': {
-        '笑话': {
-            'path': '**小功能:笑话',
-            'children': juhe_api
+feishu_menu = {
+    '小功能': {
+        'path': '**小功能',
+        'children': {
+            '笑话': {
+                'path': '**小功能:笑话',
+                'children': juhe_api
+            },
+            '新闻': {
+                'path': '**小功能:新闻',
+                'children': juhe_api
+            },
+            '骚东西': {
+                'path': '**小功能:骚东西',
+                'children': juhe_api
+            },
+            '动图': {
+                'path': '**小功能:动图',
+                'children': juhe_api
+            },
+            '今天': {
+                'path': '**小功能:今天',
+                'children': juhe_api
+            },
+            '土味情话': {
+                'path': '**小功能:土味情话',
+                'children': juhe_api
+            },
+            '孟婆汤': {
+                'path': '**小功能:孟婆汤',
+                'children': juhe_api
+            },
         },
-        '新闻': {
-            'path': '**小功能:新闻',
-            'children': juhe_api
-        },
-        '骚东西': {
-            'path': '**小功能:骚东西',
-            'children': juhe_api
-        },
-        '动图': {
-            'path': '**小功能:动图',
-            'children': juhe_api
-        },
-        '今天': {
-            'path': '**小功能:今天',
-            'children': juhe_api
-        },
-        '土味情话': {
-            'path': '**小功能:土味情话',
-            'children': juhe_api
-        },
-        '孟婆汤': {
-            'path': '**小功能:孟婆汤',
-            'children': juhe_api
-        },
+        'hidden': True
     },
-    'hidden': True
-},
+    '骚词': {
+        'path': '**骚词',
+        'children': {
+            '推荐': {
+                'path': '**骚词:推荐',
+                'children': dark_jikipedia
+            }
+        },
+        'hidden': True
+    },
     '工作性价比': {
         'path': '**工作性价比',
         'children': {
