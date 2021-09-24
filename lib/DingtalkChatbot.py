@@ -175,8 +175,9 @@ class DingtalkChatbot(BaseChatbot):
             lock.release()
         post_data = json.dumps(data)
         try:
+            logging.info(
+                f"Sending: \n {json.dumps(json.loads(post_data, encoding='utf-8'), indent=4, ensure_ascii=False)}")
             if env_config.get("DEBUG_MODE") == '0':
-                logging.info(json.dumps(json.loads(post_data, encoding='utf-8'), indent=4, ensure_ascii=False))
                 return
             if self.is_live_chat:
                 from dark_live_chat import socketio

@@ -10,6 +10,7 @@ class Logger:
     def __init__(self):
         # create logger
         logger = logging.getLogger('console')
+        logger.addFilter(logging.Filter("engineio.server"))
 
         # # create console handler and set level
         # handler = logging.StreamHandler()
