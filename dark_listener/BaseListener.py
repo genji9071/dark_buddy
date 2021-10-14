@@ -21,11 +21,11 @@ class BaseListener(metaclass=ABCMeta):
         return self.listener_manager.get_listener_name()
 
     @abstractmethod
-    def get_task_function(self):
+    def get_listener_task(self):
         raise RuntimeError("Empty task define!")
 
     def initialize(self):
-        task = self.get_task_function
+        task = self.get_listener_task
         if not hasattr(task, '__call__'):
             raise RuntimeError("task is not callable!")
         socketio.start_background_task(target=task)

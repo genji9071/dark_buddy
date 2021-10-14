@@ -39,9 +39,9 @@ class DarkJiWordCloud(BaseHandler):
             id = uuid.uuid1()
             words = self.put_words(word_cloud_dict)
         title = "小鸡骚词"
-        text = "![screenshot](http://{3}/dark_buddy/dark_ji_word_cloud/image/get?session_id={0}&uuid={1})\n### 小鸡骚词\n{2}".format(
-            request_json['chatbotUserId'], id, words, config.public_ip)
-        action_card = ActionCard(title=title, text=text, btns=[])
+        img_url = f"http://{config.public_ip}/dark_buddy/dark_ji_word_cloud/image/get?session_id={request_json['chatbotUserId']}&uuid={id}"
+        text = f"![screenshot]({img_url})\n### 小鸡骚词\n{words}"
+        action_card = ActionCard(title=title, text=text, btns=[], img_url=img_url)
         chatbots.get(request_json['chatbotUserId']
                      ).send_action_card(action_card)
 

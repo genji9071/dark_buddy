@@ -24,12 +24,6 @@ const socket = io(domain, {
     autoConnect: true
 });
 
-const cardInfo = {
-    subtext: '',
-    image: 'https://dfzximg02.dftoutiao.com/news/20210331/20210331154746_579c8ef07816b5e82889a0a7ce963c76_1_mwpm_03201609.png',
-    heading: '沪剧电影《挑山女人》开启长三角巡回演映'
-  }  
-
 socket.on('answer', function (data: any) {
     getLiveChatResponse(data)
 })

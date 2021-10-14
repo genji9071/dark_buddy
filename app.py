@@ -1,4 +1,5 @@
 # coding=utf-8
+import json
 import os
 import traceback
 from functools import wraps
@@ -7,7 +8,7 @@ from io import BytesIO
 import pytz
 from apscheduler.schedulers.blocking import BlockingScheduler
 from flask import Flask, request, make_response, send_from_directory
-from flask.json import jsonify, _json
+from flask.json import jsonify
 from flask_cors import CORS
 
 from config.ChatbotsConfig import chatbots
@@ -20,7 +21,7 @@ from dark_maze.DarkMaze import get_maze_image
 from dark_menu.DarkMenu import dark_menu
 from dark_spy.DarkSpy import dark_spy
 from dark_word_cloud.DarkWordCloud import dark_word_cloud
-from lib.Logger import log
+from lib.Logger import log, socketio_log
 from lib.ResponseLib import response_lib
 from mapper.DarkBuddyUser import select_by_name
 from user.login.User_login import user_login
@@ -133,7 +134,7 @@ def feishu():
             return response
         if request.method == 'POST':
             json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
+            log.info(json.dumps(json_object, indent=4, ensure_ascii=False))
             # do verification
             if json_object.get('type') == "url_verification":
                 return json_object
@@ -148,8 +149,19 @@ def feishu():
     except:
         log.error(traceback.format_exc())
         response = jsonify(response_lib.ERROR_CODE)
-        chatbots.get(request.json['chatbotUserId']
-                     ).send_text(traceback.format_exc())
+        return response
+
+
+@app.route('/wechat', methods=['GET'])
+@control_allow
+def wechat():
+    try:
+        if request.method == 'GET':
+            params = request.values
+            return params['echostr']
+    except:
+        log.error(traceback.format_exc())
+        response = jsonify(response_lib.ERROR_CODE)
         return response
 
 
@@ -162,7 +174,7 @@ def dark_buddy():
             return response
         if request.method == 'POST':
             json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
+            log.info(json.dumps(json_object, indent=4, ensure_ascii=False))
             do_request(json_object)
             response = jsonify(response_lib.SUCCESS_CODE)
             return response
@@ -188,7 +200,7 @@ def dark_buddy_listener():
             return response
         if request.method == 'POST':
             json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
+            log.info(json.dumps(json_object, indent=4, ensure_ascii=False))
             do_listener(json_object)
             response = jsonify(response_lib.SUCCESS_CODE)
             return response
@@ -252,7 +264,7 @@ def sign_in():
             return response
         if request.method == 'POST':
             json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
+            log.info(json.dumps(json_object, indent=4, ensure_ascii=False))
             sender_id = json_object['sender_id']
             if user_login.check_lock(sender_id):
                 return jsonify(response_lib.SUCCESS_CODE)
@@ -274,7 +286,7 @@ def darkSpyGetWord():
             return response
         if request.method == 'POST':
             json_object = request.json
-            log.info(_json.dumps(json_object, indent=4))
+            log.info(json.dumps(json_object, indent=4, ensure_ascii=False))
             return dark_spy.show_gamer_info(json_object)
     except:
         log.error(traceback.format_exc())
@@ -302,11 +314,12 @@ def web_get(path):
     response.headers["Cache-Control"] = "no-cache"
     return response
 
+
 def do_dark_debug(json):
     return dark_menu.call_api(json)
 
 
 if __name__ == '__main__':
     init_dark_live_chat_event()
-    socketio.init_app(app)
+    socketio.init_app(app, logger=socketio_log)
     socketio.run(app, "0.0.0.0", port=9000, debug=True)

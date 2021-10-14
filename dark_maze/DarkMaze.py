@@ -124,10 +124,10 @@ class DarkMaze:
     def display_maze(self, data, message):
         redis.set(name=get_dark_maze_session_name(self.chatbot_user_id), value=str(data))
         title = "暗黑迷宫"
-        text = '![screenshot]({0})\n# {1}'.format(
-            'http://{2}/dark_buddy/dark_maze/image/get?session_id={0}&uuid={1}'.format(self.chatbot_user_id,
-                                                                                       uuid.uuid1(), config.public_ip),
-            message)
-        action_card = ActionCard(title=title, text=text, btns=[])
+        img_url = 'http://{2}/dark_buddy/dark_maze/image/get?session_id={0}&uuid={1}'.format(self.chatbot_user_id,
+                                                                                             uuid.uuid1(),
+                                                                                             config.public_ip)
+        text = '![screenshot]({0})\n# {1}'.format(img_url, message)
+        action_card = ActionCard(title=title, text=text, btns=[], img_url=img_url)
         chatbots.get(self.chatbot_user_id).send_action_card(action_card)
         return
