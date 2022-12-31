@@ -34,14 +34,4 @@ tenant_base_info = {
         'isExternal': True,
         'menu': live_chat_menu
     },
-
-    'cli_a06c6d4a3d799013': {
-        'platformType': "feishu",
-        'chatbotUserId': 'cli_a06c6d4a3d799013',
-        'description': '飞书的内容应用群机器人',
-        'tenant_group_name': 'Tezign内容应用',
-        'isExternal': True,
-        'menu': feishu_menu
-    }
-
 }

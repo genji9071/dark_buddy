@@ -1,9 +1,9 @@
 requests==2.24.0
 apscheduler==3.6.3
 bs4
-lxml==4.6.1
+lxml==4.9.2
 
-Flask==1.1.2
+Flask==2.1.0
 flask-cors==3.0.9
 
 pymysql==0.10.1
@@ -12,7 +12,8 @@ redis==3.5.3
 Pillow==8.0.1
 wordcloud==1.8.0
 
-flask-socketio==4.3.1
+flask-socketio==4.3.2
+Werkzeug==2.0.1
 python-engineio==3.13.2
 python-socketio==4.6.0
 eventlet==0.29.1

@@ -15,7 +15,7 @@ class ZuAnChat(BaseHandler):
     zuan_response_list = ''
 
     def __init__(self):
-        zuan_response = open(os.path.split(os.path.realpath(__file__))[0] + '/resources/zuan_response.txt', 'r')
+        zuan_response = open(os.path.split(os.path.realpath(__file__))[0] + '/resources/zuan_response.txt', 'r', encoding='utf-8')
         self.zuan_response_list = zuan_response.readlines()
 
     def do_handle(self, request_object, request_json):
