@@ -12,6 +12,6 @@ RUN pip3 install -r requirements.txt
 
 COPY . /DarkBuddy/
 
-EXPOSE 8080
+EXPOSE 9000
 
 ENTRYPOINT python app.py
