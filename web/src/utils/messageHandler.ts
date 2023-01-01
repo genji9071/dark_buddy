@@ -19,10 +19,7 @@ export interface IActionCardRequest {
     "btns": [{title: any, actionURL: string}]
 }
 
-const socket = io(domain, {
-    transports: ['websocket'],
-    autoConnect: true
-});
+const socket = io(domain, {transports: ["websocket"]});
 
 socket.on('answer', function (data: any) {
     getLiveChatResponse(data)
@@ -61,7 +58,7 @@ function getLiveChatResponse(data: any) {
 
 // do socket chat
  async function doLiveChat(liveChatRequest: ILiveChatRequest) {
-    socket.send(liveChatRequest, (data: any) => {
+    socket.emit("message", liveChatRequest, (data: any) => {
         if (data) {
             console.log('say a word successfully');
         }
